@@ -39,7 +39,7 @@ export const Navbar = ({ onSelectRoleDemo }) => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold text-slate-900 tracking-tight">MediMind</h1>
+              <h1 className="text-lg font-bold text-slate-900 tracking-tight">NeuroSwarm</h1>
               <span className="text-[11px] font-medium uppercase tracking-wider text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">
                 Clinical AI Platform
               </span>
@@ -52,19 +52,19 @@ export const Navbar = ({ onSelectRoleDemo }) => {
           <div className="hidden md:flex items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs">
             <span className="text-slate-500 font-medium px-2">Quick Demo Switch:</span>
             <button
-              onClick={() => onSelectRoleDemo('admin@medimind.org', 'password123')}
+              onClick={() => onSelectRoleDemo('admin@neuroswarm.health', 'password123')}
               className={`px-2.5 py-1 rounded font-medium transition ${role === 'ADMIN' ? 'bg-white text-purple-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
             >
               Admin
             </button>
             <button
-              onClick={() => onSelectRoleDemo('dr.chen@medimind.org', 'password123')}
+              onClick={() => onSelectRoleDemo('dr.chen@neuroswarm.health', 'password123')}
               className={`px-2.5 py-1 rounded font-medium transition ${role === 'DOCTOR' ? 'bg-white text-sky-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
             >
               Dr. Chen
             </button>
             <button
-              onClick={() => onSelectRoleDemo('nurse.sarah@medimind.org', 'password123')}
+              onClick={() => onSelectRoleDemo('nurse.sarah@neuroswarm.health', 'password123')}
               className={`px-2.5 py-1 rounded font-medium transition ${role === 'NURSE' ? 'bg-white text-teal-700 shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
             >
               Nurse Sarah

@@ -81,7 +81,7 @@ export const AddStaffModal = ({ isOpen, onClose, onStaffCreated }) => {
               required
               value={formData.email}
               onChange={handleChange}
-              placeholder="e.g. e.watson@medimind.org"
+              placeholder="e.g. e.watson@neuroswarm.health"
               className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
             />
           </div>

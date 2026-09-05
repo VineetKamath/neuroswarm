@@ -9,7 +9,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('medimind_token');
+    const token = localStorage.getItem('neuroswarm_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -23,8 +23,8 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       // Clear token and broadcast session expiration
-      localStorage.removeItem('medimind_token');
-      localStorage.removeItem('medimind_user');
+      localStorage.removeItem('neuroswarm_token');
+      localStorage.removeItem('neuroswarm_user');
       window.dispatchEvent(new CustomEvent('session-expired'));
     }
     return Promise.reject(error);

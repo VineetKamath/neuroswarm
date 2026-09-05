@@ -4,7 +4,7 @@ import { Activity, Shield, Stethoscope, HeartPulse, Lock, Mail, ArrowRight, Aler
 
 export const LoginPage = () => {
   const { login, sessionExpired } = useAuth();
-  const [email, setEmail] = useState('admin@medimind.org');
+  const [email, setEmail] = useState('admin@neuroswarm.health');
   const [password, setPassword] = useState('password123');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -12,21 +12,21 @@ export const LoginPage = () => {
   const demoAccounts = [
     {
       role: 'Hospital Admin',
-      email: 'admin@medimind.org',
+      email: 'admin@neuroswarm.health',
       password: 'password123',
       name: 'Dr. Arthur Hastings',
       icon: Shield,
     },
     {
       role: 'Physician / Doctor',
-      email: 'dr.chen@medimind.org',
+      email: 'dr.chen@neuroswarm.health',
       password: 'password123',
       name: 'Dr. Melinda Chen, MD',
       icon: Stethoscope,
     },
     {
       role: 'Nursing Staff',
-      email: 'nurse.sarah@medimind.org',
+      email: 'nurse.sarah@neuroswarm.health',
       password: 'password123',
       name: 'Sarah Jenkins, RN',
       icon: HeartPulse,
@@ -59,7 +59,7 @@ export const LoginPage = () => {
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-sky-600 text-white shadow-md mb-4">
           <Activity className="w-8 h-8" />
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">MediMind Clinical Portal</h2>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">NeuroSwarm Clinical Portal</h2>
         <p className="mt-1 text-sm text-slate-500">
           Role-Secured EHR & Patient-Scoped Clinical RAG Assistant
         </p>
@@ -115,7 +115,7 @@ export const LoginPage = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@medimind.org"
+                  placeholder="name@neuroswarm.health"
                   className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
                 />
               </div>

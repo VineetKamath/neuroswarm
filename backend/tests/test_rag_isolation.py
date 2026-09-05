@@ -5,7 +5,7 @@ from app.main import app
 def test_rag_patient_isolation():
     with TestClient(app) as client:
         # Login as doctor
-        res_doc = client.post("/api/auth/login", json={"email": "dr.chen@medimind.org", "password": "password123"})
+        res_doc = client.post("/api/auth/login", json={"email": "dr.chen@neuroswarm.health", "password": "password123"})
         token = res_doc.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
@@ -40,7 +40,7 @@ def test_rag_patient_isolation():
 def test_rag_similarity_threshold_rejection():
     with TestClient(app) as client:
         # Login as doctor
-        res_doc = client.post("/api/auth/login", json={"email": "dr.chen@medimind.org", "password": "password123"})
+        res_doc = client.post("/api/auth/login", json={"email": "dr.chen@neuroswarm.health", "password": "password123"})
         token = res_doc.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 

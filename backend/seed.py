@@ -14,6 +14,8 @@ from app.models.vital import VitalSign
 from app.models.note import ClinicalNote, NoteType
 from app.models.task import CareTask, TaskPriority, TaskStatus
 from app.services.vector_store import vector_store
+from app.bio.seeding import generate_cohort, build_task_scenarios, write_benchmarks
+from app.bio.corpus import expert_task_score
 
 def seed_database():
     print("Resetting and creating database tables...")
@@ -25,7 +27,7 @@ def seed_database():
         print("Creating staff user accounts...")
         # 1. Staff Users
         admin_user = User(
-            email="admin@medimind.org",
+            email="admin@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
             full_name="Dr. Arthur Hastings (Admin)",
             role=UserRole.ADMIN,
@@ -33,7 +35,7 @@ def seed_database():
             is_active=True
         )
         doctor_chen = User(
-            email="dr.chen@medimind.org",
+            email="dr.chen@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
             full_name="Dr. Melinda Chen, MD",
             role=UserRole.DOCTOR,
@@ -41,7 +43,7 @@ def seed_database():
             is_active=True
         )
         doctor_patel = User(
-            email="dr.patel@medimind.org",
+            email="dr.patel@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
             full_name="Dr. Rajesh Patel, MD",
             role=UserRole.DOCTOR,
@@ -49,7 +51,7 @@ def seed_database():
             is_active=True
         )
         nurse_sarah = User(
-            email="nurse.sarah@medimind.org",
+            email="nurse.sarah@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
             full_name="Sarah Jenkins, RN",
             role=UserRole.NURSE,
@@ -57,7 +59,7 @@ def seed_database():
             is_active=True
         )
         nurse_james = User(
-            email="nurse.james@medimind.org",
+            email="nurse.james@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
             full_name="James Rodriguez, BSN",
             role=UserRole.NURSE,
@@ -319,21 +321,52 @@ def seed_database():
         ])
 
         db.commit()
-        print("Database seeded successfully with 5 staff members and 4 realistic clinical patients.")
+        print("Core demo patients seeded (4 hand-authored clinical cases).")
 
-        # ----------------------------------------------------
-        # Vector Indexing for all Patients
-        # ----------------------------------------------------
+        # ------------------------------------------------------------------
+        # Extended cohort + labeled ground truth for the bio-inspired trainers
+        # ------------------------------------------------------------------
+        print("Generating extended clinical cohort...")
+        staff = {"doctors": [doctor_chen, doctor_patel], "nurses": [nurse_sarah, nurse_james]}
+        labels = generate_cohort(db, staff, n_patients=34, seed=2026, now=now)
+
+        # Hand-authored benchmark queries for the four demo patients. These are
+        # labeled by reading the notes above and recording which note actually
+        # answers each question.
+        core_labels = build_core_benchmark(db)
+        labels["retrieval"] = core_labels + labels["retrieval"]
+
+        # Nurse workload snapshot feeds the GA's workload-balancing gene.
+        nurse_loads = {}
+        for row in labels["task_rows"]:
+            nurse_loads[row["nurse_id"]] = nurse_loads.get(row["nurse_id"], 0) + 1
+
+        scenarios = build_task_scenarios(labels["task_rows"], nurse_loads,
+                                         scenario_size=6, n_scenarios=110, seed=5)
+
+        out = write_benchmarks({
+            "retrieval": labels["retrieval"],
+            "vitals": labels["vitals"],
+            "task_scenarios": scenarios,
+        })
+        print(f"  - {len(labels['retrieval'])} labeled retrieval queries")
+        print(f"  - {len(scenarios)} expert-ordered task scenarios")
+        n_err = sum(1 for v in labels["vitals"] if v["is_error"])
+        print(f"  - {len(labels['vitals'])} vitals records ({n_err} with planted errors)")
+        print(f"  - benchmarks written to {out}")
+
+        # ------------------------------------------------------------------
+        # Vector indexing
+        # ------------------------------------------------------------------
         print("Indexing clinical notes into per-patient FAISS vector stores...")
         all_patients = db.query(Patient).all()
         total_chunks = 0
         for p in all_patients:
             notes = db.query(ClinicalNote).filter(ClinicalNote.patient_id == p.id).all()
-            chunks = vector_store.index_patient_notes(p.id, notes)
-            total_chunks += chunks
-            print(f"  - Patient: {p.full_name} ({p.mrn}) -> {chunks} chunks indexed.")
+            total_chunks += vector_store.index_patient_notes(p.id, notes)
 
-        print(f"\nSeeding complete! Total indexed vector chunks: {total_chunks}")
+        print(f"Seeding complete: {len(all_patients)} patients, {total_chunks} indexed chunks.")
+        print("Next step: python -m app.bio.cli train    (evolves all five optimizers)")
 
     except Exception as e:
         db.rollback()
@@ -341,6 +374,62 @@ def seed_database():
         raise
     finally:
         db.close()
+
+
+
+def build_core_benchmark(db):
+    """Hand-labeled benchmark queries for the four authored demo patients.
+
+    Each entry pairs a realistic clinical question with the note that actually
+    documents the answer, established by reading the seeded notes directly.
+    """
+    from app.models.note import ClinicalNote
+    from app.models.patient import Patient
+
+    specs = [
+        ("Eleanor", [
+            ("What diuretic and dose was prescribed?", "Plan & Orders"),
+            ("What was the ejection fraction on echocardiography?", "Objective / Vitals / Labs"),
+            ("Why was Lisinopril avoided for this patient?", "Plan & Orders"),
+            ("What is the daily fluid restriction?", "Plan & Orders"),
+            ("What symptoms did the patient describe on admission?", "Subjective History"),
+        ]),
+        ("Marcus", [
+            ("What bacteria was isolated in the sputum culture?", "Objective / Vitals / Labs"),
+            ("Which antibiotics were started?", "Plan & Orders"),
+            ("What did the chest imaging show?", "Objective / Vitals / Labs"),
+            ("What was the oxygen requirement?", "Objective / Vitals / Labs"),
+        ]),
+        ("", [
+            ("What is the current insulin regimen?", "Plan & Orders"),
+            ("What were the blood glucose readings?", "Objective / Vitals / Labs"),
+        ]),
+    ]
+
+    out = []
+    for name_frag, questions in specs:
+        q = db.query(Patient)
+        if name_frag:
+            q = q.filter(Patient.first_name.like(f"%{name_frag}%"))
+        patient = q.first()
+        if not patient:
+            continue
+        note = (db.query(ClinicalNote)
+                  .filter(ClinicalNote.patient_id == patient.id)
+                  .order_by(ClinicalNote.created_at.asc())
+                  .first())
+        if not note:
+            continue
+        for question, section in questions:
+            out.append({
+                "patient_id": patient.id,
+                "question": question,
+                "relevant_note_ids": [note.id],
+                "gold_section": section,
+                "condition": "authored-demo",
+            })
+    return out
+
 
 if __name__ == "__main__":
     seed_database()

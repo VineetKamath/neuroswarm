@@ -5,10 +5,10 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('medimind_user');
+    const saved = localStorage.getItem('neuroswarm_user');
     return saved ? JSON.parse(saved) : null;
   });
-  const [token, setToken] = useState(() => localStorage.getItem('medimind_token'));
+  const [token, setToken] = useState(() => localStorage.getItem('neuroswarm_token'));
   const [loading, setLoading] = useState(true);
   const [sessionExpired, setSessionExpired] = useState(false);
 
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
       api.get('/auth/me')
         .then((res) => {
           setUser(res.data);
-          localStorage.setItem('medimind_user', JSON.stringify(res.data));
+          localStorage.setItem('neuroswarm_user', JSON.stringify(res.data));
         })
         .catch(() => {
           logout();
@@ -45,16 +45,16 @@ export const AuthProvider = ({ children }) => {
     setSessionExpired(false);
     const res = await api.post('/auth/login', { email, password });
     const { access_token, user: loggedUser } = res.data;
-    localStorage.setItem('medimind_token', access_token);
-    localStorage.setItem('medimind_user', JSON.stringify(loggedUser));
+    localStorage.setItem('neuroswarm_token', access_token);
+    localStorage.setItem('neuroswarm_user', JSON.stringify(loggedUser));
     setToken(access_token);
     setUser(loggedUser);
     return loggedUser;
   };
 
   const logout = () => {
-    localStorage.removeItem('medimind_token');
-    localStorage.removeItem('medimind_user');
+    localStorage.removeItem('neuroswarm_token');
+    localStorage.removeItem('neuroswarm_user');
     setToken(null);
     setUser(null);
   };

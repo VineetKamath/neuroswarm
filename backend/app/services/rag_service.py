@@ -1,182 +1,239 @@
-import time
-import logging
-from typing import List, Dict, Any, Optional
-from sqlalchemy.orm import Session
-from groq import Groq
+"""
+NeuroSwarm clinical retrieval engine.
 
+There is deliberately NO language model in this path. Answers are composed
+directly from the clinician's own documented text, which means:
+
+  * every sentence shown is verbatim from a real note (zero hallucination is
+    structural, not a prompt instruction);
+  * the response is deterministic — the same question returns the same answer,
+    which is what makes GA fitness measurable and what a clinical audit needs;
+  * latency is dominated by retrieval, so the bio-inspired speed work has a
+    visible effect instead of vanishing behind a generation call.
+
+Pipeline
+    1. ACO routing        picks which partitions to probe first
+    2. FAISS search       returns a candidate pool (wider than the final k)
+    3. GA/PSO re-ranking  re-scores candidates on six evolved signals
+    4. Threshold gate     refuses rather than guessing
+    5. Extractive answer  composes a cited response from the winning chunks
+"""
+from __future__ import annotations
+
+import logging
+import re
+import time
+from typing import Any, Dict, List, Optional, Tuple
+
+from sqlalchemy.orm import Session
+
+from app.bio.features import detect_intent
+from app.bio.registry import bio_registry
 from app.core.config import settings
 from app.models.patient import Patient
-from app.models.note import ClinicalNote
 from app.schemas.rag import RAGQueryResponse, RAGSourceCitation
 from app.services.vector_store import vector_store
 
 logger = logging.getLogger(__name__)
 
-CLINICAL_SYSTEM_PROMPT = """You are MediMind AI, an advanced clinical assistant supporting physicians, nurses, and hospital staff.
+_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
 
-CRITICAL CLINICAL DIRECTIVES:
-1. STRICT GROUNDING: Answer the query ONLY using the provided excerpts from this patient's documented medical notes.
-2. ABSOLUTE ZERO HALLUCINATION: If the information is not explicitly documented in the provided notes, state clearly: "This information is not documented in the patient's records."
-3. NO INFERENCE/GUESSING: Do not assume symptoms, dosages, test results, or timelines that are not in the context.
-4. CITATIONS & TIMELINES: Reference the note dates, note types, and clinician names when providing summaries (e.g., 'According to the Progress Note on 2026-08-15 by Dr. Chen...').
-5. CLINICAL CONCISENESS: Organize answers clearly with bullet points, medications, vitals, or clinical findings as appropriate.
-"""
+INTENT_LEAD = {
+    "medication": "Documented medications and orders",
+    "lab": "Documented laboratory results",
+    "vitals": "Documented observations",
+    "diagnosis": "Documented assessment",
+    "symptom": "Documented history from the patient",
+    "plan": "Documented plan of care",
+    "history": "Documented background",
+    "procedure": "Documented procedures",
+    "general": "Documented findings",
+}
 
-def generate_offline_synthesis(question: str, sources: List[Dict[str, Any]], patient_name: str) -> str:
+
+def _strip_header(chunk: str) -> str:
+    """Remove the bracketed provenance header the indexer prepends."""
+    lines = [ln for ln in (chunk or "").split("\n") if ln.strip()]
+    if lines and lines[0].strip().startswith("["):
+        lines = lines[1:]
+    return "\n".join(lines).strip()
+
+
+def _select_sentences(text: str, query_terms: List[str], max_sentences: int = 3) -> str:
+    """Pick the sentences within a chunk that actually address the question.
+
+    Chunks are section-sized; showing the whole thing buries the answer. This
+    keeps the passage extractive (nothing is generated) while surfacing the
+    relevant lines first.
     """
-    Fallback deterministic synthesizer when GROQ_API_KEY is not configured or network is offline.
-    Ensures zero downtime and demo reliability while maintaining strict grounding in retrieved notes.
-    """
-    bullet_points = []
-    for s in sources:
-        chunk = s.get("chunk_text", "")
-        # Clean chunk header
-        clean_lines = [line.strip() for line in chunk.split("\n") if line.strip() and not line.strip().startswith("[")]
-        if clean_lines:
-            bullet_points.append(f"- **{s.get('note_title')}** ({s.get('date_recorded')} by {s.get('author_name')}): {' '.join(clean_lines[:3])}")
+    body = _strip_header(text)
+    if not body:
+        return ""
 
-    response = (
-        f"Based on the documented records for **{patient_name}**:\n\n"
-        + "\n".join(bullet_points)
-        + "\n\n*(Note: Groq LLM API key not configured or offline. Showing direct grounded clinical excerpt synthesis.)*"
+    # Preserve list/numbered formatting, which carries clinical meaning.
+    if re.search(r"^\s*\d+\.", body, flags=re.M):
+        lines = [ln.strip() for ln in body.split("\n") if ln.strip()]
+        if query_terms:
+            scored = sorted(lines, key=lambda ln: -sum(1 for t in query_terms if t in ln.lower()))
+            keep = [ln for ln in scored[:max_sentences]]
+            return "\n".join([ln for ln in lines if ln in keep])
+        return "\n".join(lines[:max_sentences])
+
+    sentences = [s.strip() for s in _SENT_SPLIT.split(body) if s.strip()]
+    if not sentences:
+        return body
+    if not query_terms:
+        return " ".join(sentences[:max_sentences])
+
+    ranked = sorted(
+        range(len(sentences)),
+        key=lambda i: -sum(1 for t in query_terms if t in sentences[i].lower()),
     )
-    return response
+    chosen = sorted(ranked[:max_sentences])
+    return " ".join(sentences[i] for i in chosen)
 
-class RAGService:
-    def __init__(self):
-        self._groq_client = None
 
-    @property
-    def groq_client(self) -> Optional[Groq]:
-        if not settings.GROQ_API_KEY:
-            return None
-        if self._groq_client is None:
-            try:
-                self._groq_client = Groq(api_key=settings.GROQ_API_KEY)
-            except Exception as e:
-                logger.error(f"Failed to initialize Groq client: {e}")
-                return None
-        return self._groq_client
+def compose_extractive_answer(
+    question: str,
+    ranked: List[Tuple[Dict, float, float, Dict]],
+    patient_name: str,
+) -> str:
+    """Build a cited, fully extractive answer from the top-ranked chunks."""
+    from app.bio.features import tokenize
+
+    terms = tokenize(question)
+    intent = detect_intent(question)
+    lead = INTENT_LEAD.get(intent, "Documented findings")
+
+    blocks: List[str] = []
+    seen: set = set()
+    for meta, _blended, _sim, _expl in ranked[:4]:
+        passage = _select_sentences(meta.get("chunk_text", ""), terms)
+        if not passage:
+            continue
+        fingerprint = passage[:90].lower()
+        if fingerprint in seen:
+            continue
+        seen.add(fingerprint)
+        blocks.append(
+            f"**{meta.get('note_title', 'Clinical Note')}** — {meta.get('section', 'Note')} "
+            f"({meta.get('date_recorded', 'undated')}, {meta.get('author_name', 'clinical staff')})\n"
+            f"{passage}"
+        )
+
+    if not blocks:
+        return "No relevant information found in this patient's records."
+
+    return (
+        f"{lead} for **{patient_name}**:\n\n"
+        + "\n\n".join(blocks)
+        + "\n\n_Every line above is quoted directly from the cited notes. "
+          "NeuroSwarm does not generate clinical text._"
+    )
+
+
+class RetrievalService:
+    """Bio-inspired clinical retrieval — no language model in the path."""
 
     def answer_clinical_query(
-        self, patient_id: int, question: str, db: Session
+        self,
+        patient_id: int,
+        question: str,
+        db: Session,
+        explain: bool = False,
     ) -> RAGQueryResponse:
-        """
-        Executes grounded Clinical RAG:
-        1. Validates patient existence.
-        2. Retrieves top-k note chunks strictly scoped to patient_id via FAISS vector search.
-        3. Applies Similarity Threshold: If best similarity < threshold, immediately rejects
-           to protect clinical accuracy and avoid hallucinated care guidance.
-        4. Invokes Groq Llama 3.3 70B with bounded context and explicit refusal instructions.
-        5. Returns structured response with source citations.
-        """
         t0 = time.perf_counter()
 
         patient = db.query(Patient).filter(Patient.id == patient_id).first()
         if not patient:
             return RAGQueryResponse(
-                patient_id=patient_id,
-                patient_name="Unknown Patient",
-                question=question,
-                answer="Patient not found.",
-                has_sufficient_context=False
+                patient_id=patient_id, patient_name="Unknown Patient",
+                question=question, answer="Patient not found.",
+                has_sufficient_context=False,
             )
 
-        # 1. Vector Search Scoped Strictly to Patient
-        retrieval_results = vector_store.search_patient_notes(
+        # ---- 1. Ant Colony routing ---------------------------------------
+        router = bio_registry.router
+        routing_info: Optional[Dict] = None
+        restrict = None
+        if router:
+            routing_info = router.route(question)
+            restrict = routing_info.get("partitions") or None
+
+        # ---- 2. Candidate retrieval --------------------------------------
+        t_r0 = time.perf_counter()
+        candidates = vector_store.search_patient_notes(
             patient_id=patient_id,
             query=question,
-            top_k=settings.TOP_K_NOTES,
-            db=db
+            top_k=settings.CANDIDATE_POOL_K,
+            db=db,
+            restrict_partitions=restrict,
         )
+        # A routing miss must never cost recall: if the narrowed scan found
+        # nothing usable, fall back to the full patient index.
+        if restrict and (not candidates or candidates[0][1] < settings.SIMILARITY_THRESHOLD):
+            candidates = vector_store.search_patient_notes(
+                patient_id=patient_id, query=question,
+                top_k=settings.CANDIDATE_POOL_K, db=db,
+            )
+            if routing_info:
+                routing_info["fell_back_to_full_scan"] = True
 
-        t_retrieved = time.perf_counter()
-        retrieval_time_ms = round((t_retrieved - t0) * 1000, 2)
+        retrieval_time_ms = round((time.perf_counter() - t_r0) * 1000, 3)
 
-        # 2. Similarity Score Threshold Guard
-        # If no notes exist or top similarity is below threshold, stop immediately.
-        if not retrieval_results or retrieval_results[0][1] < settings.SIMILARITY_THRESHOLD:
-            max_score = retrieval_results[0][1] if retrieval_results else 0.0
-            logger.info(f"Query rejected by similarity threshold. Top score: {max_score:.4f} < {settings.SIMILARITY_THRESHOLD}")
+        if not candidates:
             return RAGQueryResponse(
-                patient_id=patient.id,
-                patient_name=patient.full_name,
+                patient_id=patient.id, patient_name=patient.full_name,
                 question=question,
                 answer="No relevant information found in this patient's records.",
-                sources=[],
-                has_sufficient_context=False,
-                retrieval_time_ms=retrieval_time_ms,
-                generation_time_ms=0.0
+                sources=[], has_sufficient_context=False,
+                retrieval_time_ms=retrieval_time_ms, ranking_time_ms=0.0,
+                routing=routing_info,
             )
 
-        # Filter chunks that meet the minimum threshold
-        relevant_chunks = [
-            (meta, score) for meta, score in retrieval_results if score >= (settings.SIMILARITY_THRESHOLD - 0.05)
-        ]
+        # ---- 3. Evolved re-ranking ---------------------------------------
+        t_rank0 = time.perf_counter()
+        weights = bio_registry.ranking_weights
+        ranked = weights.score_candidates(candidates, question)
+        ranking_time_ms = round((time.perf_counter() - t_rank0) * 1000, 3)
 
-        citations: List[RAGSourceCitation] = [
+        best_similarity = max((sim for _, _, sim, _ in ranked), default=0.0)
+
+        # ---- 4. Threshold gate -------------------------------------------
+        if best_similarity < settings.SIMILARITY_THRESHOLD:
+            logger.info("Query rejected by similarity gate: %.4f < %.2f",
+                        best_similarity, settings.SIMILARITY_THRESHOLD)
+            return RAGQueryResponse(
+                patient_id=patient.id, patient_name=patient.full_name,
+                question=question,
+                answer="No relevant information found in this patient's records.",
+                sources=[], has_sufficient_context=False,
+                retrieval_time_ms=retrieval_time_ms, ranking_time_ms=ranking_time_ms,
+                top_similarity=round(best_similarity, 4), routing=routing_info,
+            )
+
+        floor = max(0.0, settings.SIMILARITY_THRESHOLD - 0.08)
+        kept = [r for r in ranked if r[2] >= floor][: settings.TOP_K_NOTES]
+        if not kept:
+            kept = ranked[: settings.TOP_K_NOTES]
+
+        citations = [
             RAGSourceCitation(
                 note_id=meta["note_id"],
                 note_title=meta["note_title"],
                 note_type=meta["note_type"],
+                section=meta.get("section"),
                 author_name=meta.get("author_name", "Clinical Staff"),
                 date_recorded=meta.get("date_recorded", "Unknown Date"),
                 chunk_text=meta["chunk_text"],
-                similarity_score=round(score, 4)
+                similarity_score=round(sim, 4),
+                ranked_score=round(blended, 4),
+                rank_explanation=expl if explain else None,
             )
-            for meta, score in relevant_chunks
+            for meta, blended, sim, expl in kept
         ]
 
-        # 3. Context Construction
-        context_blocks = []
-        for i, (meta, score) in enumerate(relevant_chunks, 1):
-            context_blocks.append(
-                f"--- NOTE EXCERPT #{i} ---\n"
-                f"Note: {meta['note_title']} ({meta['note_type']})\n"
-                f"Date: {meta['date_recorded']} | Author: {meta.get('author_name', 'Staff')}\n"
-                f"Relevance Score: {score:.3f}\n"
-                f"Content:\n{meta['chunk_text']}\n"
-            )
-
-        formatted_context = "\n".join(context_blocks)
-        user_prompt = (
-            f"PATIENT CONTEXT:\n"
-            f"Patient Name: {patient.full_name}\n"
-            f"MRN: {patient.mrn}\n"
-            f"Age/Gender: {patient.gender}\n"
-            f"Primary Diagnosis: {patient.primary_diagnosis or 'Not specified'}\n"
-            f"Allergies: {patient.allergies or 'None documented'}\n\n"
-            f"DOCUMENTED CLINICAL NOTES EXCERPTS:\n"
-            f"{formatted_context}\n\n"
-            f"CLINICAL QUESTION: {question}\n\n"
-            f"ANSWER (Ground strictly in the excerpts above. If not mentioned, state 'This information is not documented in the patient's records.'):"
-        )
-
-        # 4. LLM Generation via Groq
-        t_gen_start = time.perf_counter()
-        answer = ""
-        client = self.groq_client
-
-        if client:
-            try:
-                chat_completion = client.chat.completions.create(
-                    model=settings.GROQ_MODEL,
-                    messages=[
-                        {"role": "system", "content": CLINICAL_SYSTEM_PROMPT},
-                        {"role": "user", "content": user_prompt},
-                    ],
-                    temperature=0.1,  # Low temperature for deterministic clinical precision
-                    max_tokens=1024,
-                )
-                answer = chat_completion.choices[0].message.content
-            except Exception as e:
-                logger.error(f"Groq LLM call error: {e}. Falling back to synthesis.")
-                answer = generate_offline_synthesis(question, [m for m, _ in relevant_chunks], patient.full_name)
-        else:
-            answer = generate_offline_synthesis(question, [m for m, _ in relevant_chunks], patient.full_name)
-
-        t_gen_end = time.perf_counter()
-        generation_time_ms = round((t_gen_end - t_gen_start) * 1000, 2)
+        answer = compose_extractive_answer(question, kept, patient.full_name)
 
         return RAGQueryResponse(
             patient_id=patient.id,
@@ -186,7 +243,59 @@ class RAGService:
             sources=citations,
             has_sufficient_context=True,
             retrieval_time_ms=retrieval_time_ms,
-            generation_time_ms=generation_time_ms
+            ranking_time_ms=ranking_time_ms,
+            total_time_ms=round((time.perf_counter() - t0) * 1000, 3),
+            top_similarity=round(best_similarity, 4),
+            candidates_considered=len(candidates),
+            ranking_optimized=bio_registry.ranking_is_optimized,
+            intent=detect_intent(question),
+            routing=routing_info,
         )
 
-rag_service = RAGService()
+    def compare_baseline(self, patient_id: int, question: str, db: Session) -> Dict[str, Any]:
+        """Run the same query through the baseline and the evolved ranker.
+
+        This is what the demonstration page uses to show the difference on a
+        live query rather than only on stored benchmark numbers.
+        """
+        from app.bio.ranking import RankingWeights
+
+        candidates = vector_store.search_patient_notes(
+            patient_id=patient_id, query=question,
+            top_k=settings.CANDIDATE_POOL_K, db=db,
+        )
+        if not candidates:
+            return {"question": question, "baseline": [], "optimized": [], "changed": False}
+
+        def summarize(ranked):
+            return [{
+                "note_id": m.get("note_id"),
+                "note_title": m.get("note_title"),
+                "section": m.get("section"),
+                "note_type": m.get("note_type"),
+                "date_recorded": m.get("date_recorded"),
+                "similarity": round(sim, 4),
+                "score": round(blended, 4),
+                "contribution": expl.get("contribution", {}),
+                "preview": _strip_header(m.get("chunk_text", ""))[:220],
+            } for m, blended, sim, expl in ranked[:5]]
+
+        base = RankingWeights.baseline().score_candidates(candidates, question)
+        opt = bio_registry.ranking_weights.score_candidates(candidates, question)
+        base_ids = [m.get("note_id") for m, _, _, _ in base[:5]]
+        opt_ids = [m.get("note_id") for m, _, _, _ in opt[:5]]
+
+        return {
+            "question": question,
+            "intent": detect_intent(question),
+            "baseline": summarize(base),
+            "optimized": summarize(opt),
+            "changed": base_ids != opt_ids,
+            "weights": bio_registry.ranking_weights.to_dict(),
+            "optimizer_active": bio_registry.ranking_is_optimized,
+        }
+
+
+retrieval_service = RetrievalService()
+# Backwards-compatible alias for existing imports.
+rag_service = retrieval_service

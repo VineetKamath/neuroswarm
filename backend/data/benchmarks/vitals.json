@@ -1,0 +1,3530 @@
+[
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 102.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 89.0,
+      "blood_glucose": 138.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 105.0,
+      "bp_systolic": 108.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 93.7,
+      "blood_glucose": 119.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 91.0,
+      "bp_systolic": 126.0,
+      "bp_diastolic": 84.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 89.3,
+      "blood_glucose": 112.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 105.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 88.6,
+      "blood_glucose": 113.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 85.0,
+      "bp_systolic": 122.0,
+      "bp_diastolic": 79.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 92.4,
+      "blood_glucose": 96.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 98.0,
+      "bp_systolic": 135.0,
+      "bp_diastolic": 73.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 92.2,
+      "blood_glucose": 127.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 106.0,
+      "bp_systolic": 219.0,
+      "bp_diastolic": 83.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 93.7,
+      "blood_glucose": 117.6
+    },
+    "is_error": true,
+    "corruption_type": "digit_transposition"
+  },
+  {
+    "patient_id": 5,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 100.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 94.6,
+      "blood_glucose": 89.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 6,
+    "values": {
+      "heart_rate": 97.0,
+      "bp_systolic": 116.0,
+      "bp_diastolic": 75.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 37.7,
+      "o2_saturation": 89.2,
+      "blood_glucose": 126.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 6,
+    "values": {
+      "heart_rate": 108.0,
+      "bp_systolic": 131.0,
+      "bp_diastolic": 76.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 38.3,
+      "o2_saturation": 93.6,
+      "blood_glucose": 111.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 6,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 111.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 39.2,
+      "o2_saturation": 88.4,
+      "blood_glucose": 115.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 6,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 102.0,
+      "bp_diastolic": 83.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 37.8,
+      "o2_saturation": 86.3,
+      "blood_glucose": 121.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 6,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 120.0,
+      "bp_diastolic": 68.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 38.0,
+      "o2_saturation": 89.4,
+      "blood_glucose": 103.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 6,
+    "values": {
+      "heart_rate": 108.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 37.6,
+      "o2_saturation": 88.2,
+      "blood_glucose": 118.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 6,
+    "values": {
+      "heart_rate": 90.0,
+      "bp_systolic": 106.0,
+      "bp_diastolic": 60.0,
+      "resp_rate": 28.0,
+      "temp_celsius": 39.1,
+      "o2_saturation": 92.6,
+      "blood_glucose": 110.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 7,
+    "values": {
+      "heart_rate": 116.0,
+      "bp_systolic": 103.0,
+      "bp_diastolic": 67.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 94.5,
+      "blood_glucose": 403.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 7,
+    "values": {
+      "heart_rate": 101.0,
+      "bp_systolic": 102.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 97.9,
+      "blood_glucose": 403.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 7,
+    "values": {
+      "heart_rate": 102.0,
+      "bp_systolic": 111.0,
+      "bp_diastolic": 61.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 98.8,
+      "blood_glucose": 377.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 7,
+    "values": {
+      "heart_rate": 108.0,
+      "bp_systolic": 99.0,
+      "bp_diastolic": 55.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 95.6,
+      "blood_glucose": 415.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 7,
+    "values": {
+      "heart_rate": 112.0,
+      "bp_systolic": 92.0,
+      "bp_diastolic": 59.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 4.0,
+      "blood_glucose": 454.8
+    },
+    "is_error": true,
+    "corruption_type": "missing_digit"
+  },
+  {
+    "patient_id": 7,
+    "values": {
+      "heart_rate": 123.0,
+      "bp_systolic": 116.0,
+      "bp_diastolic": 76.0,
+      "resp_rate": 30.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 95.3,
+      "blood_glucose": 371.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 7,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 107.0,
+      "bp_diastolic": 58.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 96.5,
+      "blood_glucose": 469.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 8,
+    "values": {
+      "heart_rate": 66.0,
+      "bp_systolic": 180.0,
+      "bp_diastolic": 97.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 93.2,
+      "blood_glucose": 169.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 8,
+    "values": {
+      "heart_rate": 85.0,
+      "bp_systolic": 144.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 97.1,
+      "blood_glucose": 132.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 8,
+    "values": {
+      "heart_rate": 72.0,
+      "bp_systolic": 164.0,
+      "bp_diastolic": 104.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 95.4,
+      "blood_glucose": 180.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 8,
+    "values": {
+      "heart_rate": 62.0,
+      "bp_systolic": 142.0,
+      "bp_diastolic": 94.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 94.5,
+      "blood_glucose": 166.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 8,
+    "values": {
+      "heart_rate": 76.0,
+      "bp_systolic": 160.0,
+      "bp_diastolic": 102.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 98.8,
+      "blood_glucose": 112.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 8,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 161.0,
+      "bp_diastolic": 87.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 97.4,
+      "blood_glucose": 183.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 90.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 98.2,
+      "blood_glucose": 129.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 98.0,
+      "bp_systolic": 103.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 94.0,
+      "blood_glucose": 117.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 80.0,
+      "bp_systolic": 96.0,
+      "bp_diastolic": 65.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 96.1,
+      "blood_glucose": 153.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 74.0,
+      "bp_systolic": 148.0,
+      "bp_diastolic": 88.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 96.3,
+      "blood_glucose": 90.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 98.0,
+      "bp_diastolic": 93.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 96.9,
+      "blood_glucose": 122.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 76.0,
+      "bp_systolic": 96.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 93.4,
+      "blood_glucose": 138.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 110.0,
+      "bp_diastolic": 89.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 95.4,
+      "blood_glucose": 94.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 9,
+    "values": {
+      "heart_rate": 70.0,
+      "bp_systolic": 137.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 96.0,
+      "blood_glucose": 112.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 10,
+    "values": {
+      "heart_rate": 117.0,
+      "bp_systolic": 127.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 38.1,
+      "o2_saturation": 87.6,
+      "blood_glucose": 107.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 10,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 141.0,
+      "bp_diastolic": 80.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 38.4,
+      "o2_saturation": 89.1,
+      "blood_glucose": 147.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 10,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 128.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 37.8,
+      "o2_saturation": 91.1,
+      "blood_glucose": 162.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 10,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 140.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 87.4,
+      "blood_glucose": 127.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 10,
+    "values": {
+      "heart_rate": 105.0,
+      "bp_systolic": 120.0,
+      "bp_diastolic": 86.0,
+      "resp_rate": 30.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 85.9,
+      "blood_glucose": 107.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 10,
+    "values": {
+      "heart_rate": 100.0,
+      "bp_systolic": 112.0,
+      "bp_diastolic": 62.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 85.7,
+      "blood_glucose": 103.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 10,
+    "values": {
+      "heart_rate": 100.0,
+      "bp_systolic": 118.0,
+      "bp_diastolic": 87.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 86.7,
+      "blood_glucose": 105.8
+    },
+    "is_error": true,
+    "corruption_type": "digit_transposition"
+  },
+  {
+    "patient_id": 11,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 116.0,
+      "bp_diastolic": 74.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 94.8,
+      "blood_glucose": 133.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 11,
+    "values": {
+      "heart_rate": 87.0,
+      "bp_systolic": 132.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 88.5,
+      "blood_glucose": 98.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 11,
+    "values": {
+      "heart_rate": 98.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 75.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 94.1,
+      "blood_glucose": 101.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 11,
+    "values": {
+      "heart_rate": 107.0,
+      "bp_systolic": 132.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 93.8,
+      "blood_glucose": 129.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 11,
+    "values": {
+      "heart_rate": 98.0,
+      "bp_systolic": 129.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 89.9,
+      "blood_glucose": 141.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 12,
+    "values": {
+      "heart_rate": 95.0,
+      "bp_systolic": 135.0,
+      "bp_diastolic": 80.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 38.6,
+      "o2_saturation": 90.9,
+      "blood_glucose": 92.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 12,
+    "values": {
+      "heart_rate": 116.0,
+      "bp_systolic": 117.0,
+      "bp_diastolic": 70.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 38.2,
+      "o2_saturation": 88.9,
+      "blood_glucose": 122.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 12,
+    "values": {
+      "heart_rate": 111.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 39.2,
+      "o2_saturation": 92.3,
+      "blood_glucose": 116.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 12,
+    "values": {
+      "heart_rate": 102.0,
+      "bp_systolic": 131.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 39.2,
+      "o2_saturation": 92.9,
+      "blood_glucose": 147.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 12,
+    "values": {
+      "heart_rate": 107.0,
+      "bp_systolic": 110.0,
+      "bp_diastolic": 65.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 37.6,
+      "o2_saturation": 86.3,
+      "blood_glucose": 148.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 13,
+    "values": {
+      "heart_rate": 125.0,
+      "bp_systolic": 89.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 99.9,
+      "blood_glucose": 399.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 13,
+    "values": {
+      "heart_rate": 124.0,
+      "bp_systolic": 101.0,
+      "bp_diastolic": 54.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 96.1,
+      "blood_glucose": 308.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 13,
+    "values": {
+      "heart_rate": 124.0,
+      "bp_systolic": 89.0,
+      "bp_diastolic": 59.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 36.0,
+      "o2_saturation": 94.0,
+      "blood_glucose": 328.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 13,
+    "values": {
+      "heart_rate": 110.0,
+      "bp_systolic": 99.0,
+      "bp_diastolic": 61.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 94.3,
+      "blood_glucose": 494.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 13,
+    "values": {
+      "heart_rate": 117.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 32.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 94.1,
+      "blood_glucose": 368.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 13,
+    "values": {
+      "heart_rate": 117.0,
+      "bp_systolic": 93.0,
+      "bp_diastolic": 67.0,
+      "resp_rate": 28.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 99.4,
+      "blood_glucose": 335.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 91.0,
+      "bp_systolic": 182.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 95.2,
+      "blood_glucose": 97.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 94.0,
+      "bp_systolic": 175.0,
+      "bp_diastolic": 105.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 96.9,
+      "blood_glucose": 108.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 64.0,
+      "bp_systolic": 155.0,
+      "bp_diastolic": 87.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 95.4,
+      "blood_glucose": 145.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 65.0,
+      "bp_systolic": 141.0,
+      "bp_diastolic": 82.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 94.1,
+      "blood_glucose": 92.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 74.0,
+      "bp_systolic": 175.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 96.9,
+      "blood_glucose": 172.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 65.0,
+      "bp_systolic": 138.0,
+      "bp_diastolic": 92.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 95.4,
+      "blood_glucose": 154.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 185.0,
+      "bp_diastolic": 80.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 97.9,
+      "blood_glucose": 143.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 14,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 186.0,
+      "bp_diastolic": 93.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 97.3,
+      "blood_glucose": 127.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 15,
+    "values": {
+      "heart_rate": 99.0,
+      "bp_systolic": 128.0,
+      "bp_diastolic": 69.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 93.3,
+      "blood_glucose": 115.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 15,
+    "values": {
+      "heart_rate": 70.0,
+      "bp_systolic": 124.0,
+      "bp_diastolic": 74.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 94.6,
+      "blood_glucose": 99.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 15,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 123.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 98.0,
+      "blood_glucose": 103.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 15,
+    "values": {
+      "heart_rate": 99.0,
+      "bp_systolic": 120.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 96.2,
+      "blood_glucose": 130.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 15,
+    "values": {
+      "heart_rate": 72.0,
+      "bp_systolic": 122.0,
+      "bp_diastolic": 73.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 98.9,
+      "blood_glucose": 100.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 15,
+    "values": {
+      "heart_rate": 73.0,
+      "bp_systolic": 131.0,
+      "bp_diastolic": 86.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 93.2,
+      "blood_glucose": 157.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 16,
+    "values": {
+      "heart_rate": 90.0,
+      "bp_systolic": 124.0,
+      "bp_diastolic": 69.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 88.7,
+      "blood_glucose": 170.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 16,
+    "values": {
+      "heart_rate": 98.0,
+      "bp_systolic": 141.0,
+      "bp_diastolic": 87.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 37.9,
+      "o2_saturation": 90.0,
+      "blood_glucose": 108.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 16,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 126.0,
+      "bp_diastolic": 89.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 89.2,
+      "blood_glucose": 125.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 16,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 129.0,
+      "bp_diastolic": 70.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 89.0,
+      "blood_glucose": 145.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 16,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 130.0,
+      "bp_diastolic": 87.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 84.2,
+      "blood_glucose": 115.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 16,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 121.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 90.4,
+      "blood_glucose": 148.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 16,
+    "values": {
+      "heart_rate": 116.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 89.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 38.4,
+      "o2_saturation": 90.7,
+      "blood_glucose": 141.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 83.0,
+      "bp_systolic": 122.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 91.1,
+      "blood_glucose": 142.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 84.0,
+      "bp_systolic": 132.0,
+      "bp_diastolic": 61.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 91.6,
+      "blood_glucose": 98.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 92.0,
+      "bp_systolic": 110.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 94.8,
+      "blood_glucose": 103.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 92.0,
+      "bp_systolic": 107.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 93.6,
+      "blood_glucose": 104.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 83.0,
+      "bp_systolic": 104.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 88.9,
+      "blood_glucose": 105.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 104.0,
+      "bp_systolic": 118.0,
+      "bp_diastolic": 79.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 90.0,
+      "blood_glucose": 123.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 80.0,
+      "bp_systolic": 129.0,
+      "bp_diastolic": 84.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 92.6,
+      "blood_glucose": 92.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 78.0,
+      "bp_systolic": 126.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 88.5,
+      "blood_glucose": 134.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 17,
+    "values": {
+      "heart_rate": 105.0,
+      "bp_systolic": 122.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 94.5,
+      "blood_glucose": 122.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 100.0,
+      "bp_systolic": 105.0,
+      "bp_diastolic": 65.0,
+      "resp_rate": 28.0,
+      "temp_celsius": 39.1,
+      "o2_saturation": 91.7,
+      "blood_glucose": 137.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 126.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 38.6,
+      "o2_saturation": 90.3,
+      "blood_glucose": 147.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 109.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 100.4,
+      "o2_saturation": 91.1,
+      "blood_glucose": 136.4
+    },
+    "is_error": true,
+    "corruption_type": "unit_confusion"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 108.0,
+      "bp_systolic": 103.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 38.8,
+      "o2_saturation": 87.1,
+      "blood_glucose": 110.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 99.0,
+      "bp_systolic": 123.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 39.0,
+      "o2_saturation": 91.3,
+      "blood_glucose": 138.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 118.0,
+      "bp_diastolic": 68.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 39.0,
+      "o2_saturation": 90.2,
+      "blood_glucose": 139.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 44.0,
+      "bp_systolic": 88.0,
+      "bp_diastolic": 96.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 38.2,
+      "o2_saturation": 86.2,
+      "blood_glucose": 148.9
+    },
+    "is_error": true,
+    "corruption_type": "physiologic_impossible"
+  },
+  {
+    "patient_id": 18,
+    "values": {
+      "heart_rate": 99.0,
+      "bp_systolic": 117.0,
+      "bp_diastolic": 69.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 39.3,
+      "o2_saturation": 90.8,
+      "blood_glucose": 146.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 124.0,
+      "bp_systolic": 103.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 96.4,
+      "blood_glucose": 388.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 115.0,
+      "bp_systolic": 113.0,
+      "bp_diastolic": 53.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 94.6,
+      "blood_glucose": 407.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 102.0,
+      "bp_systolic": 113.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 28.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 99.0,
+      "blood_glucose": 356.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 118.0,
+      "bp_systolic": 109.0,
+      "bp_diastolic": 53.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 97.3,
+      "blood_glucose": 438.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 108.0,
+      "bp_systolic": 121.0,
+      "bp_diastolic": 60.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 36.1,
+      "o2_saturation": 95.3,
+      "blood_glucose": 468.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 44.0,
+      "bp_systolic": 88.0,
+      "bp_diastolic": 96.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 97.2,
+      "blood_glucose": 387.3
+    },
+    "is_error": true,
+    "corruption_type": "physiologic_impossible"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 122.0,
+      "bp_systolic": 97.0,
+      "bp_diastolic": 53.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 96.5,
+      "blood_glucose": 309.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 19,
+    "values": {
+      "heart_rate": 124.0,
+      "bp_systolic": 108.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 30.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 96.4,
+      "blood_glucose": 509.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 61.0,
+      "bp_systolic": 178.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 97.9,
+      "blood_glucose": 512.0
+    },
+    "is_error": true,
+    "corruption_type": "copy_forward"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 63.0,
+      "bp_systolic": 157.0,
+      "bp_diastolic": 104.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 96.9,
+      "blood_glucose": 189.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 166.0,
+      "bp_diastolic": 86.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 97.5,
+      "blood_glucose": 96.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 64.0,
+      "bp_systolic": 187.0,
+      "bp_diastolic": 89.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 93.5,
+      "blood_glucose": 157.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 84.0,
+      "bp_systolic": 182.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 95.0,
+      "blood_glucose": 155.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 78.0,
+      "bp_systolic": 157.0,
+      "bp_diastolic": 101.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 96.5,
+      "blood_glucose": 144.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 81.0,
+      "bp_systolic": 176.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 93.7,
+      "blood_glucose": 119.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 145.0,
+      "bp_diastolic": 76.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 94.5,
+      "blood_glucose": 162.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 20,
+    "values": {
+      "heart_rate": 87.0,
+      "bp_systolic": 168.0,
+      "bp_diastolic": 103.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 97.2,
+      "blood_glucose": 111.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 78.0,
+      "bp_systolic": 105.0,
+      "bp_diastolic": 83.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 99.0,
+      "blood_glucose": 89.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 83.0,
+      "bp_systolic": 96.0,
+      "bp_diastolic": 84.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 93.7,
+      "blood_glucose": 137.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 68.0,
+      "bp_systolic": 124.0,
+      "bp_diastolic": 92.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 93.8,
+      "blood_glucose": 140.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 76.0,
+      "bp_systolic": 104.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 93.6,
+      "blood_glucose": 129.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 81.0,
+      "bp_systolic": 141.0,
+      "bp_diastolic": 59.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 96.6,
+      "blood_glucose": 133.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 92.0,
+      "bp_systolic": 103.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 97.7,
+      "blood_glucose": 133.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 118.0,
+      "bp_diastolic": 61.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 94.5,
+      "blood_glucose": 97.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 21,
+    "values": {
+      "heart_rate": 90.0,
+      "bp_systolic": 115.0,
+      "bp_diastolic": 76.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 372.0,
+      "o2_saturation": 93.3,
+      "blood_glucose": 92.2
+    },
+    "is_error": true,
+    "corruption_type": "decimal_shift"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 90.0,
+      "bp_systolic": 126.0,
+      "bp_diastolic": 75.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.7,
+      "o2_saturation": 90.4,
+      "blood_glucose": 167.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 97.0,
+      "bp_systolic": 112.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 38.4,
+      "o2_saturation": 85.6,
+      "blood_glucose": 150.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 131.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 37.6,
+      "o2_saturation": 91.9,
+      "blood_glucose": 150.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 122.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 87.4,
+      "blood_glucose": 112.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 110.0,
+      "bp_systolic": 129.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.5,
+      "o2_saturation": 86.7,
+      "blood_glucose": 114.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 98.0,
+      "bp_systolic": 143.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.9,
+      "o2_saturation": 87.3,
+      "blood_glucose": 143.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 99.0,
+      "bp_systolic": 122.0,
+      "bp_diastolic": 84.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.5,
+      "o2_saturation": 89.8,
+      "blood_glucose": 165.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 117.0,
+      "bp_systolic": 144.0,
+      "bp_diastolic": 83.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 91.9,
+      "blood_glucose": 137.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 22,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 136.0,
+      "bp_diastolic": 74.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 38.1,
+      "o2_saturation": 84.4,
+      "blood_glucose": 118.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 101.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 93.1,
+      "blood_glucose": 104.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 105.0,
+      "bp_systolic": 137.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 366.0,
+      "o2_saturation": 91.9,
+      "blood_glucose": 116.5
+    },
+    "is_error": true,
+    "corruption_type": "decimal_shift"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 91.0,
+      "bp_systolic": 137.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 90.8,
+      "blood_glucose": 101.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 108.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 94.6,
+      "blood_glucose": 102.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 130.0,
+      "bp_diastolic": 59.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 366.0,
+      "o2_saturation": 89.7,
+      "blood_glucose": 117.8
+    },
+    "is_error": true,
+    "corruption_type": "decimal_shift"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 102.0,
+      "bp_systolic": 117.0,
+      "bp_diastolic": 69.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 88.8,
+      "blood_glucose": 90.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 82.0,
+      "bp_systolic": 104.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 89.2,
+      "blood_glucose": 144.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 102.0,
+      "bp_systolic": 123.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 93.5,
+      "blood_glucose": 103.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 23,
+    "values": {
+      "heart_rate": 87.0,
+      "bp_systolic": 98.0,
+      "bp_diastolic": 60.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 90.4,
+      "blood_glucose": 88.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 24,
+    "values": {
+      "heart_rate": 107.0,
+      "bp_systolic": 103.0,
+      "bp_diastolic": 74.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 38.8,
+      "o2_saturation": 92.1,
+      "blood_glucose": 106.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 24,
+    "values": {
+      "heart_rate": 116.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 38.9,
+      "o2_saturation": 90.1,
+      "blood_glucose": 144.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 24,
+    "values": {
+      "heart_rate": 99.0,
+      "bp_systolic": 130.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.9,
+      "o2_saturation": 92.9,
+      "blood_glucose": 107.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 24,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 131.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 38.0,
+      "o2_saturation": 86.3,
+      "blood_glucose": 101.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 24,
+    "values": {
+      "heart_rate": 97.0,
+      "bp_systolic": 109.0,
+      "bp_diastolic": 74.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 38.2,
+      "o2_saturation": 88.0,
+      "blood_glucose": 102.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 24,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 111.0,
+      "bp_diastolic": 82.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 39.1,
+      "o2_saturation": 3.0,
+      "blood_glucose": 94.2
+    },
+    "is_error": true,
+    "corruption_type": "missing_digit"
+  },
+  {
+    "patient_id": 24,
+    "values": {
+      "heart_rate": 99.0,
+      "bp_systolic": 108.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 38.6,
+      "o2_saturation": 90.5,
+      "blood_glucose": 114.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 121.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 33.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 98.0,
+      "blood_glucose": 370.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 110.0,
+      "bp_systolic": 118.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 95.4,
+      "blood_glucose": 507.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 101.0,
+      "bp_systolic": 94.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 94.5,
+      "blood_glucose": 414.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 44.0,
+      "bp_systolic": 88.0,
+      "bp_diastolic": 96.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 37.4,
+      "o2_saturation": 97.5,
+      "blood_glucose": 455.6
+    },
+    "is_error": true,
+    "corruption_type": "physiologic_impossible"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 123.0,
+      "bp_systolic": 98.0,
+      "bp_diastolic": 55.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 99.0,
+      "blood_glucose": 503.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 110.0,
+      "bp_diastolic": 57.0,
+      "resp_rate": 33.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 94.0,
+      "blood_glucose": 336.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 118.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 96.5,
+      "blood_glucose": 361.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 25,
+    "values": {
+      "heart_rate": 118.0,
+      "bp_systolic": 113.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 95.9,
+      "blood_glucose": 332.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 90.0,
+      "bp_systolic": 144.0,
+      "bp_diastolic": 103.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 96.9,
+      "blood_glucose": 142.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 166.0,
+      "bp_diastolic": 105.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 96.2,
+      "blood_glucose": 176.5
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 68.0,
+      "bp_systolic": 160.0,
+      "bp_diastolic": 102.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 362.0,
+      "o2_saturation": 94.0,
+      "blood_glucose": 151.9
+    },
+    "is_error": true,
+    "corruption_type": "decimal_shift"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 82.0,
+      "bp_systolic": 163.0,
+      "bp_diastolic": 105.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 95.2,
+      "blood_glucose": 160.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 77.0,
+      "bp_systolic": 164.0,
+      "bp_diastolic": 94.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 93.9,
+      "blood_glucose": 177.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 84.0,
+      "bp_systolic": 172.0,
+      "bp_diastolic": 79.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 97.1,
+      "blood_glucose": 171.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 61.0,
+      "bp_systolic": 183.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 96.2,
+      "blood_glucose": 512.0
+    },
+    "is_error": true,
+    "corruption_type": "copy_forward"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 80.0,
+      "bp_systolic": 150.0,
+      "bp_diastolic": 76.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 94.6,
+      "blood_glucose": 113.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 26,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 148.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 94.3,
+      "blood_glucose": 176.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 27,
+    "values": {
+      "heart_rate": 97.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 92.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 93.9,
+      "blood_glucose": 145.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 27,
+    "values": {
+      "heart_rate": 76.0,
+      "bp_systolic": 136.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 94.7,
+      "blood_glucose": 140.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 27,
+    "values": {
+      "heart_rate": 92.0,
+      "bp_systolic": 153.0,
+      "bp_diastolic": 95.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 93.7,
+      "blood_glucose": 93.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 27,
+    "values": {
+      "heart_rate": 83.0,
+      "bp_systolic": 128.0,
+      "bp_diastolic": 83.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 94.3,
+      "blood_glucose": 98.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 27,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 129.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 97.7,
+      "blood_glucose": 100.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 27,
+    "values": {
+      "heart_rate": 94.0,
+      "bp_systolic": 149.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 93.8,
+      "blood_glucose": 146.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 27,
+    "values": {
+      "heart_rate": 73.0,
+      "bp_systolic": 104.0,
+      "bp_diastolic": 79.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 95.7,
+      "blood_glucose": 120.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 28,
+    "values": {
+      "heart_rate": 116.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 73.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 37.4,
+      "o2_saturation": 86.9,
+      "blood_glucose": 151.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 28,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 73.0,
+      "resp_rate": 30.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 84.4,
+      "blood_glucose": 97.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 28,
+    "values": {
+      "heart_rate": 117.0,
+      "bp_systolic": 137.0,
+      "bp_diastolic": 65.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.7,
+      "o2_saturation": 91.6,
+      "blood_glucose": 165.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 28,
+    "values": {
+      "heart_rate": 110.0,
+      "bp_systolic": 147.0,
+      "bp_diastolic": 74.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 38.0,
+      "o2_saturation": 91.2,
+      "blood_glucose": 109.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 28,
+    "values": {
+      "heart_rate": 97.0,
+      "bp_systolic": 124.0,
+      "bp_diastolic": 80.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 5.0,
+      "blood_glucose": 118.3
+    },
+    "is_error": true,
+    "corruption_type": "missing_digit"
+  },
+  {
+    "patient_id": 28,
+    "values": {
+      "heart_rate": 100.0,
+      "bp_systolic": 104.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 37.7,
+      "o2_saturation": 87.9,
+      "blood_glucose": 113.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 28,
+    "values": {
+      "heart_rate": 118.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 37.9,
+      "o2_saturation": 86.5,
+      "blood_glucose": 95.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 85.0,
+      "bp_systolic": 100.0,
+      "bp_diastolic": 62.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 94.0,
+      "blood_glucose": 113.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 115.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 93.9,
+      "blood_glucose": 107.9
+    },
+    "is_error": true,
+    "corruption_type": "digit_transposition"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 61.0,
+      "bp_systolic": 126.0,
+      "bp_diastolic": 73.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 88.9,
+      "blood_glucose": 512.0
+    },
+    "is_error": true,
+    "corruption_type": "copy_forward"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 132.0,
+      "bp_diastolic": 80.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 36.7,
+      "o2_saturation": 91.8,
+      "blood_glucose": 106.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 97.0,
+      "bp_systolic": 109.0,
+      "bp_diastolic": 58.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 93.3,
+      "blood_glucose": 98.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 127.0,
+      "bp_diastolic": 84.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 90.0,
+      "blood_glucose": 112.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 97.0,
+      "bp_systolic": 125.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 90.5,
+      "blood_glucose": 96.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 104.0,
+      "bp_diastolic": 67.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 88.8,
+      "blood_glucose": 138.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 29,
+    "values": {
+      "heart_rate": 85.0,
+      "bp_systolic": 133.0,
+      "bp_diastolic": 84.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 94.7,
+      "blood_glucose": 143.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 109.0,
+      "bp_systolic": 116.0,
+      "bp_diastolic": 68.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 38.7,
+      "o2_saturation": 89.6,
+      "blood_glucose": 131.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 92.0,
+      "bp_systolic": 117.0,
+      "bp_diastolic": 79.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 38.4,
+      "o2_saturation": 93.9,
+      "blood_glucose": 128.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 91.0,
+      "bp_systolic": 111.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 28.0,
+      "temp_celsius": 38.7,
+      "o2_saturation": 88.5,
+      "blood_glucose": 123.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 101.0,
+      "bp_systolic": 106.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 28.0,
+      "temp_celsius": 38.8,
+      "o2_saturation": 88.2,
+      "blood_glucose": 118.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 78.0,
+      "resp_rate": 28.0,
+      "temp_celsius": 37.8,
+      "o2_saturation": 91.4,
+      "blood_glucose": 92.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 91.0,
+      "bp_systolic": 132.0,
+      "bp_diastolic": 69.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 39.0,
+      "o2_saturation": 93.3,
+      "blood_glucose": 117.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 107.0,
+      "bp_systolic": 116.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 38.2,
+      "o2_saturation": 90.0,
+      "blood_glucose": 115.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 30,
+    "values": {
+      "heart_rate": 114.0,
+      "bp_systolic": 15.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 38.5,
+      "o2_saturation": 91.3,
+      "blood_glucose": 103.1
+    },
+    "is_error": true,
+    "corruption_type": "digit_transposition"
+  },
+  {
+    "patient_id": 31,
+    "values": {
+      "heart_rate": 108.0,
+      "bp_systolic": 99.0,
+      "bp_diastolic": 73.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 98.9,
+      "blood_glucose": 450.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 31,
+    "values": {
+      "heart_rate": 105.0,
+      "bp_systolic": 115.0,
+      "bp_diastolic": 69.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.4,
+      "o2_saturation": 98.1,
+      "blood_glucose": 363.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 31,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 100.0,
+      "bp_diastolic": 66.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 95.9,
+      "blood_glucose": 317.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 31,
+    "values": {
+      "heart_rate": 110.0,
+      "bp_systolic": 93.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 30.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 96.3,
+      "blood_glucose": 311.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 31,
+    "values": {
+      "heart_rate": 113.0,
+      "bp_systolic": 99.0,
+      "bp_diastolic": 56.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 95.6,
+      "blood_glucose": 337.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 32,
+    "values": {
+      "heart_rate": 63.0,
+      "bp_systolic": 185.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 98.4,
+      "blood_glucose": 144.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 32,
+    "values": {
+      "heart_rate": 75.0,
+      "bp_systolic": 153.0,
+      "bp_diastolic": 97.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 94.4,
+      "blood_glucose": 180.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 32,
+    "values": {
+      "heart_rate": 74.0,
+      "bp_systolic": 170.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 96.7,
+      "blood_glucose": 165.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 32,
+    "values": {
+      "heart_rate": 44.0,
+      "bp_systolic": 88.0,
+      "bp_diastolic": 96.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 95.4,
+      "blood_glucose": 138.7
+    },
+    "is_error": true,
+    "corruption_type": "physiologic_impossible"
+  },
+  {
+    "patient_id": 32,
+    "values": {
+      "heart_rate": 66.0,
+      "bp_systolic": 147.0,
+      "bp_diastolic": 88.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 93.6,
+      "blood_glucose": 127.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 32,
+    "values": {
+      "heart_rate": 94.0,
+      "bp_systolic": 140.0,
+      "bp_diastolic": 90.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 97.5,
+      "blood_glucose": 122.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 32,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 150.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 97.2,
+      "blood_glucose": 189.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 33,
+    "values": {
+      "heart_rate": 92.0,
+      "bp_systolic": 105.0,
+      "bp_diastolic": 73.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 97.1,
+      "blood_glucose": 89.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 33,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 134.0,
+      "bp_diastolic": 87.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 96.1,
+      "blood_glucose": 122.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 33,
+    "values": {
+      "heart_rate": 61.0,
+      "bp_systolic": 146.0,
+      "bp_diastolic": 60.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 96.5,
+      "blood_glucose": 512.0
+    },
+    "is_error": true,
+    "corruption_type": "copy_forward"
+  },
+  {
+    "patient_id": 33,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 146.0,
+      "bp_diastolic": 59.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 94.3,
+      "blood_glucose": 147.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 33,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 138.0,
+      "bp_diastolic": 92.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 97.0,
+      "blood_glucose": 132.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 33,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 130.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 95.5,
+      "blood_glucose": 140.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 34,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 109.0,
+      "bp_diastolic": 86.0,
+      "resp_rate": 31.0,
+      "temp_celsius": 38.1,
+      "o2_saturation": 88.9,
+      "blood_glucose": 163.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 34,
+    "values": {
+      "heart_rate": 86.0,
+      "bp_systolic": 116.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 38.2,
+      "o2_saturation": 87.7,
+      "blood_glucose": 96.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 34,
+    "values": {
+      "heart_rate": 87.0,
+      "bp_systolic": 122.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 30.0,
+      "temp_celsius": 37.3,
+      "o2_saturation": 86.2,
+      "blood_glucose": 95.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 34,
+    "values": {
+      "heart_rate": 109.0,
+      "bp_systolic": 112.0,
+      "bp_diastolic": 87.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 37.7,
+      "o2_saturation": 84.1,
+      "blood_glucose": 103.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 34,
+    "values": {
+      "heart_rate": 111.0,
+      "bp_systolic": 129.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 91.7,
+      "blood_glucose": 166.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 34,
+    "values": {
+      "heart_rate": 118.0,
+      "bp_systolic": 144.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 85.8,
+      "blood_glucose": 102.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 132.0,
+      "bp_diastolic": 59.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 90.5,
+      "blood_glucose": 123.1
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 82.0,
+      "bp_systolic": 111.0,
+      "bp_diastolic": 65.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 89.2,
+      "blood_glucose": 94.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 106.0,
+      "bp_systolic": 125.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 20.0,
+      "temp_celsius": 97.3,
+      "o2_saturation": 91.2,
+      "blood_glucose": 109.2
+    },
+    "is_error": true,
+    "corruption_type": "unit_confusion"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 101.0,
+      "bp_systolic": 112.0,
+      "bp_diastolic": 77.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 89.4,
+      "blood_glucose": 139.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 78.0,
+      "bp_systolic": 115.0,
+      "bp_diastolic": 80.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 94.3,
+      "blood_glucose": 131.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 104.0,
+      "bp_systolic": 131.0,
+      "bp_diastolic": 81.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 94.8,
+      "blood_glucose": 97.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 103.0,
+      "bp_systolic": 135.0,
+      "bp_diastolic": 60.0,
+      "resp_rate": 24.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 91.2,
+      "blood_glucose": 98.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 81.0,
+      "bp_systolic": 128.0,
+      "bp_diastolic": 69.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 36.2,
+      "o2_saturation": 93.8,
+      "blood_glucose": 144.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 35,
+    "values": {
+      "heart_rate": 84.0,
+      "bp_systolic": 129.0,
+      "bp_diastolic": 79.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.5,
+      "o2_saturation": 88.8,
+      "blood_glucose": 132.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 89.0,
+      "bp_systolic": 112.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 26.0,
+      "temp_celsius": 39.2,
+      "o2_saturation": 93.0,
+      "blood_glucose": 94.6
+    },
+    "is_error": true,
+    "corruption_type": "digit_transposition"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 116.0,
+      "bp_diastolic": 79.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 38.1,
+      "o2_saturation": 90.6,
+      "blood_glucose": 120.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 115.0,
+      "bp_systolic": 124.0,
+      "bp_diastolic": 71.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 38.1,
+      "o2_saturation": 92.5,
+      "blood_glucose": 101.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 44.0,
+      "bp_systolic": 88.0,
+      "bp_diastolic": 96.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 39.3,
+      "o2_saturation": 87.8,
+      "blood_glucose": 114.1
+    },
+    "is_error": true,
+    "corruption_type": "physiologic_impossible"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 132.0,
+      "bp_diastolic": 64.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 38.8,
+      "o2_saturation": 87.8,
+      "blood_glucose": 147.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 93.0,
+      "bp_systolic": 105.0,
+      "bp_diastolic": 74.0,
+      "resp_rate": 21.0,
+      "temp_celsius": 37.7,
+      "o2_saturation": 89.5,
+      "blood_glucose": 117.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 107.0,
+      "bp_systolic": 105.0,
+      "bp_diastolic": 70.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 38.7,
+      "o2_saturation": 87.1,
+      "blood_glucose": 144.3
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 36,
+    "values": {
+      "heart_rate": 92.0,
+      "bp_systolic": 131.0,
+      "bp_diastolic": 83.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 100.4,
+      "o2_saturation": 88.9,
+      "blood_glucose": 95.1
+    },
+    "is_error": true,
+    "corruption_type": "unit_confusion"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 121.0,
+      "bp_systolic": 119.0,
+      "bp_diastolic": 70.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 371.0,
+      "o2_saturation": 95.1,
+      "blood_glucose": 514.5
+    },
+    "is_error": true,
+    "corruption_type": "decimal_shift"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 96.0,
+      "bp_systolic": 114.0,
+      "bp_diastolic": 62.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 36.6,
+      "o2_saturation": 98.8,
+      "blood_glucose": 464.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 125.0,
+      "bp_systolic": 89.0,
+      "bp_diastolic": 60.0,
+      "resp_rate": 32.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 94.7,
+      "blood_glucose": 339.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 118.0,
+      "bp_systolic": 13.0,
+      "bp_diastolic": 63.0,
+      "resp_rate": 29.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 99.1,
+      "blood_glucose": 444.7
+    },
+    "is_error": true,
+    "corruption_type": "digit_transposition"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 113.0,
+      "bp_systolic": 108.0,
+      "bp_diastolic": 67.0,
+      "resp_rate": 27.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 97.0,
+      "blood_glucose": 305.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 112.0,
+      "bp_systolic": 120.0,
+      "bp_diastolic": 53.0,
+      "resp_rate": 25.0,
+      "temp_celsius": 37.1,
+      "o2_saturation": 96.5,
+      "blood_glucose": 406.9
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 120.0,
+      "bp_systolic": 93.0,
+      "bp_diastolic": 72.0,
+      "resp_rate": 22.0,
+      "temp_celsius": 36.8,
+      "o2_saturation": 96.8,
+      "blood_glucose": 507.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 37,
+    "values": {
+      "heart_rate": 125.0,
+      "bp_systolic": 89.0,
+      "bp_diastolic": 59.0,
+      "resp_rate": 23.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 96.5,
+      "blood_glucose": 322.6
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 88.0,
+      "bp_systolic": 411.0,
+      "bp_diastolic": 106.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.4,
+      "o2_saturation": 95.4,
+      "blood_glucose": 126.3
+    },
+    "is_error": true,
+    "corruption_type": "digit_transposition"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 91.0,
+      "bp_systolic": 144.0,
+      "bp_diastolic": 82.0,
+      "resp_rate": 15.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 96.4,
+      "blood_glucose": 111.8
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 61.0,
+      "bp_systolic": 142.0,
+      "bp_diastolic": 106.0,
+      "resp_rate": 16.0,
+      "temp_celsius": 37.0,
+      "o2_saturation": 95.4,
+      "blood_glucose": 512.0
+    },
+    "is_error": true,
+    "corruption_type": "copy_forward"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 84.0,
+      "bp_systolic": 177.0,
+      "bp_diastolic": 107.0,
+      "resp_rate": 17.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 95.3,
+      "blood_glucose": 114.7
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 94.0,
+      "bp_systolic": 155.0,
+      "bp_diastolic": 85.0,
+      "resp_rate": 19.0,
+      "temp_celsius": 36.9,
+      "o2_saturation": 95.5,
+      "blood_glucose": 100.4
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 90.0,
+      "bp_systolic": 150.0,
+      "bp_diastolic": 94.0,
+      "resp_rate": 18.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 98.1,
+      "blood_glucose": 157.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 81.0,
+      "bp_systolic": 161.0,
+      "bp_diastolic": 80.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 37.2,
+      "o2_saturation": 93.1,
+      "blood_glucose": 111.2
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  },
+  {
+    "patient_id": 38,
+    "values": {
+      "heart_rate": 76.0,
+      "bp_systolic": 165.0,
+      "bp_diastolic": 86.0,
+      "resp_rate": 14.0,
+      "temp_celsius": 36.3,
+      "o2_saturation": 94.0,
+      "blood_glucose": 125.0
+    },
+    "is_error": false,
+    "corruption_type": "clean"
+  }
+]

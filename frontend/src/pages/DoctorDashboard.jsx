@@ -51,7 +51,7 @@ export const DoctorDashboard = ({ onNavigateToPatient }) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard title="Assigned Inpatients" value={patients.length} subtitle="Active Clinical Cases" icon={Users} color="blue" />
-        <StatCard title="Grounded RAG Assistant" value="Available" subtitle="Per-Patient Isolated FAISS" icon={Bot} color="teal" />
+        <StatCard title="Clinical Retrieval" value="Verbatim" subtitle="No LLM · GA/PSO ranked" icon={Bot} color="teal" />
         <StatCard title="Care Reviews Needed" value={patients.filter(p => p.pending_tasks_count > 0).length} subtitle="Patients with active orders" icon={Activity} color="amber" />
       </div>
 

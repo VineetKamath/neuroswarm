@@ -7,7 +7,9 @@ export const RAGChatDrawer = ({ patient, isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `Hello! I am MediMind AI, your clinical assistant for **${patient?.first_name || ''} ${patient?.last_name || ''}** (MRN: ${patient?.mrn || ''}).\n\nAsk me any clinical questions regarding their documented history, vitals, microbiology, medications, or surgical notes. All answers are strictly grounded in this patient's records.`,
+      content: `**NeuroSwarm Clinical Retrieval** — scoped to **${patient?.first_name || ''} ${patient?.last_name || ''}** (MRN: ${patient?.mrn || ''}).
+
+Ask about documented history, vitals, microbiology, medications or procedures. Every answer is assembled **verbatim from this patient's notes** — no language model writes clinical text here, so nothing can be invented. Results are ranked by weights evolved with a Genetic Algorithm and Particle Swarm Optimization.`,
       sources: [],
       has_sufficient_context: true,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -51,7 +53,12 @@ export const RAGChatDrawer = ({ patient, isOpen, onClose }) => {
         sources: res.data.sources || [],
         has_sufficient_context: res.data.has_sufficient_context,
         retrieval_time_ms: res.data.retrieval_time_ms,
-        generation_time_ms: res.data.generation_time_ms,
+        ranking_time_ms: res.data.ranking_time_ms,
+        total_time_ms: res.data.total_time_ms,
+        intent: res.data.intent,
+        routing: res.data.routing,
+        candidates_considered: res.data.candidates_considered,
+        ranking_optimized: res.data.ranking_optimized,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
@@ -79,12 +86,12 @@ export const RAGChatDrawer = ({ patient, isOpen, onClose }) => {
     <div className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-white shadow-2xl border-l border-slate-200 flex flex-col animate-in slide-in-from-right duration-200">
       <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-sky-600 flex items-center justify-center text-white shadow-xs">
+          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-xs">
             <Bot className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-slate-900">Clinical RAG Assistant</h3>
+              <h3 className="font-bold text-slate-900">Clinical Retrieval</h3>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
                 <ShieldCheck className="w-3 h-3" /> Scoped to {patient.mrn}
               </span>
@@ -110,11 +117,35 @@ export const RAGChatDrawer = ({ patient, isOpen, onClose }) => {
               className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
             >
               <div className="flex items-center gap-2 mb-1 text-[11px] text-slate-400">
-                <span>{msg.role === 'user' ? 'You (Clinician)' : 'MediMind AI'}</span>
+                <span>{msg.role === 'user' ? 'You (Clinician)' : 'NeuroSwarm Retrieval'}</span>
                 <span>�</span>
                 <span>{msg.timestamp}</span>
-                {msg.retrieval_time_ms && (
-                  <span className="text-sky-600 font-mono">({msg.retrieval_time_ms}ms retrieval)</span>
+                {msg.total_time_ms != null && msg.role === 'assistant' && (
+                  <span className="font-mono text-indigo-600">
+                    {msg.total_time_ms}ms total · {msg.retrieval_time_ms}ms retrieval
+                    {msg.ranking_time_ms != null && ` · ${msg.ranking_time_ms}ms rank`}
+                  </span>
+                )}
+                {msg.intent && (
+                  <span className="rounded-full border border-indigo-200 bg-indigo-50 px-1.5 py-0.5 font-semibold text-indigo-700">
+                    {msg.intent}
+                  </span>
+                )}
+                {msg.ranking_optimized && (
+                  <span className="rounded-full border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 font-semibold text-emerald-700">
+                    GA/PSO ranked
+                  </span>
+                )}
+                {msg.routing?.partitions?.length > 0 && (
+                  <span
+                    className="rounded-full border border-amber-200 bg-amber-50 px-1.5 py-0.5 font-semibold text-amber-700"
+                    title={`ACO probed: ${msg.routing.partitions.join(', ')}${msg.routing.fell_back_to_full_scan ? ' (fell back to full scan)' : ''}`}
+                  >
+                    ACO {msg.routing.fell_back_to_full_scan ? 'fallback' : `${msg.routing.partitions.length} partitions`}
+                  </span>
+                )}
+                {msg.candidates_considered > 0 && (
+                  <span className="font-mono text-slate-400">{msg.candidates_considered} candidates</span>
                 )}
               </div>
 
@@ -156,7 +187,7 @@ export const RAGChatDrawer = ({ patient, isOpen, onClose }) => {
             <div className="flex items-center gap-2 p-4 bg-white border border-slate-200 rounded-2xl w-fit shadow-xs animate-pulse">
               <Bot className="w-4 h-4 text-sky-600 animate-spin" />
               <span className="text-xs font-medium text-slate-600">
-                Searching FAISS index for {patient.first_name}'s clinical notes & synthesizing grounded answer...
+                Routing, searching and re-ranking {patient.first_name}'s notes with the evolved weights...
               </span>
             </div>
           )}

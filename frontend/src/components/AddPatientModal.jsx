@@ -58,7 +58,7 @@ export const AddPatientModal = ({ isOpen, onClose, onPatientCreated }) => {
             </div>
             <div>
               <h3 className="font-bold text-slate-900">Admit / Register New Patient</h3>
-              <p className="text-xs text-slate-500">Creates centralized EHR and initializes isolated FAISS store</p>
+              <p className="text-xs text-slate-500">Creates the EHR record and initializes an isolated vector index</p>
             </div>
           </div>
           <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-600 rounded-lg">

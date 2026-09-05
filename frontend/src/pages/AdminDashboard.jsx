@@ -66,7 +66,7 @@ export const AdminDashboard = ({ onNavigateToPatient }) => {
             <span className="text-xs text-slate-400 font-medium">Hospital Control & AI Vector Oversight</span>
           </div>
           <h1 className="text-xl font-bold text-slate-900 mt-1">Hospital Administration Dashboard</h1>
-          <p className="text-xs text-slate-500">Centralized EHR control, staff access provisioning, and FAISS RAG health.</p>
+          <p className="text-xs text-slate-500">Centralized EHR control, staff provisioning, and bio-inspired engine health.</p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -104,7 +104,7 @@ export const AdminDashboard = ({ onNavigateToPatient }) => {
             <div className="p-2 bg-sky-100 text-sky-700 rounded-lg"><Cpu className="w-5 h-5" /></div>
             <div>
               <h2 className="text-sm font-bold text-slate-900">Vector Search Engine & RAG Telemetry</h2>
-              <p className="text-xs text-slate-500">Sentence-BERT + FAISS per-patient isolated indices</p>
+              <p className="text-xs text-slate-500">Sentence-BERT + FAISS, per-patient isolated indices in a GA-evolved subspace</p>
             </div>
           </div>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">

@@ -61,7 +61,7 @@ export const LoginPage = () => {
         </div>
         <h2 className="text-2xl font-bold text-slate-900 tracking-tight">NeuroSwarm Clinical Portal</h2>
         <p className="mt-1 text-sm text-slate-500">
-          Role-Secured EHR & Patient-Scoped Clinical RAG Assistant
+          Bio-Inspired Clinical Intelligence · Role-Secured EHR
         </p>
       </div>
 

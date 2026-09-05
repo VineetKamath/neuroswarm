@@ -216,6 +216,50 @@ def train_all(
     labels = load_benchmark("retrieval")
     logger.info("Training bio-inspired subsystem on %d labeled queries", len(labels))
 
+    # NOTE ON ORDERING
+    # Compression runs FIRST and reindexes every patient. It has to: the
+    # evolved dimension mask changes the vector space, so cosine similarities
+    # shift. Training the ranker before that would tune weights against
+    # similarity values the served index no longer produces. Compression's own
+    # fitness uses raw unprojected vectors, so it has no such dependency, and
+    # routing partitions are likewise recomputed against the final index.
+
+    # ---- 4. Embedding compression (binary GA) ----------------------------
+    t0 = time.perf_counter()
+    comp_cases = build_compression_cases(db, labels)
+    comp_train, comp_test = split_cases(comp_cases, test_frac=0.3, seed=23)
+    report["compression_cases"] = len(comp_cases)
+    report["compression_split"] = {"train": len(comp_train), "test": len(comp_test)}
+    if comp_train and comp_test:
+        comp = train_compression(
+            comp_train, dims_total=settings.EMBEDDING_DIM,
+            generations=max(20, generations // 2), population=36,
+        )
+        # Held-out accuracy/speed: the mask never saw these queries.
+        from app.bio.compression import _measure
+        import numpy as _np
+        held_base = _measure(comp_test, _np.ones(settings.EMBEDDING_DIM, dtype=bool))
+        held_opt = _measure(comp_test, comp.mask)
+        comp.baseline_metrics, comp.optimized_metrics = held_base, held_opt
+        projector = CompressedProjector(comp.mask)
+        bio_registry.set_projector(projector)
+        payload = comp.to_dict()
+        payload["train_seconds"] = round(time.perf_counter() - t0, 2)
+        bio_registry.write("compression", payload)
+        report["compression"] = {
+            "baseline": comp.baseline_metrics.to_dict(),
+            "optimized": comp.optimized_metrics.to_dict(),
+            "improvement": comp.improvement(),
+            "seconds": round(time.perf_counter() - t0, 2),
+        }
+        if reindex_after_compression:
+            # Indices must be rebuilt in the evolved subspace or queries and
+            # documents would live in different vector spaces.
+            chunks = vector_store.reindex_all(db)
+            report["reindexed_chunks"] = chunks
+    else:
+        report["compression"] = {"error": "no compression cases available"}
+
     # ---- 1. Ranking (GA, and PSO for comparison) -------------------------
     t0 = time.perf_counter()
     all_cases = build_ranking_cases(db, labels)
@@ -273,6 +317,34 @@ def train_all(
         }
     else:
         report["ranking"] = {"error": "insufficient labeled retrieval cases"}
+
+    # ---- 5. Ant Colony routing -------------------------------------------
+    t0 = time.perf_counter()
+    routing_cases = build_routing_cases(db, labels)
+    sizes = vector_store.partition_sizes()
+    report["routing_cases"] = len(routing_cases)
+    if routing_cases and sizes:
+        router = AntColonyRouter(ACOConfig(n_ants=40, iterations=60, probe_budget=5,
+                                   evaporation=0.10, alpha=1.0, beta=2.5))
+        router.fit(routing_cases, sorted(sizes.keys()), sizes)
+        metrics = router.evaluate(routing_cases)
+        baseline = router.baseline_metrics(routing_cases)
+        bio_registry.set_router(router)
+        bio_registry.write("routing", {
+            "router": router.to_dict(),
+            "metrics": metrics.to_dict(),
+            "baseline_metrics": baseline.to_dict(),
+            "pheromone_matrix": router.pheromone_matrix(),
+            "history": router.history,
+            "train_seconds": round(time.perf_counter() - t0, 2),
+        })
+        report["routing"] = {
+            "baseline": baseline.to_dict(),
+            "optimized": metrics.to_dict(),
+            "seconds": round(time.perf_counter() - t0, 2),
+        }
+    else:
+        report["routing"] = {"error": "no routing cases or partitions available"}
 
     # ---- 2. Task prioritization (GA) -------------------------------------
     t0 = time.perf_counter()
@@ -337,70 +409,6 @@ def train_all(
         }
     else:
         report["immune"] = {"error": "no self samples available"}
-
-    # ---- 4. Embedding compression (binary GA) ----------------------------
-    t0 = time.perf_counter()
-    comp_cases = build_compression_cases(db, labels)
-    comp_train, comp_test = split_cases(comp_cases, test_frac=0.3, seed=23)
-    report["compression_cases"] = len(comp_cases)
-    report["compression_split"] = {"train": len(comp_train), "test": len(comp_test)}
-    if comp_train and comp_test:
-        comp = train_compression(
-            comp_train, dims_total=settings.EMBEDDING_DIM,
-            generations=max(20, generations // 2), population=36,
-        )
-        # Held-out accuracy/speed: the mask never saw these queries.
-        from app.bio.compression import _measure
-        import numpy as _np
-        held_base = _measure(comp_test, _np.ones(settings.EMBEDDING_DIM, dtype=bool))
-        held_opt = _measure(comp_test, comp.mask)
-        comp.baseline_metrics, comp.optimized_metrics = held_base, held_opt
-        projector = CompressedProjector(comp.mask)
-        bio_registry.set_projector(projector)
-        payload = comp.to_dict()
-        payload["train_seconds"] = round(time.perf_counter() - t0, 2)
-        bio_registry.write("compression", payload)
-        report["compression"] = {
-            "baseline": comp.baseline_metrics.to_dict(),
-            "optimized": comp.optimized_metrics.to_dict(),
-            "improvement": comp.improvement(),
-            "seconds": round(time.perf_counter() - t0, 2),
-        }
-        if reindex_after_compression:
-            # Indices must be rebuilt in the evolved subspace or queries and
-            # documents would live in different vector spaces.
-            chunks = vector_store.reindex_all(db)
-            report["reindexed_chunks"] = chunks
-    else:
-        report["compression"] = {"error": "no compression cases available"}
-
-    # ---- 5. Ant Colony routing -------------------------------------------
-    t0 = time.perf_counter()
-    routing_cases = build_routing_cases(db, labels)
-    sizes = vector_store.partition_sizes()
-    report["routing_cases"] = len(routing_cases)
-    if routing_cases and sizes:
-        router = AntColonyRouter(ACOConfig(n_ants=40, iterations=60, probe_budget=5,
-                                   evaporation=0.10, alpha=1.0, beta=2.5))
-        router.fit(routing_cases, sorted(sizes.keys()), sizes)
-        metrics = router.evaluate(routing_cases)
-        baseline = router.baseline_metrics(routing_cases)
-        bio_registry.set_router(router)
-        bio_registry.write("routing", {
-            "router": router.to_dict(),
-            "metrics": metrics.to_dict(),
-            "baseline_metrics": baseline.to_dict(),
-            "pheromone_matrix": router.pheromone_matrix(),
-            "history": router.history,
-            "train_seconds": round(time.perf_counter() - t0, 2),
-        })
-        report["routing"] = {
-            "baseline": baseline.to_dict(),
-            "optimized": metrics.to_dict(),
-            "seconds": round(time.perf_counter() - t0, 2),
-        }
-    else:
-        report["routing"] = {"error": "no routing cases or partitions available"}
 
     bio_registry.set_report(report)
     bio_registry.write("report", report)

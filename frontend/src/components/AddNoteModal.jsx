@@ -73,7 +73,7 @@ export const AddNoteModal = ({ isOpen, onClose, patientId, patientName, onNoteCr
             </div>
             <div>
               <h3 className="font-bold text-slate-900">Create Clinical Note</h3>
-              <p className="text-xs text-slate-500">Patient: {patientName} • Auto-indexed into FAISS vector store</p>
+              <p className="text-xs text-slate-500">Patient: {patientName} • Auto-indexed and chunked by SOAP section</p>
             </div>
           </div>
           <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-600 rounded-lg">
@@ -197,7 +197,7 @@ export const AddNoteModal = ({ isOpen, onClose, patientId, patientName, onNoteCr
               name="content"
               value={formData.content}
               onChange={handleChange}
-              placeholder="Combined clinical narrative indexed by Sentence-BERT and FAISS..."
+              placeholder="Combined clinical narrative — indexed and retrievable verbatim..."
               className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
             />
           </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  Dna, Wind, ShieldCheck, Boxes, Route, Activity, Loader2, AlertTriangle,
-  CheckCircle2, PlayCircle, ChevronRight, FlaskConical, Gauge,
+  Dna, Wind, ShieldCheck, Boxes, Route, Loader2, AlertTriangle,
+  CheckCircle2, PlayCircle, ChevronRight, FlaskConical,
 } from 'lucide-react';
 import { bioApi, ALGO_HEX, pct, num } from '../api/bio';
 import { Scope, Chip, MetricDelta, WeightBar, Skeleton, EmptyState, Stat } from '../components/bio/Primitives';

@@ -1,6 +1,39 @@
 {
-  "trained_at": "2026-09-05T17:12:51.147991+00:00",
+  "trained_at": "2026-09-05T17:38:01.748832+00:00",
   "project": "NeuroSwarm",
+  "compression_cases": 60,
+  "compression_split": {
+    "train": 42,
+    "test": 18
+  },
+  "compression": {
+    "baseline": {
+      "ndcg_at_5": 0.6787,
+      "dims_kept": 384,
+      "dims_total": 384,
+      "retention_pct": 100.0,
+      "compression_ratio": 1.0,
+      "search_ms": 0.1756,
+      "bytes_per_vector": 1536
+    },
+    "optimized": {
+      "ndcg_at_5": 0.6859,
+      "dims_kept": 146,
+      "dims_total": 384,
+      "retention_pct": 38.02,
+      "compression_ratio": 2.63,
+      "search_ms": 0.1477,
+      "bytes_per_vector": 584
+    },
+    "improvement": {
+      "ndcg_delta_pct": 1.07,
+      "accuracy_retained_pct": 101.07,
+      "search_speedup_x": 1.19,
+      "memory_saved_pct": 61.98
+    },
+    "seconds": 37.45
+  },
+  "reindexed_chunks": 822,
   "ranking_cases": 181,
   "ranking_split": {
     "train": 126,
@@ -9,33 +42,51 @@
   "ranking": {
     "selected": "Particle Swarm Optimization",
     "baseline": {
-      "ndcg_at_5": 0.5972,
-      "ndcg_at_3": 0.5447,
-      "recall_at_5": 0.6894,
-      "mrr": 0.7202,
+      "ndcg_at_5": 0.6987,
+      "ndcg_at_3": 0.6857,
+      "recall_at_5": 0.77,
+      "mrr": 0.8417,
       "queries": 55
     },
     "optimized": {
-      "ndcg_at_5": 0.92,
-      "ndcg_at_3": 0.9044,
-      "recall_at_5": 0.9339,
-      "mrr": 0.9561,
+      "ndcg_at_5": 0.9228,
+      "ndcg_at_3": 0.9069,
+      "recall_at_5": 0.9673,
+      "mrr": 0.9667,
       "queries": 55
     },
     "improvement_pct": {
-      "ndcg_at_5": 54.04,
-      "ndcg_at_3": 66.05,
-      "recall_at_5": 35.47,
-      "mrr": 32.75
+      "ndcg_at_5": 32.07,
+      "ndcg_at_3": 32.25,
+      "recall_at_5": 25.62,
+      "mrr": 14.84
     },
     "train_metrics": {
-      "ndcg_at_5": 0.8905,
-      "ndcg_at_3": 0.8614,
-      "recall_at_5": 0.9165,
-      "mrr": 0.9138,
+      "ndcg_at_5": 0.8988,
+      "ndcg_at_3": 0.8674,
+      "recall_at_5": 0.9454,
+      "mrr": 0.9411,
       "queries": 126
     },
-    "seconds": 514.81
+    "seconds": 522.43
+  },
+  "routing_cases": 181,
+  "routing": {
+    "baseline": {
+      "hit_rate": 1.0,
+      "mean_partitions_scanned": 30.0,
+      "mean_chunks_scanned": 822.0,
+      "scan_reduction_pct": 0.0,
+      "queries": 181
+    },
+    "optimized": {
+      "hit_rate": 0.8508,
+      "mean_partitions_scanned": 5.0,
+      "mean_chunks_scanned": 154.87,
+      "scan_reduction_pct": 81.16,
+      "queries": 181
+    },
+    "seconds": 0.52
   },
   "task_scenarios": 110,
   "task_split": {
@@ -62,7 +113,7 @@
       "kendall_tau": 85.33,
       "top1_accuracy": 200.0
     },
-    "seconds": 10.16
+    "seconds": 7.49
   },
   "immune": {
     "metrics": {
@@ -78,57 +129,6 @@
       "f1": 0.9434
     },
     "detectors": 320,
-    "seconds": 2.57
-  },
-  "compression_cases": 60,
-  "compression_split": {
-    "train": 42,
-    "test": 18
-  },
-  "compression": {
-    "baseline": {
-      "ndcg_at_5": 0.6787,
-      "dims_kept": 384,
-      "dims_total": 384,
-      "retention_pct": 100.0,
-      "compression_ratio": 1.0,
-      "search_ms": 0.1469,
-      "bytes_per_vector": 1536
-    },
-    "optimized": {
-      "ndcg_at_5": 0.6687,
-      "dims_kept": 142,
-      "dims_total": 384,
-      "retention_pct": 36.98,
-      "compression_ratio": 2.7,
-      "search_ms": 0.1275,
-      "bytes_per_vector": 568
-    },
-    "improvement": {
-      "ndcg_delta_pct": -1.46,
-      "accuracy_retained_pct": 98.54,
-      "search_speedup_x": 1.15,
-      "memory_saved_pct": 63.02
-    },
-    "seconds": 34.42
-  },
-  "reindexed_chunks": 822,
-  "routing_cases": 181,
-  "routing": {
-    "baseline": {
-      "hit_rate": 1.0,
-      "mean_partitions_scanned": 30.0,
-      "mean_chunks_scanned": 822.0,
-      "scan_reduction_pct": 0.0,
-      "queries": 181
-    },
-    "optimized": {
-      "hit_rate": 0.8508,
-      "mean_partitions_scanned": 5.0,
-      "mean_chunks_scanned": 154.87,
-      "scan_reduction_pct": 81.16,
-      "queries": 181
-    },
-    "seconds": 0.44
+    "seconds": 2.48
   }
 }

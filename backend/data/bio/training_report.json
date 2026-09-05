@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-09-05T17:00:11.348091+00:00",
+  "trained_at": "2026-09-05T17:12:51.147991+00:00",
   "project": "NeuroSwarm",
   "ranking_cases": 181,
   "ranking_split": {
@@ -35,7 +35,7 @@
       "mrr": 0.9138,
       "queries": 126
     },
-    "seconds": 81.55
+    "seconds": 514.81
   },
   "task_scenarios": 110,
   "task_split": {
@@ -62,23 +62,23 @@
       "kendall_tau": 85.33,
       "top1_accuracy": 200.0
     },
-    "seconds": 3.22
+    "seconds": 10.16
   },
   "immune": {
     "metrics": {
-      "true_positives": 22,
+      "true_positives": 25,
       "false_positives": 0,
       "true_negatives": 56,
-      "false_negatives": 6,
+      "false_negatives": 3,
       "detectors": 320,
       "coverage": 0.99,
-      "detection_rate": 0.7857,
+      "detection_rate": 0.8929,
       "false_alarm_rate": 0.0,
       "precision": 1.0,
-      "f1": 0.88
+      "f1": 0.9434
     },
     "detectors": 320,
-    "seconds": 0.47
+    "seconds": 2.57
   },
   "compression_cases": 60,
   "compression_split": {
@@ -92,7 +92,7 @@
       "dims_total": 384,
       "retention_pct": 100.0,
       "compression_ratio": 1.0,
-      "search_ms": 0.0307,
+      "search_ms": 0.1469,
       "bytes_per_vector": 1536
     },
     "optimized": {
@@ -101,16 +101,16 @@
       "dims_total": 384,
       "retention_pct": 36.98,
       "compression_ratio": 2.7,
-      "search_ms": 0.0197,
+      "search_ms": 0.1275,
       "bytes_per_vector": 568
     },
     "improvement": {
       "ndcg_delta_pct": -1.46,
       "accuracy_retained_pct": 98.54,
-      "search_speedup_x": 1.55,
+      "search_speedup_x": 1.15,
       "memory_saved_pct": 63.02
     },
-    "seconds": 7.34
+    "seconds": 34.42
   },
   "reindexed_chunks": 822,
   "routing_cases": 181,
@@ -129,6 +129,6 @@
       "scan_reduction_pct": 81.16,
       "queries": 181
     },
-    "seconds": 0.16
+    "seconds": 0.44
   }
 }

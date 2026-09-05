@@ -536,7 +536,7 @@
     "dims_total": 384,
     "retention_pct": 100.0,
     "compression_ratio": 1.0,
-    "search_ms": 0.0307,
+    "search_ms": 0.1469,
     "bytes_per_vector": 1536
   },
   "optimized_metrics": {
@@ -545,13 +545,13 @@
     "dims_total": 384,
     "retention_pct": 36.98,
     "compression_ratio": 2.7,
-    "search_ms": 0.0197,
+    "search_ms": 0.1275,
     "bytes_per_vector": 568
   },
   "improvement": {
     "ndcg_delta_pct": -1.46,
     "accuracy_retained_pct": 98.54,
-    "search_speedup_x": 1.55,
+    "search_speedup_x": 1.15,
     "memory_saved_pct": 63.02
   },
   "dimension_importance": [
@@ -940,5 +940,5 @@
     0.3463,
     0.408
   ],
-  "train_seconds": 7.34
+  "train_seconds": 34.42
 }

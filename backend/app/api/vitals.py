@@ -8,6 +8,8 @@ from app.models.patient import Patient
 from app.models.vital import VitalSign
 from app.models.user import User
 from app.schemas.vital import VitalCreate, VitalOut
+from app.bio.immune import VITAL_FEATURES, hard_range_violations
+from app.bio.registry import bio_registry
 
 router = APIRouter(prefix="/vitals", tags=["Vitals"])
 
@@ -27,6 +29,23 @@ def record_vital_signs(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Patient with ID {vital_in.patient_id} not found."
         )
+
+    # Artificial Immune System checkpoint: screen the reading before it is
+    # trusted for alerts or trend display. The record is still saved — a
+    # suspect value is flagged for verification, never silently discarded.
+    values = {f: getattr(vital_in, f, None) for f in VITAL_FEATURES}
+    model = bio_registry.immune
+    if model is not None:
+        report = model.check(values)
+        anomaly = {"is_anomalous": report.is_anomalous, **report.to_dict()}
+    else:
+        violations = hard_range_violations(values)
+        anomaly = {
+            "is_anomalous": bool(violations), "anomaly_score": 1.0 if violations else 0.0,
+            "hard_violations": violations, "suspect_features": [],
+            "explanation": violations[0]["reason"] if violations
+                           else "Immune detectors not trained; hard range check only.",
+        }
 
     vital = VitalSign(
         **vital_in.model_dump(),
@@ -49,7 +68,8 @@ def record_vital_signs(
         notes=vital.notes,
         recorded_by_id=vital.recorded_by_id,
         recorded_by_name=current_user.full_name,
-        recorded_at=vital.recorded_at
+        recorded_at=vital.recorded_at,
+        anomaly=anomaly
     )
 
 @router.get("/patient/{patient_id}", response_model=List[VitalOut])

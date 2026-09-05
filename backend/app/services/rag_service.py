@@ -169,9 +169,14 @@ class RetrievalService:
             db=db,
             restrict_partitions=restrict,
         )
-        # A routing miss must never cost recall: if the narrowed scan found
-        # nothing usable, fall back to the full patient index.
-        if restrict and (not candidates or candidates[0][1] < settings.SIMILARITY_THRESHOLD):
+        # A routing miss must never cost recall. Fall back to the full patient
+        # index when the narrowed scan came back weak OR too thin to fill the
+        # answer — efficiency is only worth having if the answer stays complete.
+        if restrict and (
+            not candidates
+            or candidates[0][1] < settings.SIMILARITY_THRESHOLD
+            or len(candidates) < settings.TOP_K_NOTES
+        ):
             candidates = vector_store.search_patient_notes(
                 patient_id=patient_id, query=question,
                 top_k=settings.CANDIDATE_POOL_K, db=db,
@@ -188,6 +193,10 @@ class RetrievalService:
                 answer="No relevant information found in this patient's records.",
                 sources=[], has_sufficient_context=False,
                 retrieval_time_ms=retrieval_time_ms, ranking_time_ms=0.0,
+                total_time_ms=round((time.perf_counter() - t0) * 1000, 3),
+                candidates_considered=0,
+                ranking_optimized=bio_registry.ranking_is_optimized,
+                intent=detect_intent(question),
                 routing=routing_info,
             )
 
@@ -209,7 +218,12 @@ class RetrievalService:
                 answer="No relevant information found in this patient's records.",
                 sources=[], has_sufficient_context=False,
                 retrieval_time_ms=retrieval_time_ms, ranking_time_ms=ranking_time_ms,
-                top_similarity=round(best_similarity, 4), routing=routing_info,
+                total_time_ms=round((time.perf_counter() - t0) * 1000, 3),
+                top_similarity=round(best_similarity, 4),
+                candidates_considered=len(candidates),
+                ranking_optimized=bio_registry.ranking_is_optimized,
+                intent=detect_intent(question),
+                routing=routing_info,
             )
 
         floor = max(0.0, settings.SIMILARITY_THRESHOLD - 0.08)

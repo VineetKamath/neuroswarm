@@ -77,8 +77,17 @@ def normalize_vector(values: Dict[str, Optional[float]]) -> Tuple[np.ndarray, np
 
 
 def hard_range_violations(values: Dict[str, Optional[float]]) -> List[Dict]:
-    """Impossible-value screen. Runs ahead of the AIS: a systolic of 1200 is a
-    typo, not a rare physiology, and deserves a deterministic rule."""
+    """Deterministic impossibility screen, run ahead of the AIS.
+
+    Two classes of error belong in rules rather than in learned detectors:
+
+    1. Out-of-range values — a systolic of 1200 is a typo, not rare physiology.
+    2. Impossible RELATIONSHIPS — a diastolic above the systolic cannot occur
+       at any acuity, yet both numbers are individually plausible, so they sit
+       close enough to the self-region that no detector reliably covers them.
+       Negative selection exists to catch error modes nobody enumerated; a
+       known-impossible relation is enumerable, so it gets a rule.
+    """
     out = []
     for name in VITAL_FEATURES:
         v = values.get(name)
@@ -91,6 +100,27 @@ def hard_range_violations(values: Dict[str, Optional[float]]) -> List[Dict]:
                 "plausible_range": [lo, hi], "unit": FEATURE_UNITS[name],
                 "reason": f"{name.replace('_', ' ')} of {v} {FEATURE_UNITS[name]} lies outside "
                           f"the physiologically recordable range {lo}-{hi}.",
+            })
+
+    sys_v, dia_v = values.get("bp_systolic"), values.get("bp_diastolic")
+    if sys_v is not None and dia_v is not None:
+        sys_f, dia_f = float(sys_v), float(dia_v)
+        if dia_f >= sys_f:
+            out.append({
+                "feature": "bp_diastolic", "value": dia_f,
+                "plausible_range": [FEATURE_BOUNDS["bp_diastolic"][0], sys_f - 1],
+                "unit": "mmHg",
+                "reason": f"Diastolic pressure ({dia_f:.0f} mmHg) is not below systolic "
+                          f"({sys_f:.0f} mmHg) — physiologically impossible, most likely the "
+                          f"two values were entered in the wrong fields.",
+            })
+        elif sys_f - dia_f < 10:
+            out.append({
+                "feature": "bp_diastolic", "value": dia_f,
+                "plausible_range": [FEATURE_BOUNDS["bp_diastolic"][0], sys_f - 10],
+                "unit": "mmHg",
+                "reason": f"Pulse pressure of {sys_f - dia_f:.0f} mmHg is implausibly narrow; "
+                          f"verify the blood pressure reading.",
             })
     return out
 

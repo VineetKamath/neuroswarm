@@ -67,14 +67,14 @@
     {
       "generation": 4,
       "best_fitness": 0.855331,
-      "mean_fitness": 0.808772,
+      "mean_fitness": 0.808771,
       "worst_fitness": 0.707059,
       "diversity": 0.141672
     },
     {
       "generation": 5,
       "best_fitness": 0.874102,
-      "mean_fitness": 0.823022,
+      "mean_fitness": 0.823021,
       "worst_fitness": 0.730443,
       "diversity": 0.140465
     },
@@ -5228,7 +5228,7 @@
         {
           "generation": 1,
           "best_fitness": 0.818276,
-          "mean_fitness": 0.719023,
+          "mean_fitness": 0.719021,
           "worst_fitness": 0.493104,
           "diversity": 0.275173
         },
@@ -5590,14 +5590,14 @@
         {
           "generation": 4,
           "best_fitness": 0.855331,
-          "mean_fitness": 0.808772,
+          "mean_fitness": 0.808771,
           "worst_fitness": 0.707059,
           "diversity": 0.141672
         },
         {
           "generation": 5,
           "best_fitness": 0.874102,
-          "mean_fitness": 0.823022,
+          "mean_fitness": 0.823021,
           "worst_fitness": 0.730443,
           "diversity": 0.140465
         },
@@ -10705,7 +10705,7 @@
     }
   },
   "selected": "Particle Swarm Optimization",
-  "train_seconds": 81.55,
+  "train_seconds": 514.8,
   "split": {
     "train": 126,
     "test": 55

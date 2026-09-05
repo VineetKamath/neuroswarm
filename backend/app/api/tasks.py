@@ -9,6 +9,8 @@ from app.models.patient import Patient
 from app.models.task import CareTask, TaskStatus, TaskPriority
 from app.models.user import User, UserRole
 from app.schemas.task import TaskCreate, TaskUpdate, TaskOut
+from app.bio.registry import bio_registry
+from app.bio.tasks import extract_task_features
 
 router = APIRouter(prefix="/tasks", tags=["Care Coordination & Tasks"])
 
@@ -34,9 +36,32 @@ def list_tasks(
         query = query.filter(CareTask.status == status)
 
     tasks = query.order_by(CareTask.due_time.asc(), CareTask.priority.desc()).all()
-    
-    results = []
+
+    # Genetic-Algorithm prioritization. The SQL sort above is only a stable
+    # starting order; the evolved policy decides what a clinician sees first.
+    # Open tasks per nurse feed the policy's workload-balancing gene.
+    nurse_loads = {}
     for t in tasks:
+        if t.assigned_nurse_id and t.status in (TaskStatus.PENDING, TaskStatus.IN_PROGRESS):
+            nurse_loads[t.assigned_nurse_id] = nurse_loads.get(t.assigned_nurse_id, 0) + 1
+
+    policy = bio_registry.task_policy
+    scored = []
+    for t in tasks:
+        pstatus = t.patient.status.value if (t.patient and t.patient.status) else "ADMITTED"
+        feats = extract_task_features(t, pstatus, nurse_loads.get(t.assigned_nurse_id, 0))
+        scored.append((t, policy.score(feats), feats))
+
+    # Completed and cancelled work sinks below anything still open.
+    def sort_key(item):
+        t, score, _ = item
+        open_rank = 0 if t.status in (TaskStatus.PENDING, TaskStatus.IN_PROGRESS) else 1
+        return (open_rank, -score)
+
+    scored.sort(key=sort_key)
+
+    results = []
+    for t, urgency, feats in scored:
         results.append(TaskOut(
             id=t.id,
             patient_id=t.patient_id,
@@ -54,7 +79,11 @@ def list_tasks(
             completed_at=t.completed_at,
             completion_notes=t.completion_notes,
             created_at=t.created_at,
-            updated_at=t.updated_at
+            updated_at=t.updated_at,
+            urgency_score=round(urgency, 4),
+            task_category=feats.category,
+            overdue_hours=round(feats.overdue_hours, 2),
+            prioritized_by_ga=bio_registry.task_is_optimized
         ))
     return results
 

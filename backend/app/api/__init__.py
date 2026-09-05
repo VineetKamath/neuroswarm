@@ -6,6 +6,7 @@ from app.api.notes import router as notes_router
 from app.api.tasks import router as tasks_router
 from app.api.staff import router as staff_router
 from app.api.rag import router as rag_router
+from app.api.bio import router as bio_router
 
 api_router = APIRouter()
 api_router.include_router(auth_router)
@@ -15,3 +16,4 @@ api_router.include_router(notes_router)
 api_router.include_router(tasks_router)
 api_router.include_router(staff_router)
 api_router.include_router(rag_router)
+api_router.include_router(bio_router)

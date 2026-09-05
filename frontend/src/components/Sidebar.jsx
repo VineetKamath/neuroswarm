@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Users, CheckSquare, Settings, Bot, HeartHandshake } from 'lucide-react';
+import { LayoutDashboard, Users, CheckSquare, Settings, HeartHandshake, FlaskConical, Dna } from 'lucide-react';
 
 export const Sidebar = ({ activeTab, setActiveTab }) => {
   const { role } = useAuth();
@@ -9,6 +9,7 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['ADMIN', 'DOCTOR', 'NURSE'] },
     { id: 'patients', label: 'Patient Records', icon: Users, roles: ['ADMIN', 'DOCTOR', 'NURSE'] },
     { id: 'tasks', label: 'Care Tasks', icon: CheckSquare, roles: ['ADMIN', 'DOCTOR', 'NURSE'] },
+    { id: 'biolab', label: 'Bio-Lab', icon: FlaskConical, roles: ['ADMIN', 'DOCTOR', 'NURSE'] },
     { id: 'staff', label: 'Staff Directory', icon: HeartHandshake, roles: ['ADMIN'] },
     { id: 'system', label: 'System & Vectors', icon: Settings, roles: ['ADMIN'] },
   ];
@@ -37,14 +38,16 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
         })}
       </div>
 
-      <div className="bg-sky-50 border border-sky-100 rounded-xl p-3 text-xs text-sky-900">
-        <div className="flex items-center gap-2 font-semibold text-sky-800 mb-1">
-          <Bot className="w-4 h-4 text-sky-600" />
-          Grounded Clinical AI
+      <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-3 text-xs text-indigo-900">
+        <div className="mb-1 flex items-center gap-2 font-semibold text-indigo-800">
+          <Dna className="h-4 w-4 text-indigo-600" />
+          Bio-Inspired Engine
         </div>
-        <p className="text-sky-700 leading-relaxed">
-          Sentence-BERT embeddings + FAISS vector search with strict patient boundary isolation.
+        <p className="leading-relaxed text-indigo-700">
+          Retrieval, triage and data-quality decisions tuned by GA, PSO, an Artificial Immune
+          System and Ant Colony Optimization.
         </p>
+        <p className="mt-1.5 font-semibold text-indigo-800">No LLM in the pipeline.</p>
       </div>
     </aside>
   );

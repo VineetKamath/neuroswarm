@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, Optional
 from pydantic import BaseModel
 
 class VitalBase(BaseModel):
@@ -21,6 +21,8 @@ class VitalOut(VitalBase):
     recorded_by_id: Optional[int] = None
     recorded_by_name: Optional[str] = None
     recorded_at: datetime
+    # Immune-system verdict attached at intake; None for historical reads.
+    anomaly: Optional[Dict[str, Any]] = None
 
     class Config:
         from_attributes = True

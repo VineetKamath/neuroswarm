@@ -5576,16 +5576,16 @@
     ]
   },
   "metrics": {
-    "true_positives": 22,
+    "true_positives": 25,
     "false_positives": 0,
     "true_negatives": 56,
-    "false_negatives": 6,
+    "false_negatives": 3,
     "detectors": 320,
     "coverage": 0.99,
-    "detection_rate": 0.7857,
+    "detection_rate": 0.8929,
     "false_alarm_rate": 0.0,
     "precision": 1.0,
-    "f1": 0.88
+    "f1": 0.9434
   },
   "train_self_count": 168,
   "test_normal_count": 56,
@@ -5756,5 +5756,5 @@
       "coverage_estimate": 0.9844
     }
   ],
-  "train_seconds": 0.47
+  "train_seconds": 2.56
 }

@@ -25,6 +25,12 @@ class TaskUpdate(BaseModel):
     completion_notes: Optional[str] = None
 
 class TaskOut(TaskBase):
+    # Populated by the GA-evolved prioritization policy on list endpoints.
+    urgency_score: Optional[float] = None
+    task_category: Optional[str] = None
+    overdue_hours: Optional[float] = None
+    prioritized_by_ga: bool = False
+
     id: int
     patient_id: int
     patient_name: Optional[str] = None

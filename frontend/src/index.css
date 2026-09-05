@@ -1,23 +1,130 @@
 @import "tailwindcss";
 
-body {
-  background-color: #f8fafc;
-  color: #0f172a;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  -webkit-font-smoothing: antialiased;
+:root {
+  --ns-ink: #0b1220;
+  --ns-surface: #ffffff;
+  --ns-muted: #64748b;
+  --ns-line: #e2e8f0;
+
+  /* Each algorithm family carries one accent, used consistently everywhere it
+     appears — chart, badge, panel border — so the eye can track a family
+     across the whole page without reading a label. */
+  --ns-ga: #6366f1;      /* Genetic Algorithm      — indigo */
+  --ns-pso: #06b6d4;     /* Particle Swarm         — cyan   */
+  --ns-ais: #f43f5e;     /* Artificial Immune Sys  — rose   */
+  --ns-aco: #f59e0b;     /* Ant Colony             — amber  */
+  --ns-bin: #10b981;     /* Binary GA / compression— emerald*/
+  --ns-base: #94a3b8;    /* the un-optimized baseline — slate */
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+body {
+  background-color: #f6f8fb;
+  color: var(--ns-ink);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ---------------------------------------------------------------- motion --
+   Animations are informational here, not decorative: a pulsing detector means
+   "this bound an anomaly", a travelling dash means "this trail is active".
+   All of it collapses under reduced-motion.                                  */
+
+@keyframes ns-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+@keyframes ns-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ns-pulse-ring {
+  0%   { transform: scale(0.85); opacity: 0.75; }
+  70%  { transform: scale(1.6);  opacity: 0; }
+  100% { transform: scale(1.6);  opacity: 0; }
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+@keyframes ns-dash { to { stroke-dashoffset: -1000; } }
+@keyframes ns-draw { to { stroke-dashoffset: 0; } }
+@keyframes ns-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes ns-drift {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(3px, -4px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes ns-spin { to { transform: rotate(360deg); } }
+
+.ns-animate-up { animation: ns-fade-up .5s cubic-bezier(.22,.9,.3,1) both; }
+.ns-animate-in { animation: ns-fade-in .45s ease both; }
+.ns-pulse-ring { animation: ns-pulse-ring 1.9s cubic-bezier(0,0,.2,1) infinite; transform-origin: center; }
+.ns-dash { stroke-dasharray: 5 7; animation: ns-dash 14s linear infinite; }
+.ns-drift { animation: ns-drift 5s ease-in-out infinite; }
+.ns-spin { animation: ns-spin 1s linear infinite; }
+
+.ns-skeleton {
+  background: linear-gradient(90deg, #eef2f7 25%, #e2e8f0 37%, #eef2f7 63%);
+  background-size: 800px 100%;
+  animation: ns-shimmer 1.4s linear infinite;
+}
+
+/* Line-drawing effect for convergence curves. */
+.ns-draw-line {
+  stroke-dasharray: 2200;
+  stroke-dashoffset: 2200;
+  animation: ns-draw 1.6s cubic-bezier(.25,.8,.35,1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .ns-draw-line { stroke-dashoffset: 0; }
+}
+
+/* ----------------------------------------------------------- components -- */
+.ns-card {
+  background: var(--ns-surface);
+  border: 1px solid var(--ns-line);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px -18px rgba(15, 23, 42, .25);
+}
+
+/* The dark instrument panel used for every visualization canvas — it reads as
+   scientific equipment and makes the accent colors carry properly. */
+.ns-scope {
+  background:
+    radial-gradient(1100px 380px at 12% -10%, rgba(99,102,241,.16), transparent 60%),
+    radial-gradient(900px 340px at 105% 110%, rgba(6,182,212,.13), transparent 60%),
+    #0b1220;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  color: #e2e8f0;
+}
+
+.ns-grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(148,163,184,.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148,163,184,.10) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.ns-chip {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .2rem .55rem; border-radius: 9999px;
+  font-size: .6875rem; font-weight: 650; letter-spacing: .01em;
+  border: 1px solid currentColor;
+}
+
+.ns-tabular { font-variant-numeric: tabular-nums; }
+
+.ns-focus:focus-visible {
+  outline: 2px solid var(--ns-ga);
+  outline-offset: 2px;
+  border-radius: 10px;
 }

@@ -9,6 +9,7 @@ import { NurseDashboard } from './pages/NurseDashboard';
 import { PatientListPage } from './pages/PatientListPage';
 import { PatientDetailPage } from './pages/PatientDetailPage';
 import { TasksPage } from './pages/TasksPage';
+import { BioLabPage } from './pages/BioLabPage';
 
 export default function App() {
   const { isAuthenticated, role, login } = useAuth();
@@ -51,6 +52,10 @@ export default function App() {
       return <TasksPage />;
     }
 
+    if (activeTab === 'biolab') {
+      return <BioLabPage />;
+    }
+
     switch (role) {
       case 'ADMIN':
         return <AdminDashboard onNavigateToPatient={handleNavigateToPatient} />;
@@ -68,7 +73,7 @@ export default function App() {
       <Navbar onSelectRoleDemo={handleRoleDemoSwitch} />
       <div className="flex-1 flex">
         <Sidebar activeTab={selectedPatientId ? 'patients' : activeTab} setActiveTab={(tab) => { setSelectedPatientId(null); setActiveTab(tab); }} />
-        <main className="flex-1 p-6 max-w-7xl mx-auto w-full">
+        <main className="flex-1 p-6 max-w-[1400px] mx-auto w-full">
           {renderContent()}
         </main>
       </div>

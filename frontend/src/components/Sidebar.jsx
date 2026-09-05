@@ -1,0 +1,51 @@
+import React from 'react';
+import { useAuth } from '../context/AuthContext';
+import { LayoutDashboard, Users, CheckSquare, Settings, Bot, HeartHandshake } from 'lucide-react';
+
+export const Sidebar = ({ activeTab, setActiveTab }) => {
+  const { role } = useAuth();
+
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['ADMIN', 'DOCTOR', 'NURSE'] },
+    { id: 'patients', label: 'Patient Records', icon: Users, roles: ['ADMIN', 'DOCTOR', 'NURSE'] },
+    { id: 'tasks', label: 'Care Tasks', icon: CheckSquare, roles: ['ADMIN', 'DOCTOR', 'NURSE'] },
+    { id: 'staff', label: 'Staff Directory', icon: HeartHandshake, roles: ['ADMIN'] },
+    { id: 'system', label: 'System & Vectors', icon: Settings, roles: ['ADMIN'] },
+  ];
+
+  const filteredItems = navItems.filter((item) => item.roles.includes(role));
+
+  return (
+    <aside className="w-64 bg-white border-r border-slate-200 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between shrink-0">
+      <div className="space-y-1">
+        <div className="px-3 py-2 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+          Navigation
+        </div>
+        {filteredItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={"w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition " + (isActive ? "bg-sky-50 text-sky-700 font-semibold" : "text-slate-600 hover:text-slate-900 hover:bg-slate-50")}
+            >
+              <Icon className={"w-4 h-4 " + (isActive ? "text-sky-600" : "text-slate-400")} />
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="bg-sky-50 border border-sky-100 rounded-xl p-3 text-xs text-sky-900">
+        <div className="flex items-center gap-2 font-semibold text-sky-800 mb-1">
+          <Bot className="w-4 h-4 text-sky-600" />
+          Grounded Clinical AI
+        </div>
+        <p className="text-sky-700 leading-relaxed">
+          Sentence-BERT embeddings + FAISS vector search with strict patient boundary isolation.
+        </p>
+      </div>
+    </aside>
+  );
+};

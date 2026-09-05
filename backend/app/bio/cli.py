@@ -60,6 +60,9 @@ def main(argv=None) -> int:
                         help="skip the GA-vs-PSO head-to-head")
     args = parser.parse_args(argv)
 
+    from app.core.preflight import check as preflight_check
+    preflight_check()
+
     from app.bio.registry import bio_registry
 
     if args.command == "status":

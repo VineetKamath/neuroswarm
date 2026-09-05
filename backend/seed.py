@@ -5,6 +5,11 @@ from datetime import datetime, date, timedelta, timezone
 # Add backend directory to sys.path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+# Fail fast with a readable message if the wrong interpreter is being used,
+# rather than a deep pydantic traceback whose real cause is one missing package.
+from app.core.preflight import check as _preflight_check
+_preflight_check()
+
 from app.db.base import Base
 from app.db.session import engine, SessionLocal
 from app.core.security import get_password_hash

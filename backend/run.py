@@ -29,6 +29,9 @@ def main() -> int:
     parser.add_argument("--reload", action="store_true", help="auto-reload on code changes")
     args = parser.parse_args()
 
+    from app.core.preflight import check as preflight_check
+    preflight_check()
+
     import uvicorn
 
     print("NeuroSwarm — Bio-Inspired Clinical Intelligence")

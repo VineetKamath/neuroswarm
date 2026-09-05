@@ -137,12 +137,29 @@ removed, for four reasons that all point the same way:
 
 ```bash
 cd backend
-python -m venv venv && venv\Scripts\activate      # Windows
+
+# 1. Create and ACTIVATE the virtualenv. Everything below must run inside it —
+#    if your prompt does not start with (venv), the next steps will fail.
+python -m venv venv
+venv\Scripts\activate             # Windows PowerShell / cmd
+# source venv/bin/activate        # macOS / Linux
+
 pip install -r requirements.txt
 
 python seed.py                    # 38 patients, 822 chunks, labeled benchmarks
 python -m app.bio.cli train       # evolve all five optimizers (~2 min)
 python run.py                     # http://127.0.0.1:8000
+```
+
+**If the venv already exists you still have to activate it in every new terminal.**
+Skipping activation runs your system Python, which does not have the dependencies
+installed. Each entry point detects this and prints the exact command to fix it
+instead of a traceback. To bypass activation entirely, call the interpreter directly:
+
+```bash
+venv\Scripts\python.exe seed.py
+venv\Scripts\python.exe -m app.bio.cli train
+venv\Scripts\python.exe run.py
 ```
 
 `run.py` works from the repository root or from `backend/` — it puts the package on

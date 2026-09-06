@@ -371,7 +371,7 @@
     "kendall_tau": 57.1,
     "top1_accuracy": 106.06
   },
-  "train_seconds": 7.48,
+  "train_seconds": 14.93,
   "split": {
     "train": 77,
     "test": 33

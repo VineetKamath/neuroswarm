@@ -10,7 +10,54 @@ import { SwarmCanvas } from '../components/bio/SwarmCanvas';
 import { ImmuneMap } from '../components/bio/ImmuneMap';
 import { PheromoneGrid, ACOHistory } from '../components/bio/PheromoneGrid';
 import { DimensionMask } from '../components/bio/DimensionMask';
+import { AlgorithmRoster, ALGORITHMS } from '../components/bio/AlgorithmRoster';
+import { GASandbox } from '../components/bio/sandbox/GASandbox';
+import { PSOSandbox } from '../components/bio/sandbox/PSOSandbox';
+import { AISSandbox } from '../components/bio/sandbox/AISSandbox';
+import { BinaryGASandbox } from '../components/bio/sandbox/BinaryGASandbox';
+import { ACOSandbox } from '../components/bio/sandbox/ACOSandbox';
 import api from '../api/axios';
+
+/** Per-tab view mode: measured results from the trained model, or a live
+ *  interactive sandbox running the same algorithm in the browser. */
+const ModeToggle = ({ mode, setMode, color }) => (
+  <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1">
+    {[
+      { id: 'results', label: 'Measured results' },
+      { id: 'learn', label: 'Interactive lab' },
+    ].map((m) => (
+      <button
+        key={m.id}
+        onClick={() => setMode(m.id)}
+        className={`ns-focus rounded-lg px-3.5 py-1.5 text-xs font-bold transition ${
+          mode === m.id ? 'text-white' : 'text-slate-600 hover:text-slate-900'}`}
+        style={mode === m.id ? { backgroundColor: color } : undefined}
+      >
+        {m.label}
+      </button>
+    ))}
+  </div>
+);
+
+/** Names the algorithm at the top of each panel, so the answer to
+ *  "which algorithm is this?" never requires hunting. */
+const AlgoBanner = ({ algoKey }) => {
+  const a = ALGORITHMS.find((x) => x.key === algoKey);
+  if (!a) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-2 rounded-xl border p-3"
+         style={{ borderColor: `${a.color}33`, backgroundColor: `${a.color}0d` }}>
+      <span className="grid h-6 w-6 place-items-center rounded-md text-[11px] font-bold text-white"
+            style={{ backgroundColor: a.color }}>{a.n}</span>
+      <span className="text-sm font-bold text-slate-900">{a.name}</span>
+      {a.second && <span className="text-sm font-bold" style={{ color: a.color }}>+ {a.second}</span>}
+      <span className="text-xs text-slate-500">· {a.family}</span>
+      <span className="ml-auto text-xs text-slate-600">
+        Inspired by <span className="font-semibold text-slate-800">{a.inspiration}</span>
+      </span>
+    </div>
+  );
+};
 
 const TABS = [
   { id: 'overview',    label: 'Overview',          icon: FlaskConical, color: '#0f172a' },
@@ -155,6 +202,8 @@ const Overview = ({ status, report, catalog, onJump }) => {
 
   return (
     <div className="space-y-4">
+      <AlgorithmRoster onJump={onJump} status={status} />
+
       {catalog.algorithms.map((a) => {
         const st = status?.algorithms?.[a.key];
         const h = headline(a.key);
@@ -244,6 +293,8 @@ const PanelHead = ({ meta, color, children }) => (
 
 /* ----------------------------------------------------------------- ranking */
 const RankingPanel = ({ meta }) => {
+  const [mode, setMode] = useState('results');
+  const [lab, setLab] = useState('ga');
   const [d, setD] = useState(null);
   const [patients, setPatients] = useState([]);
   const [pid, setPid] = useState('');
@@ -267,10 +318,38 @@ const RankingPanel = ({ meta }) => {
     catch { setCmp(null); } finally { setBusy(false); }
   };
 
-  if (d === false) return <EmptyState title="Not trained yet" body="Run the trainer to evolve retrieval weights." />;
-  if (!d) return <Skeleton className="h-96" />;
-
   const color = ALGO_HEX.ranking;
+
+  if (mode === 'learn') {
+    return (
+      <div className="space-y-4">
+        <AlgoBanner algoKey="ranking" />
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <ModeToggle mode={mode} setMode={setMode} color={color} />
+          <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1">
+            {[{ id: 'ga', label: 'Genetic Algorithm' }, { id: 'pso', label: 'Particle Swarm' }].map((t) => (
+              <button key={t.id} onClick={() => setLab(t.id)}
+                className={`ns-focus rounded-lg px-3.5 py-1.5 text-xs font-bold transition ${
+                  lab === t.id ? 'text-white' : 'text-slate-600 hover:text-slate-900'}`}
+                style={lab === t.id ? { backgroundColor: t.id === 'pso' ? ALGO_HEX.pso : color } : undefined}>
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        {lab === 'ga' ? <GASandbox /> : <PSOSandbox />}
+      </div>
+    );
+  }
+
+  if (d === false) return (
+    <div className="space-y-4">
+      <AlgoBanner algoKey="ranking" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
+      <EmptyState title="Not trained yet" body="Run the trainer to evolve retrieval weights, or open the interactive lab to explore the algorithm now." />
+    </div>
+  );
+  if (!d) return <Skeleton className="h-96" />;
   const ga = d.comparison?.ga;
   const pso = d.comparison?.pso;
   const base = d.heldout_baseline_metrics || d.baseline_metrics;
@@ -280,6 +359,8 @@ const RankingPanel = ({ meta }) => {
 
   return (
     <div className="space-y-4">
+      <AlgoBanner algoKey="ranking" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
       <PanelHead meta={meta} color={color}>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <MetricDelta label="nDCG@5" before={num(base?.ndcg_at_5)} after={num(opt?.ndcg_at_5)} deltaPct={imp?.ndcg_at_5} />
@@ -404,6 +485,7 @@ const RankColumn = ({ title, rows, tone }) => (
 
 /* ------------------------------------------------------------------- tasks */
 const TasksPanel = ({ meta }) => {
+  const [mode, setMode] = useState('results');
   const [d, setD] = useState(null);
   const [live, setLive] = useState(null);
 
@@ -412,10 +494,26 @@ const TasksPanel = ({ meta }) => {
     bioApi.taskRanking(10).then(setLive).catch(() => {});
   }, []);
 
-  if (d === false) return <EmptyState title="Not trained yet" body="Run the trainer to evolve the triage policy." />;
-  if (!d) return <Skeleton className="h-96" />;
-
   const color = ALGO_HEX.tasks;
+
+  if (mode === 'learn') {
+    return (
+      <div className="space-y-4">
+        <AlgoBanner algoKey="tasks" />
+        <ModeToggle mode={mode} setMode={setMode} color={color} />
+        <GASandbox />
+      </div>
+    );
+  }
+
+  if (d === false) return (
+    <div className="space-y-4">
+      <AlgoBanner algoKey="tasks" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
+      <EmptyState title="Not trained yet" body="Run the trainer to evolve the triage policy. Or open the interactive lab to explore the algorithm now." />
+    </div>
+  );
+  if (!d) return <Skeleton className="h-96" />;
   const base = d.heldout_baseline_metrics || d.baseline_metrics;
   const opt = d.heldout_optimized_metrics || d.optimized_metrics;
   const imp = d.heldout_improvement_pct || d.improvement_pct;
@@ -423,6 +521,8 @@ const TasksPanel = ({ meta }) => {
 
   return (
     <div className="space-y-4">
+      <AlgoBanner algoKey="tasks" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
       <PanelHead meta={meta} color={color}>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <MetricDelta label="Pairwise agreement" before={num(base?.pairwise_agreement)} after={num(opt?.pairwise_agreement)} deltaPct={imp?.pairwise_agreement} />
@@ -520,6 +620,7 @@ const PRESETS = [
 ];
 
 const ImmunePanel = ({ meta }) => {
+  const [mode, setMode] = useState('results');
   const [d, setD] = useState(null);
   const [vitals, setVitals] = useState(EMPTY_VITALS);
   const [result, setResult] = useState(null);
@@ -537,10 +638,26 @@ const ImmunePanel = ({ meta }) => {
     catch { setResult(null); } finally { setBusy(false); }
   };
 
-  if (d === false) return <EmptyState title="Not trained yet" body="Run the trainer to mature the detector repertoire." />;
-  if (!d) return <Skeleton className="h-96" />;
-
   const color = ALGO_HEX.immune;
+
+  if (mode === 'learn') {
+    return (
+      <div className="space-y-4">
+        <AlgoBanner algoKey="immune" />
+        <ModeToggle mode={mode} setMode={setMode} color={color} />
+        <AISSandbox />
+      </div>
+    );
+  }
+
+  if (d === false) return (
+    <div className="space-y-4">
+      <AlgoBanner algoKey="immune" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
+      <EmptyState title="Not trained yet" body="Run the trainer to mature the detector repertoire. Or open the interactive lab to explore the algorithm now." />
+    </div>
+  );
+  if (!d) return <Skeleton className="h-96" />;
   const m = d.metrics || {};
 
   const bounds = {
@@ -555,6 +672,8 @@ const ImmunePanel = ({ meta }) => {
 
   return (
     <div className="space-y-4">
+      <AlgoBanner algoKey="immune" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
       <PanelHead meta={meta} color={color}>
         <div className="mt-4 grid gap-3 sm:grid-cols-4">
           <MetricDelta label="Detection rate" before="0.000" after={num(m.detection_rate)} />
@@ -660,19 +779,38 @@ const ImmunePanel = ({ meta }) => {
 
 /* ------------------------------------------------------------- compression */
 const CompressionPanel = ({ meta }) => {
+  const [mode, setMode] = useState('results');
   const [d, setD] = useState(null);
   useEffect(() => { bioApi.compression().then(setD).catch(() => setD(false)); }, []);
 
-  if (d === false) return <EmptyState title="Not trained yet" body="Run the trainer to evolve the dimension mask." />;
-  if (!d) return <Skeleton className="h-96" />;
-
   const color = ALGO_HEX.compression;
+
+  if (mode === 'learn') {
+    return (
+      <div className="space-y-4">
+        <AlgoBanner algoKey="compression" />
+        <ModeToggle mode={mode} setMode={setMode} color={color} />
+        <BinaryGASandbox />
+      </div>
+    );
+  }
+
+  if (d === false) return (
+    <div className="space-y-4">
+      <AlgoBanner algoKey="compression" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
+      <EmptyState title="Not trained yet" body="Run the trainer to evolve the dimension mask. Or open the interactive lab to explore the algorithm now." />
+    </div>
+  );
+  if (!d) return <Skeleton className="h-96" />;
   const b = d.baseline_metrics || {};
   const o = d.optimized_metrics || {};
   const imp = d.improvement || {};
 
   return (
     <div className="space-y-4">
+      <AlgoBanner algoKey="compression" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
       <PanelHead meta={meta} color={color}>
         <div className="mt-4 grid gap-3 sm:grid-cols-4">
           <MetricDelta label="Dimensions" before={b.dims_total} after={o.dims_kept} higherIsBetter={false} />
@@ -707,19 +845,38 @@ const CompressionPanel = ({ meta }) => {
 
 /* ----------------------------------------------------------------- routing */
 const RoutingPanel = ({ meta }) => {
+  const [mode, setMode] = useState('results');
   const [d, setD] = useState(null);
   const [intent, setIntent] = useState(null);
   useEffect(() => { bioApi.routing().then(setD).catch(() => setD(false)); }, []);
 
-  if (d === false) return <EmptyState title="Not trained yet" body="Run the trainer to lay down pheromone trails." />;
-  if (!d) return <Skeleton className="h-96" />;
-
   const color = ALGO_HEX.routing;
+
+  if (mode === 'learn') {
+    return (
+      <div className="space-y-4">
+        <AlgoBanner algoKey="routing" />
+        <ModeToggle mode={mode} setMode={setMode} color={color} />
+        <ACOSandbox />
+      </div>
+    );
+  }
+
+  if (d === false) return (
+    <div className="space-y-4">
+      <AlgoBanner algoKey="routing" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
+      <EmptyState title="Not trained yet" body="Run the trainer to lay down pheromone trails. Or open the interactive lab to explore the algorithm now." />
+    </div>
+  );
+  if (!d) return <Skeleton className="h-96" />;
   const b = d.baseline_metrics || {};
   const o = d.metrics || {};
 
   return (
     <div className="space-y-4">
+      <AlgoBanner algoKey="routing" />
+      <ModeToggle mode={mode} setMode={setMode} color={color} />
       <PanelHead meta={meta} color={color}>
         <div className="mt-4 grid gap-3 sm:grid-cols-4">
           <MetricDelta label="Chunks scanned" before={num(b.mean_chunks_scanned, 0)} after={num(o.mean_chunks_scanned, 0)} higherIsBetter={false} />

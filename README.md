@@ -203,18 +203,52 @@ The login screen has one-click role switching.
 
 ## The Bio-Lab page
 
-`Sidebar → Bio-Lab` is a live, interactive demonstration of all five algorithms:
+`Sidebar → Bio-Lab` has two modes on every tab, switchable with one click.
 
-- **Convergence charts** replaying each evolutionary run — best/mean/worst fitness with
-  population diversity collapsing as the run converges, GA and PSO overlaid.
-- **Particle swarm animation** replaying the recorded trajectory: particles scatter at
-  high inertia, then contract onto the global best.
+### Interactive lab — learn how the algorithm works
+
+Each algorithm has a **live sandbox that runs in the browser**, implemented in
+`frontend/src/bio/engines.js` with the same operators as the Python originals.
+Drag a slider and the algorithm responds immediately — no server round-trip.
+Each sandbox provides:
+
+- **Play / Step / Reset** — single-step one generation at a time to watch selection,
+  crossover and mutation happen, or let it run.
+- **Live parameter sliders** — population size, mutation rate, crossover rate,
+  tournament size, elitism; inertia, cognitive and social pull; self-radius and
+  detector count; evaporation, α and β.
+- **"Try this — break it on purpose"** presets that make a specific point:
+  freeze all variation and watch fitness flatline; turn off elitism and watch the
+  best-fitness line dip; set α = 0 and watch the colony stop learning.
+- **A step-by-step mechanism panel** with the actual update equation.
+- **One generation dissected** — which genomes entered each tournament, whether
+  crossover fired, and exactly which genes mutated.
+
+Every claim the sandbox copy makes is checked by an automated script:
+
+```bash
+cd frontend
+npm run verify:bio
+```
+
+It asserts things like *"with elitism the best genome never regresses"* (0 regressions
+across 12 seeds × 50 generations, versus 40 without), *"binary crossover cannot invent
+a bit no parent has, so mutation is essential"* (diversity → 0.00000 and 22/27 useful
+dimensions found instead of 27/27), and *"the colony learns a correct route for every
+intent"* (4/4). If a claim ever stops being true, the script fails.
+
+### Measured results — what the trained models achieved
+
+- **Convergence charts** replaying each real evolutionary run — best/mean/worst fitness
+  with population diversity collapsing, GA and PSO overlaid.
+- **Particle swarm animation** replaying the recorded trajectory.
 - **Immune detector map** — a projection of the 7-D vitals space showing detectors ringing
   the normal cloud without overlapping it. Plant a typo and watch it get bound in real time.
 - **Pheromone heatmap** — query intent × partition trail strength after training.
 - **Dimension mask** — all 384 embedding dimensions, lit if they survived selection.
 - **Live A/B panels** — run a real query or the real ward queue through both the baseline
   and the evolved policy, side by side.
+
 
 ---
 

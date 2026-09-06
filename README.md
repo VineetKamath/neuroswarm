@@ -14,10 +14,10 @@ what makes the rest of the project measurable — see [Why no LLM](#why-there-is
 
 | # | Decision point | Algorithm | Baseline → Optimized (held-out) |
 |---|---|---|---|
-| 1 | Search result ranking | Genetic Algorithm + Particle Swarm | nDCG@5 **0.6987 → 0.9228** (+32.07%) |
+| 1 | Search result ranking | Genetic Algorithm + Particle Swarm | nDCG@5 **0.7635 → 0.9264** (+21.33%) |
 | 2 | Care-task prioritization | Genetic Algorithm | Expert agreement **0.6808 → 0.9212** (+35.31%) |
 | 3 | Vitals anomaly detection | Artificial Immune System (negative selection) | **89.3%** detection at **0%** false alarms (F1 0.9434) |
-| 4 | Embedding compression | Binary Genetic Algorithm | **384 → 146** dims, 61.98% less memory, accuracy break-even |
+| 4 | Embedding compression | Binary Genetic Algorithm | **384 → 145** dims, 62.24% less memory, accuracy preserved |
 | 5 | Multi-source query routing | Ant Colony Optimization | **81.16%** fewer chunks scanned, 0.8508 hit rate |
 
 Every figure above is measured on a **held-out test split** the optimizer never trained on,
@@ -84,12 +84,14 @@ be decisive alongside another. Uniform crossover recombines useful dimension gro
 
 *Fitness:* retrieval nDCG@5 in the reduced subspace, minus a parsimony penalty.
 
-> **Honest note.** On this run the evolved 146-dimension subspace scored
-> +1.07% held-out nDCG — a wash, not a real accuracy gain — while saving
-> 61.98% of memory per vector at a 1.19x faster scan. Different seeds land between
-> roughly -2% and +1% on accuracy, so treat this as break-even, not free improvement. The
-> speedup is modest because a per-patient index holds only ~20 vectors; the memory saving
-> is the durable win, and it is what the Bio-Lab reports.
+> **Honest note on the accuracy figure.** The compression benchmark holds out only ~18
+> queries, so its variance across seeds is large: repeated runs of this configuration gave
+> held-out nDCG changes of −1.46%, +0.54%, +1.07% and +13.02%. A single run on a
+> split that small cannot separate a real gain from sampling noise, so the defensible claim is
+> that accuracy is **preserved**, not improved. The gain that *is* stable across every seed is
+> the 62.24% memory reduction, which follows deterministically from keeping
+> 145 of 384 dimensions. The 1.29× scan speed-up is modest because a per-patient
+> index holds only ~20 vectors; it would matter more at hospital scale.
 
 ### 5. Multi-source query routing — ACO
 

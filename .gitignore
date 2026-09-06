@@ -6,3 +6,5 @@ venv/
 dist/
 .pytest_cache/
 .env
+report/preview/
+report/_pass1.pdf

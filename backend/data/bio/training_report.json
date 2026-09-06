@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-09-05T19:24:30.047757+00:00",
+  "trained_at": "2026-09-06T05:40:47.092489+00:00",
   "project": "NeuroSwarm",
   "compression_cases": 60,
   "compression_split": {
@@ -13,62 +13,62 @@
       "dims_total": 384,
       "retention_pct": 100.0,
       "compression_ratio": 1.0,
-      "search_ms": 0.1468,
+      "search_ms": 0.1607,
       "bytes_per_vector": 1536
     },
     "optimized": {
-      "ndcg_at_5": 0.6823,
-      "dims_kept": 141,
+      "ndcg_at_5": 0.7671,
+      "dims_kept": 145,
       "dims_total": 384,
-      "retention_pct": 36.72,
-      "compression_ratio": 2.72,
-      "search_ms": 0.1185,
-      "bytes_per_vector": 564
+      "retention_pct": 37.76,
+      "compression_ratio": 2.65,
+      "search_ms": 0.1241,
+      "bytes_per_vector": 580
     },
     "improvement": {
-      "ndcg_delta_pct": 0.54,
-      "accuracy_retained_pct": 100.54,
-      "search_speedup_x": 1.24,
-      "memory_saved_pct": 63.28
+      "ndcg_delta_pct": 13.02,
+      "accuracy_retained_pct": 113.02,
+      "search_speedup_x": 1.29,
+      "memory_saved_pct": 62.24
     },
-    "seconds": 34.71
+    "seconds": 33.68
   },
   "reindexed_chunks": 822,
-  "ranking_cases": 180,
+  "ranking_cases": 181,
   "ranking_split": {
-    "train": 125,
+    "train": 126,
     "test": 55
   },
   "ranking": {
-    "selected": "Particle Swarm Optimization",
+    "selected": "Genetic Algorithm",
     "baseline": {
-      "ndcg_at_5": 0.7461,
-      "ndcg_at_3": 0.7084,
-      "recall_at_5": 0.833,
-      "mrr": 0.8369,
+      "ndcg_at_5": 0.7635,
+      "ndcg_at_3": 0.7324,
+      "recall_at_5": 0.8482,
+      "mrr": 0.8864,
       "queries": 55
     },
     "optimized": {
-      "ndcg_at_5": 0.9086,
-      "ndcg_at_3": 0.8913,
-      "recall_at_5": 0.9212,
-      "mrr": 0.9461,
+      "ndcg_at_5": 0.9264,
+      "ndcg_at_3": 0.9024,
+      "recall_at_5": 0.9618,
+      "mrr": 0.9727,
       "queries": 55
     },
     "improvement_pct": {
-      "ndcg_at_5": 21.78,
-      "ndcg_at_3": 25.82,
-      "recall_at_5": 10.59,
-      "mrr": 13.04
+      "ndcg_at_5": 21.33,
+      "ndcg_at_3": 23.22,
+      "recall_at_5": 13.4,
+      "mrr": 9.74
     },
     "train_metrics": {
-      "ndcg_at_5": 0.8995,
-      "ndcg_at_3": 0.8707,
-      "recall_at_5": 0.9259,
-      "mrr": 0.9226,
-      "queries": 125
+      "ndcg_at_5": 0.9115,
+      "ndcg_at_3": 0.8814,
+      "recall_at_5": 0.9458,
+      "mrr": 0.9537,
+      "queries": 126
     },
-    "seconds": 491.67
+    "seconds": 244.99
   },
   "routing_cases": 181,
   "routing": {
@@ -86,7 +86,7 @@
       "scan_reduction_pct": 81.16,
       "queries": 181
     },
-    "seconds": 0.45
+    "seconds": 0.44
   },
   "task_scenarios": 110,
   "task_split": {
@@ -113,7 +113,7 @@
       "kendall_tau": 85.33,
       "top1_accuracy": 200.0
     },
-    "seconds": 14.93
+    "seconds": 14.35
   },
   "immune": {
     "metrics": {
@@ -129,6 +129,6 @@
       "f1": 0.9434
     },
     "detectors": 320,
-    "seconds": 2.47
+    "seconds": 2.92
   }
 }

@@ -76,7 +76,7 @@ TEAM = [
 GUIDE = "Prof. Hitha S"
 GUIDE_TITLE = "Assistant Professor"
 HOD = "Dr. Seemanthini K"
-YEAR = "2025-2026"
+YEAR = "2026-2027"
 
 ACCENT = HexColor("#7B3F00")
 INK = HexColor("#0B1220")

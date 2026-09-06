@@ -1,4 +1,4 @@
-# Bio-Inspired Algorithms — Mini Project Report
+# Bio-Inspired Algorithms — Project Report
 
 Regenerate the PDF after any retraining so the report always matches the artifacts:
 

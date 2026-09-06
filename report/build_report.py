@@ -1,5 +1,5 @@
 """
-Builds the NeuroSwarm Bio-Inspired Algorithms mini-project report as a PDF,
+Builds the NeuroSwarm Bio-Inspired Algorithms project report as a PDF,
 matching the VTU / BMSCE format of the reference report.
 
     python report/build_report.py
@@ -255,13 +255,13 @@ def _cover(story):
     story.append(Image(str(ASSETS / "vtu_logo.png"), width=22 * mm, height=15.7 * mm,
                        hAlign="CENTER"))
     story.append(Spacer(1, 4 * mm))
-    story.append(P(f"<b>{SUBJECT} MINI PROJECT REPORT</b>",
+    story.append(P(f"<b>{SUBJECT} PROJECT REPORT</b>",
                    S("cv3", fontName="Times-Bold", fontSize=13.5, leading=18, alignment=TA_CENTER)))
     story.append(P("ON", S("cv4", fontSize=10.5, leading=14, alignment=TA_CENTER)))
     story.append(P("<b>NeuroSwarm: Bio-Inspired Optimization for<br/>Real-Time Clinical Intelligence</b>",
                    S("cv5", fontName="Times-Bold", fontSize=16.5, leading=22, alignment=TA_CENTER,
                      spaceAfter=10)))
-    story.append(P("<i>Submitted in Partial fulfilment for the VI Semester, BE, "
+    story.append(P("<i>Submitted in Partial fulfilment for the VII Semester, BE, "
                    "Artificial Intelligence &amp; Data Science</i>",
                    S("cv6", fontSize=10.5, leading=14, alignment=TA_CENTER, spaceAfter=12)))
     story.append(P("<b>Submitted by:</b>", center_b))
@@ -325,7 +325,7 @@ def _certificate(story):
 
     names = ", ".join(n for n, _ in TEAM[:-1]) + " and " + TEAM[-1][0]
     story.append(P(
-        f"Certified that the mini project entitled <b>&ldquo;NeuroSwarm: Bio-Inspired Optimization "
+        f"Certified that the project entitled <b>&ldquo;NeuroSwarm: Bio-Inspired Optimization "
         f"for Real-Time Clinical Intelligence&rdquo;</b> carried out by {names}, bonafide students "
         f"of BMS College of Engineering in partial fulfillment for award of Bachelor of Engineering "
         f"in Artificial Intelligence and Data Science during the year {YEAR}. It is certified that "
@@ -353,14 +353,14 @@ def doc_w():
 def _declaration(story):
     story.append(P("<b>DECLARATION</b>", h1))
     story.append(P(
-        "We the undersigned students of 6<super>th</super> semester, Department of Artificial "
-        "Intelligence &amp; Data Science, BMS College of Engineering, declare that the mini project "
+        "We the undersigned students of 7<super>th</super> semester, Department of Artificial "
+        "Intelligence &amp; Data Science, BMS College of Engineering, declare that the project "
         "entitled <b>&ldquo;NeuroSwarm: Bio-Inspired Optimization for Real-Time Clinical "
         "Intelligence&rdquo;</b>, is a bonafide work of us and our project is neither a copy nor by "
         "any means a modification of any other engineering project.",
         S("d1", fontSize=12, leading=20, firstLineIndent=18)))
     story.append(P(
-        "We also declare that this mini project was not entitled for submission to any other "
+        "We also declare that this project was not entitled for submission to any other "
         "university in the past and shall remain the only submission made and will not be submitted "
         "by us to any other university in the future.",
         S("d2", fontSize=12, leading=20, firstLineIndent=18)))

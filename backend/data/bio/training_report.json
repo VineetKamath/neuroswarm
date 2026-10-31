@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-09-06T05:40:47.092489+00:00",
+  "trained_at": "2026-09-17T16:25:24.601159+00:00",
   "project": "NeuroSwarm",
   "compression_cases": 60,
   "compression_split": {
@@ -13,25 +13,25 @@
       "dims_total": 384,
       "retention_pct": 100.0,
       "compression_ratio": 1.0,
-      "search_ms": 0.1607,
+      "search_ms": 0.0219,
       "bytes_per_vector": 1536
     },
     "optimized": {
-      "ndcg_at_5": 0.7671,
-      "dims_kept": 145,
+      "ndcg_at_5": 0.6944,
+      "dims_kept": 139,
       "dims_total": 384,
-      "retention_pct": 37.76,
-      "compression_ratio": 2.65,
-      "search_ms": 0.1241,
-      "bytes_per_vector": 580
+      "retention_pct": 36.2,
+      "compression_ratio": 2.76,
+      "search_ms": 0.0171,
+      "bytes_per_vector": 556
     },
     "improvement": {
-      "ndcg_delta_pct": 13.02,
-      "accuracy_retained_pct": 113.02,
-      "search_speedup_x": 1.29,
-      "memory_saved_pct": 62.24
+      "ndcg_delta_pct": 2.32,
+      "accuracy_retained_pct": 102.32,
+      "search_speedup_x": 1.28,
+      "memory_saved_pct": 63.8
     },
-    "seconds": 33.68
+    "seconds": 12.05
   },
   "reindexed_chunks": 822,
   "ranking_cases": 181,
@@ -40,35 +40,35 @@
     "test": 55
   },
   "ranking": {
-    "selected": "Genetic Algorithm",
+    "selected": "Particle Swarm Optimization",
     "baseline": {
-      "ndcg_at_5": 0.7635,
-      "ndcg_at_3": 0.7324,
-      "recall_at_5": 0.8482,
-      "mrr": 0.8864,
+      "ndcg_at_5": 0.7382,
+      "ndcg_at_3": 0.7003,
+      "recall_at_5": 0.8258,
+      "mrr": 0.8198,
       "queries": 55
     },
     "optimized": {
-      "ndcg_at_5": 0.9264,
-      "ndcg_at_3": 0.9024,
-      "recall_at_5": 0.9618,
-      "mrr": 0.9727,
+      "ndcg_at_5": 0.9001,
+      "ndcg_at_3": 0.8867,
+      "recall_at_5": 0.9264,
+      "mrr": 0.9386,
       "queries": 55
     },
     "improvement_pct": {
-      "ndcg_at_5": 21.33,
-      "ndcg_at_3": 23.22,
-      "recall_at_5": 13.4,
-      "mrr": 9.74
+      "ndcg_at_5": 21.93,
+      "ndcg_at_3": 26.63,
+      "recall_at_5": 12.18,
+      "mrr": 14.5
     },
     "train_metrics": {
-      "ndcg_at_5": 0.9115,
-      "ndcg_at_3": 0.8814,
-      "recall_at_5": 0.9458,
-      "mrr": 0.9537,
+      "ndcg_at_5": 0.8989,
+      "ndcg_at_3": 0.869,
+      "recall_at_5": 0.9284,
+      "mrr": 0.92,
       "queries": 126
     },
-    "seconds": 244.99
+    "seconds": 85.04
   },
   "routing_cases": 181,
   "routing": {
@@ -86,7 +86,7 @@
       "scan_reduction_pct": 81.16,
       "queries": 181
     },
-    "seconds": 0.44
+    "seconds": 0.08
   },
   "task_scenarios": 110,
   "task_split": {
@@ -113,7 +113,7 @@
       "kendall_tau": 85.33,
       "top1_accuracy": 200.0
     },
-    "seconds": 14.35
+    "seconds": 3.4
   },
   "immune": {
     "metrics": {
@@ -129,6 +129,6 @@
       "f1": 0.9434
     },
     "detectors": 320,
-    "seconds": 2.92
+    "seconds": 0.5
   }
 }

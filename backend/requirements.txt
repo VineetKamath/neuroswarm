@@ -1,3 +1,7 @@
+# Python >=3.9,<3.14 — build the venv with `py -3.11 -m venv venv` (Windows) or
+# `python3.11 -m venv venv`. torch (pulled in by sentence-transformers) and
+# faiss-cpu publish no wheels for 3.14, so a newer interpreter cannot install
+# this file at all. app/core/preflight.py enforces the same range at startup.
 fastapi>=0.110.0
 uvicorn[standard]>=0.28.0
 pydantic[email]>=2.6.0    # [email] pulls email-validator, required by EmailStr in schemas/user.py

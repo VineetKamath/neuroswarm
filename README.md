@@ -133,7 +133,8 @@ removed, for four reasons that all point the same way:
 
 ## Quickstart
 
-**Prerequisites:** Python 3.11+, Node.js 18+
+**Prerequisites:** Python 3.11 (3.9–3.13 all work; **not 3.14** — torch and faiss-cpu
+publish no wheels for it), Node.js 18+
 
 ### Backend
 
@@ -142,7 +143,10 @@ cd backend
 
 # 1. Create and ACTIVATE the virtualenv. Everything below must run inside it —
 #    if your prompt does not start with (venv), the next steps will fail.
-python -m venv venv
+#    Name the interpreter explicitly: a bare `python` may be 3.14, which cannot
+#    install the dependencies.
+py -3.11 -m venv venv             # Windows
+# python3.11 -m venv venv         # macOS / Linux
 venv\Scripts\activate             # Windows PowerShell / cmd
 # source venv/bin/activate        # macOS / Linux
 
@@ -163,6 +167,13 @@ venv\Scripts\python.exe seed.py
 venv\Scripts\python.exe -m app.bio.cli train
 venv\Scripts\python.exe run.py
 ```
+
+**Do not re-run `python -m venv venv` over an existing venv to "repair" it.** If the
+interpreter differs from the one that built it, that rewrites `pyvenv.cfg` but leaves
+`Lib/site-packages` alone, so every compiled extension in it becomes unimportable and
+you get `No module named 'pydantic_core._pydantic_core'`. Either delete `venv/` and
+rebuild it, or point it back at the original interpreter with
+`py -3.11 -m venv venv --upgrade`.
 
 `run.py` works from the repository root or from `backend/` — it puts the package on
 `sys.path` itself, and the database path is resolved relative to the package rather than

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  ChevronLeft, ChevronRight, Maximize2, Minimize2, Leaf, ListOrdered, Sigma, Lightbulb, Mic,
+  ChevronLeft, ChevronRight, Maximize2, Minimize2, Leaf, ListOrdered, Sigma, Lightbulb,
   MessageSquareText, HeartPulse, ClipboardList, ArrowRight, MapPin, FileCode2, Zap, BarChart3, BookOpen,
 } from 'lucide-react';
 import { bioApi } from '../api/bio';
@@ -227,7 +227,7 @@ function Overview({ report }) {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div>
         <div className="card p-5">
           <div className="mb-3 text-sm font-bold text-slate-900">The loop every one of them shares</div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
@@ -240,10 +240,6 @@ function Overview({ report }) {
               <div key={t} className="rounded-xl border border-slate-100 p-3"><div className="font-bold" style={{ color: col }}>{t}</div><div className="font-semibold text-slate-700">{a}</div><div className="text-[11px] text-slate-500">{d}</div></div>
             ))}
           </div>
-        </div>
-        <div className="card p-5">
-          <div className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900"><Mic className="h-4 w-4 text-brand-600" />Opening lines</div>
-          <ul className="space-y-2">{c.say.map((s) => <li key={s} className="flex gap-2.5 text-[13px] leading-relaxed text-slate-700"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />{s}</li>)}</ul>
         </div>
       </div>
     </div>

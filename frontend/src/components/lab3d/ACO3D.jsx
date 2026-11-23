@@ -60,12 +60,12 @@ export const ACO3D = forwardRef(function ACO3D(_, ref) {
     ground.rotation.x = -Math.PI / 2; ground.position.y = -0.01; scene.add(ground);
 
     ACO_INTENTS.forEach((intent, i) => {
-      const [x, z] = hillPos(i);
+      const [x, , z] = hillPos(i);
       const hill = makeMound(ICOL[i]); hill.position.set(x, 0, z); scene.add(hill);
       const l = label(`${intent} questions`, { color: ICSS[i] }); l.position.set(x, -0.2, z + 1.3); scene.add(l);
     });
     ACO_PARTITIONS.forEach((name, p) => {
-      const [x, z] = pilePos(p);
+      const [x, , z] = pilePos(p);
       const stack = makePaperStack(Math.round(ACO_SIZES[name] / 3)); const h = stack.height;
       stack.group.position.set(x, 0, z); scene.add(stack.group);
       const l = label(`${name.replace(' :: ', ' · ')} (${ACO_SIZES[name]})`, { color: '#cbd5e1' }); l.position.set(x, h + 0.8 + (p % 2) * 0.8, z); scene.add(l);

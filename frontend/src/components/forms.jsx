@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FileText, HeartPulse, ClipboardPlus, UserPlus, ShieldAlert, ShieldCheck, UserCog } from 'lucide-react';
 import api from '../api/axios';
 import { Modal, Field, ErrorNote, Spinner, cx } from './ui';
@@ -196,28 +196,51 @@ export function PatientModal({ open, onClose, onSaved }) {
   const [error, setError] = useState('');
   useEffect(() => {
     if (open) {
-      setForm({ mrn: `NS-${Math.floor(7000 + Math.random() * 2000)}`, first_name: '', last_name: '', date_of_birth: '', gender: 'Female',
+      setForm({ mrn: `NS-${Math.floor(7000 + Math.random() * 2000)}`, first_name: '', last_name: '', date_of_birth: '', age: '', gender: 'Female',
         blood_group: 'O+', ward: 'General Medicine', room_number: '', status: 'ADMITTED', primary_diagnosis: '', allergies: '', medical_history: '', emergency_contact: '' });
       setError('');
     }
   }, [open]); // eslint-disable-line
 
+  const topRef = useRef(null);
+  const fail = (msg) => { setError(msg); topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+
   const submit = async (e) => {
-    e.preventDefault(); setBusy(true); setError('');
-    try { const r = await api.post('/patients', form); onSaved?.(r.data); onClose(); }
-    catch (err) { setError(errText(err, 'Could not admit the patient.')); } finally { setBusy(false); }
+    e.preventDefault();
+    // Our own checks, shown at the top of the form, instead of the browser's
+    // small tooltip that can be hidden inside the scrolling dialog.
+    const missing = [];
+    if (!form.first_name?.trim()) missing.push('first name');
+    if (!form.mrn?.trim()) missing.push('MRN');
+    if (!form.date_of_birth && !form.age) missing.push('date of birth or age');
+    if (missing.length) { fail(`Please fill in: ${missing.join(', ')}.`); return; }
+    const age = Number(form.age);
+    if (!form.date_of_birth && (!Number.isFinite(age) || age < 0 || age > 120)) { fail('Age must be a number between 0 and 120.'); return; }
+
+    const { age: _age, ...rest } = form;
+    const payload = {
+      ...rest,
+      first_name: form.first_name.trim(),
+      last_name: (form.last_name || '').trim(),
+      // Only an age was given: store 1 January of the birth year.
+      date_of_birth: form.date_of_birth || `${new Date().getFullYear() - Math.round(age)}-01-01`,
+    };
+    setBusy(true); setError('');
+    try { const r = await api.post('/patients', payload); onSaved?.(r.data); onClose(); }
+    catch (err) { fail(errText(err, 'Could not admit the patient. Check that the server is running.')); } finally { setBusy(false); }
   };
 
   return (
     <Modal open={open} onClose={onClose} icon={UserPlus} size="lg" title="Admit patient"
       footer={<Footer onClose={onClose} busy={busy} label="Admit" form="patient-form" />}>
-      <form id="patient-form" onSubmit={submit} className="space-y-4">
-        <ErrorNote>{error}</ErrorNote>
+      <form id="patient-form" onSubmit={submit} noValidate className="space-y-4">
+        <div ref={topRef}><ErrorNote>{error}</ErrorNote></div>
         <div className="grid gap-4 sm:grid-cols-3">
-          <Field label="First name"><input className="input" required {...bind('first_name')} /></Field>
-          <Field label="Last name"><input className="input" required {...bind('last_name')} /></Field>
-          <Field label="MRN"><input className="input font-mono" required {...bind('mrn')} /></Field>
-          <Field label="Date of birth"><input type="date" className="input" required {...bind('date_of_birth')} /></Field>
+          <Field label="First name *"><input className="input" {...bind('first_name')} /></Field>
+          <Field label="Last name (optional)"><input className="input" {...bind('last_name')} /></Field>
+          <Field label="MRN *"><input className="input font-mono" {...bind('mrn')} /></Field>
+          <Field label="Date of birth" hint="or fill in age instead"><input type="date" className="input" {...bind('date_of_birth')} /></Field>
+          <Field label="Age (years)" hint="used if no date of birth"><input type="number" min="0" max="120" className="input" {...bind('age')} placeholder="e.g. 45" /></Field>
           <Field label="Gender"><select className="input" {...bind('gender')}><option>Female</option><option>Male</option><option>Other</option></select></Field>
           <Field label="Blood group"><select className="input" {...bind('blood_group')}>{['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].map((b) => <option key={b}>{b}</option>)}</select></Field>
           <Field label="Ward"><select className="input" {...bind('ward')}>{['General Medicine', 'Cardiology', 'Pulmonology', 'Neurology', 'Internal Medicine', 'Post-Surgical 3C'].map((w) => <option key={w}>{w}</option>)}</select></Field>

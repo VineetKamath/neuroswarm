@@ -131,7 +131,7 @@ const layerOf = (r) => {
   return { name: 'Physiological range rule', tone: 'amber' };
 };
 export function VitalsLive() {
-  const base = Object.fromEntries(VITAL_FIELDS.map(([k, v]) => [k, v]));
+  const base = Object.fromEntries(VITAL_FIELDS.map(([k, , v]) => [k, v]));
   const [vals, setVals] = useState(base);
   const [res, setRes] = useState(null);
   const [busy, setBusy] = useState(false);

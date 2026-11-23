@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  ChevronLeft, ChevronRight, Maximize2, Minimize2, Leaf, ListOrdered, Sigma, Lightbulb, Mic, HelpCircle, ChevronDown,
+  ChevronLeft, ChevronRight, Maximize2, Minimize2, Leaf, ListOrdered, Sigma, Lightbulb, Mic,
   MessageSquareText, HeartPulse, ClipboardList, ArrowRight, MapPin, FileCode2, Zap, BarChart3, BookOpen,
 } from 'lucide-react';
 import { bioApi } from '../api/bio';
@@ -74,32 +74,6 @@ function Details({ chapter }) {
   );
 }
 
-function QA({ chapter }) {
-  const c = CONTENT[chapter.key];
-  const [open, setOpen] = useState(0);
-  return (
-    <div className="grid gap-4 lg:grid-cols-2">
-      <div className="card p-5">
-        <div className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900"><Mic className="h-4 w-4" style={{ color: chapter.color }} />Say this while the demo runs</div>
-        <ul className="space-y-2">{c.say.map((s) => <li key={s} className="flex gap-2.5 text-[13px] leading-relaxed text-slate-700"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: chapter.color }} />{s}</li>)}</ul>
-      </div>
-      <div className="card p-5">
-        <div className="mb-3 flex items-center gap-2 text-sm font-bold text-slate-900"><HelpCircle className="h-4 w-4" style={{ color: chapter.color }} />Likely examiner questions</div>
-        <div className="space-y-2">
-          {c.qa.map(([q, a], i) => (
-            <div key={q} className="rounded-xl border border-slate-100">
-              <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center gap-2 px-3 py-2 text-left text-[13px] font-semibold text-slate-800">
-                <span className="flex-1">{q}</span><ChevronDown className={cx('h-4 w-4 text-slate-400 transition', open === i && 'rotate-180')} />
-              </button>
-              {open === i && <div className="border-t border-slate-100 px-3 py-2 text-[13px] leading-relaxed text-slate-600 anim-in">{a}</div>}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /* ------------------------------------------------------------ chapter -- */
 function Chapter({ chapter, report }) {
   const Scene = SCENES[chapter.key];
@@ -159,13 +133,11 @@ function Chapter({ chapter, report }) {
           { value: 'live', label: 'Try it on the real system', icon: Zap },
           { value: 'results', label: 'Real training results', icon: BarChart3 },
           { value: 'details', label: 'How it works', icon: BookOpen },
-          { value: 'qa', label: 'Talking points & Q&A', icon: Mic },
         ]} />
         <div key={tab} className="anim-in">
           {tab === 'live' && LIVE[chapter.key]()}
           {tab === 'results' && RESULTS[chapter.key](report)}
           {tab === 'details' && <Details chapter={chapter} />}
-          {tab === 'qa' && <QA chapter={chapter} />}
         </div>
       </div>
     </div>

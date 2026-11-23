@@ -59,7 +59,7 @@ def partition_key(note_type: str, section: str) -> str:
 class ACOConfig:
     n_ants: int = 30
     iterations: int = 40
-    evaporation: float = 0.12      # rho — how fast stale trails fade
+    evaporation: float = 0.12      # rho, how fast stale trails fade
     alpha: float = 1.0             # pheromone influence
     beta: float = 2.0              # heuristic (prior affinity) influence
     q_deposit: float = 1.0
@@ -186,7 +186,7 @@ class AntColonyRouter:
                         # Earlier steps on a successful route earn more credit.
                         deposits[i_idx, p] += self.cfg.q_deposit * quality / (r + 1)
 
-            # Evaporate, then deposit — trails that stopped paying off decay away.
+            # Evaporate, then deposit, trails that stopped paying off decay away.
             self.pheromone *= (1.0 - self.cfg.evaporation)
             self.pheromone += deposits / max(1, self.cfg.n_ants)
             np.clip(self.pheromone, self.cfg.min_pheromone, self.cfg.max_pheromone,
@@ -251,7 +251,7 @@ class AntColonyRouter:
         )
 
     def baseline_metrics(self, cases: Sequence[Dict]) -> ACOMetrics:
-        """Exhaustive scan — what the system does without routing."""
+        """Exhaustive scan, what the system does without routing."""
         total_chunks = max(1, sum(self.partition_sizes.values()))
         return ACOMetrics(
             hit_rate=1.0,                       # scanning everything always contains the gold

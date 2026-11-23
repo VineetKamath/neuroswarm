@@ -4,7 +4,7 @@ Genetic-Algorithm care-task prioritization (Improvement #2).
 WHERE IT PLUGS IN
     The task queue previously ordered work with a fixed two-key SQL sort:
     `ORDER BY due_time ASC, priority DESC`. That rule cannot express the
-    trade-offs a charge nurse makes constantly — an overdue MEDIUM medication
+    trade-offs a charge nurse makes constantly, an overdue MEDIUM medication
     on a CRITICAL patient outranks a not-yet-due HIGH hygiene task, and no
     static sort key encodes that.
 
@@ -13,7 +13,7 @@ WHY BIO-INSPIRED
     *preferences* from clinicians ("this task should come before that one")
     far more easily than we can elicit a scoring formula. Pairwise-agreement
     is a discontinuous step function of the weights, so again there is no
-    gradient to follow — a GA optimizes it directly.
+    gradient to follow, a GA optimizes it directly.
 
 FITNESS
     Fraction of expert-labeled pairwise orderings the policy reproduces,
@@ -128,7 +128,7 @@ def extract_task_features(task, patient_status: str, nurse_open_tasks: int,
 
 @dataclass
 class TaskPolicy:
-    """Decoded prioritization policy — the evolved 'clinical instinct'."""
+    """Decoded prioritization policy, the evolved 'clinical instinct'."""
     w_priority: float = 1.0
     w_acuity: float = 0.0
     w_overdue: float = 0.0

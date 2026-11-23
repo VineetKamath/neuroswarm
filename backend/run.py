@@ -34,7 +34,7 @@ def main() -> int:
 
     import uvicorn
 
-    print("NeuroSwarm — Bio-Inspired Clinical Intelligence")
+    print("NeuroSwarm, Bio-Inspired Clinical Intelligence")
     print(f"  API   http://{args.host}:{args.port}")
     print(f"  Docs  http://{args.host}:{args.port}/docs")
     uvicorn.run("app.main:app", host=args.host, port=args.port,

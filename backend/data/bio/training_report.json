@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-09-17T16:25:24.601159+00:00",
+  "trained_at": "2026-11-22T14:14:23.729535+00:00",
   "project": "NeuroSwarm",
   "compression_cases": 60,
   "compression_split": {
@@ -8,83 +8,83 @@
   },
   "compression": {
     "baseline": {
-      "ndcg_at_5": 0.6787,
+      "ndcg_at_5": 0.642,
       "dims_kept": 384,
       "dims_total": 384,
       "retention_pct": 100.0,
       "compression_ratio": 1.0,
-      "search_ms": 0.0219,
+      "search_ms": 0.0251,
       "bytes_per_vector": 1536
     },
     "optimized": {
-      "ndcg_at_5": 0.6944,
-      "dims_kept": 139,
+      "ndcg_at_5": 0.6048,
+      "dims_kept": 142,
       "dims_total": 384,
-      "retention_pct": 36.2,
-      "compression_ratio": 2.76,
-      "search_ms": 0.0171,
-      "bytes_per_vector": 556
+      "retention_pct": 36.98,
+      "compression_ratio": 2.7,
+      "search_ms": 0.0231,
+      "bytes_per_vector": 568
     },
     "improvement": {
-      "ndcg_delta_pct": 2.32,
-      "accuracy_retained_pct": 102.32,
-      "search_speedup_x": 1.28,
-      "memory_saved_pct": 63.8
+      "ndcg_delta_pct": -5.79,
+      "accuracy_retained_pct": 94.21,
+      "search_speedup_x": 1.08,
+      "memory_saved_pct": 63.02
     },
-    "seconds": 12.05
+    "seconds": 9.48
   },
-  "reindexed_chunks": 822,
-  "ranking_cases": 181,
+  "reindexed_chunks": 1932,
+  "ranking_cases": 386,
   "ranking_split": {
-    "train": 126,
-    "test": 55
+    "train": 270,
+    "test": 116
   },
   "ranking": {
-    "selected": "Particle Swarm Optimization",
+    "selected": "Genetic Algorithm",
     "baseline": {
-      "ndcg_at_5": 0.7382,
-      "ndcg_at_3": 0.7003,
-      "recall_at_5": 0.8258,
-      "mrr": 0.8198,
-      "queries": 55
+      "ndcg_at_5": 0.6925,
+      "ndcg_at_3": 0.6345,
+      "recall_at_5": 0.7687,
+      "mrr": 0.7986,
+      "queries": 116
     },
     "optimized": {
-      "ndcg_at_5": 0.9001,
-      "ndcg_at_3": 0.8867,
-      "recall_at_5": 0.9264,
-      "mrr": 0.9386,
-      "queries": 55
+      "ndcg_at_5": 0.9174,
+      "ndcg_at_3": 0.8941,
+      "recall_at_5": 0.9484,
+      "mrr": 0.9441,
+      "queries": 116
     },
     "improvement_pct": {
-      "ndcg_at_5": 21.93,
-      "ndcg_at_3": 26.63,
-      "recall_at_5": 12.18,
-      "mrr": 14.5
+      "ndcg_at_5": 32.47,
+      "ndcg_at_3": 40.91,
+      "recall_at_5": 23.38,
+      "mrr": 18.22
     },
     "train_metrics": {
-      "ndcg_at_5": 0.8989,
-      "ndcg_at_3": 0.869,
-      "recall_at_5": 0.9284,
-      "mrr": 0.92,
-      "queries": 126
+      "ndcg_at_5": 0.9162,
+      "ndcg_at_3": 0.9034,
+      "recall_at_5": 0.9311,
+      "mrr": 0.9443,
+      "queries": 270
     },
-    "seconds": 85.04
+    "seconds": 185.35
   },
-  "routing_cases": 181,
+  "routing_cases": 391,
   "routing": {
     "baseline": {
       "hit_rate": 1.0,
       "mean_partitions_scanned": 30.0,
-      "mean_chunks_scanned": 822.0,
+      "mean_chunks_scanned": 1932.0,
       "scan_reduction_pct": 0.0,
-      "queries": 181
+      "queries": 391
     },
     "optimized": {
-      "hit_rate": 0.8508,
+      "hit_rate": 0.9079,
       "mean_partitions_scanned": 5.0,
-      "mean_chunks_scanned": 154.87,
-      "scan_reduction_pct": 81.16,
-      "queries": 181
+      "mean_chunks_scanned": 340.21,
+      "scan_reduction_pct": 82.39,
+      "queries": 391
     },
     "seconds": 0.08
   },
@@ -95,40 +95,40 @@
   },
   "tasks": {
     "baseline": {
-      "pairwise_agreement": 0.6808,
-      "kendall_tau": 0.4545,
-      "top1_accuracy": 0.303,
+      "pairwise_agreement": 0.8061,
+      "kendall_tau": 0.701,
+      "top1_accuracy": 0.6061,
       "scenarios": 33,
       "pairs": 495
     },
     "optimized": {
-      "pairwise_agreement": 0.9212,
-      "kendall_tau": 0.8424,
+      "pairwise_agreement": 0.9434,
+      "kendall_tau": 0.8869,
       "top1_accuracy": 0.9091,
       "scenarios": 33,
       "pairs": 495
     },
     "improvement_pct": {
-      "pairwise_agreement": 35.31,
-      "kendall_tau": 85.33,
-      "top1_accuracy": 200.0
+      "pairwise_agreement": 17.04,
+      "kendall_tau": 26.51,
+      "top1_accuracy": 50.0
     },
-    "seconds": 3.4
+    "seconds": 3.46
   },
   "immune": {
     "metrics": {
-      "true_positives": 25,
-      "false_positives": 0,
-      "true_negatives": 56,
-      "false_negatives": 3,
+      "true_positives": 65,
+      "false_positives": 1,
+      "true_negatives": 112,
+      "false_negatives": 7,
       "detectors": 320,
-      "coverage": 0.99,
-      "detection_rate": 0.8929,
-      "false_alarm_rate": 0.0,
-      "precision": 1.0,
-      "f1": 0.9434
+      "coverage": 0.9833,
+      "detection_rate": 0.9028,
+      "false_alarm_rate": 0.0088,
+      "precision": 0.9848,
+      "f1": 0.942
     },
     "detectors": 320,
-    "seconds": 0.5
+    "seconds": 0.74
   }
 }

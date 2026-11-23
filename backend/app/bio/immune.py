@@ -1,5 +1,5 @@
 """
-Artificial Immune System — real-valued negative selection (Improvement #3).
+Artificial Immune System, real-valued negative selection (Improvement #3).
 
 WHERE IT PLUGS IN
     A checkpoint over vital-sign records, run before the data is trusted for
@@ -17,7 +17,7 @@ THE BIOLOGICAL ANALOGY
 
 WHY THIS RATHER THAN A CLASSIFIER
     A supervised model needs labeled examples of every error type. We do not
-    have those — transcription typos, transposed digits, and unit mix-ups are
+    have those, transcription typos, transposed digits, and unit mix-ups are
     open-ended and unpredictable. Negative selection trains on *normal data
     only*, so it flags error modes that were never enumerated in advance.
     This is the defining strength of the immune metaphor for safety checking.
@@ -81,8 +81,8 @@ def hard_range_violations(values: Dict[str, Optional[float]]) -> List[Dict]:
 
     Two classes of error belong in rules rather than in learned detectors:
 
-    1. Out-of-range values — a systolic of 1200 is a typo, not rare physiology.
-    2. Impossible RELATIONSHIPS — a diastolic above the systolic cannot occur
+    1. Out-of-range values, a systolic of 1200 is a typo, not rare physiology.
+    2. Impossible RELATIONSHIPS, a diastolic above the systolic cannot occur
        at any acuity, yet both numbers are individually plausible, so they sit
        close enough to the self-region that no detector reliably covers them.
        Negative selection exists to catch error modes nobody enumerated; a
@@ -111,7 +111,7 @@ def hard_range_violations(values: Dict[str, Optional[float]]) -> List[Dict]:
                 "plausible_range": [FEATURE_BOUNDS["bp_diastolic"][0], sys_f - 1],
                 "unit": "mmHg",
                 "reason": f"Diastolic pressure ({dia_f:.0f} mmHg) is not below systolic "
-                          f"({sys_f:.0f} mmHg) — physiologically impossible, most likely the "
+                          f"({sys_f:.0f} mmHg), physiologically impossible, most likely the "
                           f"two values were entered in the wrong fields.",
             })
         elif sys_f - dia_f < 10:
@@ -320,9 +320,9 @@ class NegativeSelectionDetector:
             direction = "above" if s["z_score"] > 0 else "below"
             return (f"A detector bound this reading. {s['feature'].replace('_', ' ').title()} of "
                     f"{s['value']} {s['unit']} sits {abs(s['z_score']):.1f}σ {direction} the learned "
-                    f"norm (typical {s['normal_band'][0]}–{s['normal_band'][1]}). Verify before acting.")
+                    f"norm (typical {s['normal_band'][0]}-{s['normal_band'][1]}). Verify before acting.")
         return (f"Reading lies {nearest:.3f} from the nearest normal pattern and was bound by a "
-                f"non-self detector — the combination of values is unusual even though each "
+                f"non-self detector, the combination of values is unusual even though each "
                 f"individual number looks acceptable.")
 
     # ---- persistence -----------------------------------------------------

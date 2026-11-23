@@ -2,8 +2,8 @@
 Dependency preflight.
 
 Running an entry point with the system interpreter instead of the project
-virtualenv produces a 40-line pydantic traceback whose actual cause — one
-missing package — is buried at the very bottom. This turns that into a single
+virtualenv produces a 40-line pydantic traceback whose actual cause, one
+missing package, is buried at the very bottom. This turns that into a single
 readable message that names the interpreter in use and the command to fix it.
 """
 from __future__ import annotations
@@ -67,7 +67,7 @@ def _check_interpreter_version(exit_on_failure: bool) -> bool:
     ceiling = ".".join(str(n) for n in MAX_PYTHON_EXCLUSIVE)
     running = ".".join(str(n) for n in sys.version_info[:3])
     message = _banner(
-        f"NeuroSwarm needs Python >={want},<{ceiling} — you are running {running}",
+        f"NeuroSwarm needs Python >={want},<{ceiling}, you are running {running}",
         [
             f"  Interpreter in use: {sys.executable}",
             "",
@@ -95,7 +95,7 @@ def _abi_mismatch(exc: ImportError) -> bool:
     different interpreter rewrites pyvenv.cfg but leaves Lib/site-packages
     alone, so every compiled extension in it (`*.cp311-win_amd64.pyd`) becomes
     invisible to the new interpreter. The resulting error names a private
-    submodule — `No module named 'pydantic_core._pydantic_core'` — which looks
+    submodule, `No module named 'pydantic_core._pydantic_core'`, which looks
     nothing like the real cause.
     """
     text = str(exc)
@@ -105,7 +105,7 @@ def _abi_mismatch(exc: ImportError) -> bool:
 def _report_abi_mismatch(exc: ImportError, exit_on_failure: bool) -> None:
     running = ".".join(str(n) for n in sys.version_info[:2])
     message = _banner(
-        "NeuroSwarm cannot start — installed packages were built for another Python",
+        "NeuroSwarm cannot start, installed packages were built for another Python",
         [
             f"  Interpreter in use: {sys.executable}  (Python {running})",
             f"  Import failed:      {exc}",
@@ -157,7 +157,7 @@ def check(exit_on_failure: bool = True) -> list[str]:
     lines = [
         "",
         "=" * 74,
-        "  NeuroSwarm cannot start — missing Python packages",
+        "  NeuroSwarm cannot start, missing Python packages",
         "=" * 74,
         f"  Interpreter in use: {sys.executable}",
         "",

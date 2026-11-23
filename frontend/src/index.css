@@ -1,130 +1,128 @@
 @import "tailwindcss";
 
-:root {
-  --ns-ink: #0b1220;
-  --ns-surface: #ffffff;
-  --ns-muted: #64748b;
-  --ns-line: #e2e8f0;
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Each algorithm family carries one accent, used consistently everywhere it
-     appears — chart, badge, panel border — so the eye can track a family
-     across the whole page without reading a label. */
-  --ns-ga: #6366f1;      /* Genetic Algorithm      — indigo */
-  --ns-pso: #06b6d4;     /* Particle Swarm         — cyan   */
-  --ns-ais: #f43f5e;     /* Artificial Immune Sys  — rose   */
-  --ns-aco: #f59e0b;     /* Ant Colony             — amber  */
-  --ns-bin: #10b981;     /* Binary GA / compression— emerald*/
-  --ns-base: #94a3b8;    /* the un-optimized baseline — slate */
+  /* Brand: a calm clinical teal. One accent, used sparingly. */
+  --color-brand-50: #effcf9;
+  --color-brand-100: #d0f7ef;
+  --color-brand-200: #a2eee0;
+  --color-brand-300: #6bdecd;
+  --color-brand-400: #3bc6b6;
+  --color-brand-500: #1faa9c;
+  --color-brand-600: #15897f;
+  --color-brand-700: #156e67;
+  --color-brand-800: #155853;
+  --color-brand-900: #164946;
+
+  /* One colour per algorithm family, used identically everywhere. */
+  --color-ga: #7c6cf2;
+  --color-pso: #22b8e0;
+  --color-ais: #f0527a;
+  --color-bga: #2fbf71;
+  --color-aco: #f5a524;
 }
+
+:root {
+  --ink: #0f172a;
+  --scope-bg: #0a1020;
+}
+
+html, body, #root { height: 100%; }
+html { scroll-behavior: smooth; }
 
 body {
-  background-color: #f6f8fb;
-  color: var(--ns-ink);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  background: #f4f6fa;
+  color: var(--ink);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "cv11", "ss01";
 }
 
-::-webkit-scrollbar { width: 8px; height: 8px; }
+::selection { background: #a2eee0; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar-thumb { background: #cfd6e2; border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: #a9b4c6; background-clip: padding-box; }
 
-/* ---------------------------------------------------------------- motion --
-   Animations are informational here, not decorative: a pulsing detector means
-   "this bound an anomaly", a travelling dash means "this trail is active".
-   All of it collapses under reduced-motion.                                  */
+/* ------------------------------------------------------------ components -- */
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_10px_30px_-20px_rgba(15,23,42,0.25)];
+  }
+  .card-pad { @apply p-5; }
+  button.card, a.card { @apply transition-all duration-200 ease-out; }
 
-@keyframes ns-fade-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes ns-fade-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes ns-pulse-ring {
-  0%   { transform: scale(0.85); opacity: 0.75; }
-  70%  { transform: scale(1.6);  opacity: 0; }
-  100% { transform: scale(1.6);  opacity: 0; }
-}
-@keyframes ns-dash { to { stroke-dashoffset: -1000; } }
-@keyframes ns-draw { to { stroke-dashoffset: 0; } }
-@keyframes ns-shimmer {
-  0%   { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
-}
-@keyframes ns-drift {
-  0%   { transform: translate(0, 0); }
-  50%  { transform: translate(3px, -4px); }
-  100% { transform: translate(0, 0); }
-}
-@keyframes ns-spin { to { transform: rotate(360deg); } }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2
+           active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100;
+  }
+  .btn-sm { @apply px-2.5 py-1.5 text-xs rounded-lg; }
+  .btn-primary { @apply bg-brand-600 text-white shadow-sm hover:bg-brand-700; }
+  .btn-dark { @apply bg-slate-900 text-white hover:bg-slate-800; }
+  .btn-outline { @apply border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300; }
+  .btn-ghost { @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900; }
+  .btn-danger { @apply bg-rose-600 text-white hover:bg-rose-700; }
 
-.ns-animate-up { animation: ns-fade-up .5s cubic-bezier(.22,.9,.3,1) both; }
-.ns-animate-in { animation: ns-fade-in .45s ease both; }
-.ns-pulse-ring { animation: ns-pulse-ring 1.9s cubic-bezier(0,0,.2,1) infinite; transform-origin: center; }
-.ns-dash { stroke-dasharray: 5 7; animation: ns-dash 14s linear infinite; }
-.ns-drift { animation: ns-drift 5s ease-in-out infinite; }
-.ns-spin { animation: ns-spin 1s linear infinite; }
+  .input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400
+           outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-100;
+  }
+  .label { @apply mb-1.5 block text-xs font-semibold text-slate-600; }
 
-.ns-skeleton {
-  background: linear-gradient(90deg, #eef2f7 25%, #e2e8f0 37%, #eef2f7 63%);
+  .badge { @apply inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-semibold ring-1 ring-inset; }
+
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400; }
+
+  /* Dark instrument panel for every simulation canvas. */
+  .scope {
+    background:
+      radial-gradient(900px 320px at 10% -20%, rgba(124,108,242,.18), transparent 60%),
+      radial-gradient(800px 300px at 110% 120%, rgba(34,184,224,.14), transparent 60%),
+      var(--scope-bg);
+    @apply rounded-2xl border border-slate-800 text-slate-200;
+  }
+  .scope-grid {
+    background-image:
+      linear-gradient(to right, rgba(148,163,184,.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148,163,184,.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
+
+/* -------------------------------------------------------------- motion -- */
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes page-in { from { opacity: 0; transform: translateY(6px) scale(.995); } to { opacity: 1; transform: none; } }
+.page-in { animation: page-in .32s cubic-bezier(.22,.9,.3,1) both; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in-right { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes pop { 0% { transform: scale(.96); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+@keyframes pulse-ring { 0% { transform: scale(.8); opacity: .8; } 80%, 100% { transform: scale(1.8); opacity: 0; } }
+@keyframes blink { 50% { opacity: .35; } }
+
+.anim-up { animation: fade-up .45s cubic-bezier(.22,.9,.3,1) both; }
+.anim-in { animation: fade-in .35s ease both; }
+.anim-pop { animation: pop .2s ease-out both; }
+.anim-slide { animation: slide-in-right .28s cubic-bezier(.22,.9,.3,1) both; }
+.pulse-ring { animation: pulse-ring 1.8s cubic-bezier(0,0,.2,1) infinite; transform-origin: center; }
+.blink { animation: blink 1.2s ease-in-out infinite; }
+
+.skeleton {
+  background: linear-gradient(90deg, #eef1f6 25%, #e3e8f0 37%, #eef1f6 63%);
   background-size: 800px 100%;
-  animation: ns-shimmer 1.4s linear infinite;
+  animation: shimmer 1.3s linear infinite;
+  border-radius: 10px;
 }
 
-/* Line-drawing effect for convergence curves. */
-.ns-draw-line {
-  stroke-dasharray: 2200;
-  stroke-dashoffset: 2200;
-  animation: ns-draw 1.6s cubic-bezier(.25,.8,.35,1) forwards;
-}
+.prose-answer strong { color: #0f172a; font-weight: 650; }
+.prose-answer em { color: #64748b; font-style: normal; font-size: 11px; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .001ms !important;
-  }
-  .ns-draw-line { stroke-dashoffset: 0; }
-}
-
-/* ----------------------------------------------------------- components -- */
-.ns-card {
-  background: var(--ns-surface);
-  border: 1px solid var(--ns-line);
-  border-radius: 16px;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px -18px rgba(15, 23, 42, .25);
-}
-
-/* The dark instrument panel used for every visualization canvas — it reads as
-   scientific equipment and makes the accent colors carry properly. */
-.ns-scope {
-  background:
-    radial-gradient(1100px 380px at 12% -10%, rgba(99,102,241,.16), transparent 60%),
-    radial-gradient(900px 340px at 105% 110%, rgba(6,182,212,.13), transparent 60%),
-    #0b1220;
-  border: 1px solid #1e293b;
-  border-radius: 16px;
-  color: #e2e8f0;
-}
-
-.ns-grid-lines {
-  background-image:
-    linear-gradient(to right, rgba(148,163,184,.10) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148,163,184,.10) 1px, transparent 1px);
-  background-size: 34px 34px;
-}
-
-.ns-chip {
-  display: inline-flex; align-items: center; gap: .375rem;
-  padding: .2rem .55rem; border-radius: 9999px;
-  font-size: .6875rem; font-weight: 650; letter-spacing: .01em;
-  border: 1px solid currentColor;
-}
-
-.ns-tabular { font-variant-numeric: tabular-nums; }
-
-.ns-focus:focus-visible {
-  outline: 2px solid var(--ns-ga);
-  outline-offset: 2px;
-  border-radius: 10px;
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }

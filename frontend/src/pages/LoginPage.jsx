@@ -1,156 +1,113 @@
 import React, { useState } from 'react';
+import { ArrowRight, Lock, Mail, ShieldCheck, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { Activity, Shield, Stethoscope, HeartPulse, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
+import { DEMO_ACCOUNTS, Logo } from '../components/Shell';
+import { Avatar, ErrorNote, Spinner, cx } from '../components/ui';
 
-export const LoginPage = () => {
+const ALGOS = [
+  { k: 'Genetic Algorithm', d: 'evolves search ranking & task triage', c: '#7c6cf2' },
+  { k: 'Particle Swarm', d: 'races the GA on ranking weights', c: '#22b8e0' },
+  { k: 'Artificial Immune System', d: 'catches mistyped vital signs', c: '#f0527a' },
+  { k: 'Binary GA', d: 'compresses embeddings 384 → ~140 dims', c: '#2fbf71' },
+  { k: 'Ant Colony', d: 'routes each query to the right notes', c: '#f5a524' },
+];
+
+export function LoginPage() {
   const { login, sessionExpired } = useAuth();
-  const [email, setEmail] = useState('admin@neuroswarm.health');
+  const [email, setEmail] = useState(DEMO_ACCOUNTS[1].email);
   const [password, setPassword] = useState('password123');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const demoAccounts = [
-    {
-      role: 'Hospital Admin',
-      email: 'admin@neuroswarm.health',
-      password: 'password123',
-      name: 'Dr. Arthur Hastings',
-      icon: Shield,
-    },
-    {
-      role: 'Physician / Doctor',
-      email: 'dr.chen@neuroswarm.health',
-      password: 'password123',
-      name: 'Dr. Melinda Chen, MD',
-      icon: Stethoscope,
-    },
-    {
-      role: 'Nursing Staff',
-      email: 'nurse.sarah@neuroswarm.health',
-      password: 'password123',
-      name: 'Sarah Jenkins, RN',
-      icon: HeartPulse,
-    },
-  ];
-
-  const handleSelectDemo = (acc) => {
-    setEmail(acc.email);
-    setPassword(acc.password);
-    setError('');
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
+  const submit = async (e, acc) => {
+    e?.preventDefault();
+    setBusy(true); setError('');
     try {
-      await login(email, password);
+      await login(acc?.email || email, acc ? 'password123' : password);
+      window.location.hash = '#/dashboard';
     } catch (err) {
-      setError(err.response?.data?.detail || 'Invalid email or password. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+      setError(err.response?.data?.detail || 'Cannot reach the server. Is the backend running on port 8000?');
+    } finally { setBusy(false); }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-sky-600 text-white shadow-md mb-4">
-          <Activity className="w-8 h-8" />
+    <div className="grid min-h-full lg:grid-cols-[1.1fr_1fr]">
+      {/* ---- story panel ---- */}
+      <div className="relative hidden overflow-hidden bg-[#0b1222] p-12 text-white lg:flex lg:flex-col">
+        <div className="pointer-events-none absolute inset-0 opacity-60"
+          style={{ background: 'radial-gradient(600px 300px at 20% 10%, rgba(31,170,156,.35), transparent 60%), radial-gradient(500px 300px at 90% 90%, rgba(124,108,242,.3), transparent 60%)' }} />
+        <div className="relative"><Logo dark /></div>
+        <div className="relative mt-auto max-w-lg">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-brand-200">
+            <Sparkles className="h-3.5 w-3.5" /> Bio-Inspired Algorithms · Course Project
+          </div>
+          <h1 className="text-4xl font-bold leading-tight tracking-tight">
+            Five decisions in a hospital,<br />made by algorithms <span className="text-brand-300">borrowed from nature.</span>
+          </h1>
+          <p className="mt-4 text-sm leading-relaxed text-slate-400">
+            Evolution, swarms, immune cells and ant colonies tune how NeuroSwarm searches patient notes,
+            orders the nurse's queue, and catches data-entry errors, measured against hand-written baselines.
+          </p>
+          <div className="mt-8 space-y-2.5">
+            {ALGOS.map((a) => (
+              <div key={a.k} className="flex items-center gap-3 text-sm">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ background: a.c, boxShadow: `0 0 12px ${a.c}` }} />
+                <span className="font-semibold text-slate-100">{a.k}</span>
+                <span className="text-slate-500">, {a.d}</span>
+              </div>
+            ))}
+          </div>
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">NeuroSwarm Clinical Portal</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Bio-Inspired Clinical Intelligence · Role-Secured EHR
-        </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 shadow-sm border border-slate-200 rounded-2xl sm:px-10">
-          {sessionExpired && (
-            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl flex items-center gap-2 font-medium">
-              <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
-              Your session has expired. Please sign in again to continue.
-            </div>
-          )}
+      {/* ---- sign-in ---- */}
+      <div className="flex items-center justify-center p-6 sm:p-12">
+        <div className="w-full max-w-md anim-up">
+          <div className="mb-8 lg:hidden"><Logo /></div>
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Sign in</h2>
+          <p className="mt-1 text-sm text-slate-500">Pick a demo account or enter credentials.</p>
 
-          {error && (
-            <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-center gap-2 font-medium">
-              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-              {error}
-            </div>
-          )}
+          {sessionExpired && <div className="mt-4"><ErrorNote>Your session expired. Please sign in again.</ErrorNote></div>}
 
-          <div className="mb-6">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-              Quick Demo Role Sign-In:
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {demoAccounts.map((acc, idx) => {
-                const Icon = acc.icon;
-                const isSelected = email === acc.email;
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleSelectDemo(acc)}
-                    className={"p-2.5 rounded-xl border text-left transition flex flex-col items-center text-center " + (isSelected ? "border-sky-500 bg-sky-50 ring-2 ring-sky-500/20" : "border-slate-200 bg-slate-50 hover:bg-slate-100")}
-                  >
-                    <Icon className="w-4 h-4 text-slate-700 mb-1" />
-                    <span className="text-[11px] font-bold text-slate-900 leading-tight">{acc.role.split('/')[0]}</span>
-                    <span className="text-[10px] text-slate-500 truncate w-full mt-0.5">{acc.name.split(' ')[0]}</span>
-                  </button>
-                );
-              })}
-            </div>
+          <div className="mt-6 grid gap-2">
+            {DEMO_ACCOUNTS.map((a) => (
+              <button key={a.email} disabled={busy} onClick={(e) => submit(e, a)}
+                className={cx('group flex items-center gap-3 rounded-2xl border bg-white px-3.5 py-3 text-left transition hover:border-brand-300 hover:shadow-md',
+                  email === a.email ? 'border-brand-300' : 'border-slate-200')}>
+                <Avatar name={a.name} />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-semibold text-slate-800">{a.name}</div>
+                  <div className="truncate text-xs text-slate-500">{a.title}</div>
+                </div>
+                <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">{a.role}</span>
+                <ArrowRight className="h-4 w-4 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-brand-600" />
+              </button>
+            ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Hospital Email</label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@neuroswarm.health"
-                  className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
-                />
-              </div>
-            </div>
+          <div className="my-6 flex items-center gap-3 text-[11px] font-medium uppercase tracking-wider text-slate-400">
+            <div className="h-px flex-1 bg-slate-200" /> or <div className="h-px flex-1 bg-slate-200" />
+          </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Password</label>
-              <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
-                />
-              </div>
+          <form onSubmit={submit} className="space-y-3">
+            {error && <ErrorNote>{error}</ErrorNote>}
+            <div className="relative">
+              <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <input className="input pl-9" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@neuroswarm.health" required />
             </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full mt-2 py-2.5 px-4 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-sm transition shadow-xs flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {loading ? 'Authenticating...' : 'Sign In to Clinical Portal'}
-              <ArrowRight className="w-4 h-4" />
+            <div className="relative">
+              <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <input className="input pl-9" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </div>
+            <button className="btn btn-primary w-full py-2.5" disabled={busy}>
+              {busy ? <Spinner /> : 'Sign in'}
             </button>
           </form>
-        </div>
-
-        <div className="mt-4 text-center text-xs text-slate-400">
-          Protected Health Information System • Strictly Audited & Encrypted
+          <p className="mt-6 flex items-center gap-1.5 text-[11px] text-slate-400">
+            <ShieldCheck className="h-3.5 w-3.5" /> All demo accounts use the password <code className="font-mono">password123</code>
+          </p>
         </div>
       </div>
     </div>
   );
-};
+}

@@ -82,3 +82,18 @@ def health_check():
         "vector_engine": vector_store.get_index_stats(),
         "bio_inspired": bio_registry.status()["algorithms"],
     }
+
+
+# ---- Serve the built frontend (single-container deployment) ---------------
+# In production the React app is built into frontend/dist and served from the
+# same origin as the API, so there is one URL and no CORS setup. In local
+# development (SERVE_FRONTEND unset, or no dist folder) nothing is mounted and
+# the Vite dev server is used instead.
+import os
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+
+_dist = Path(os.getenv("FRONTEND_DIST", Path(__file__).resolve().parents[2] / "frontend" / "dist"))
+if os.getenv("SERVE_FRONTEND", "0") == "1" and (_dist / "index.html").exists():
+    app.mount("/", StaticFiles(directory=str(_dist), html=True), name="frontend")
+    logger.info("Serving frontend from %s", _dist)

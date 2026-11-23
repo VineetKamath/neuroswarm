@@ -3,7 +3,7 @@ Synthetic clinical corpus + labeled ground truth.
 
 Every bio-inspired optimizer here is trained against measurable ground truth,
 which the four hand-authored demo patients cannot supply on their own. This
-module generates a larger, clinically coherent cohort and — crucially —
+module generates a larger, clinically coherent cohort and, crucially,
 records the labels *while generating*, so the benchmark is exact rather than
 guessed after the fact:
 
@@ -219,16 +219,185 @@ CONDITIONS: List[ConditionTemplate] = [
             ("How long has the patient been breathless?", "Subjective History"),
         ],
     ),
+    ConditionTemplate(
+        name="Dengue Fever",
+        diagnosis="Dengue Fever with Warning Signs and Thrombocytopenia",
+        ward="General Medicine",
+        complaint="High-grade fever with severe body ache, retro-orbital pain and rash for {d} days.",
+        subjective="{age}yo {sex} from a dengue-endemic locality reports {d} days of high-grade fever "
+                   "with chills, severe myalgia, headache behind the eyes and {dengue_sx}.",
+        objective="Temp {temp}°C, HR {hr} bpm, BP {sbp}/{dbp} mmHg. Petechial rash over forearms, "
+                  "tourniquet test positive. Platelet count {plt_d} x10^9/L, haematocrit {hct}%, "
+                  "WBC {wbc_d} x10^9/L. NS1 antigen {ns1}, Dengue IgM {igm}. SGOT {sgot} U/L.",
+        assessment="Dengue fever with warning signs ({warning}). Thrombocytopenia with platelets "
+                   "{plt_d} x10^9/L and haematocrit {hct}%. No evidence of shock at present.",
+        plan="1. IV Ringer lactate {fluid_d}mL/kg/hr, titrate to urine output and haematocrit.\n"
+             "2. Paracetamol 650mg QID for fever; strictly avoid NSAIDs and aspirin because of bleeding risk.\n"
+             "3. Platelet count and haematocrit every 12 hours; transfuse only if bleeding or below 10 x10^9/L.\n"
+             "4. Monitor for warning signs: abdominal pain, mucosal bleed, rising haematocrit.",
+        medications=["Ringer lactate", "Paracetamol", "Oral rehydration solution", "Pantoprazole"],
+        organism_or_marker="NS1 antigen",
+        vitals_profile={"heart_rate": (88, 120), "bp_systolic": (96, 128), "bp_diastolic": (58, 82),
+                        "resp_rate": (18, 26), "temp_celsius": (37.8, 39.8),
+                        "o2_saturation": (94, 99), "blood_glucose": (86, 140)},
+        questions=[
+            ("What is the latest platelet count?", "Objective / Vitals / Labs"),
+            ("Was the NS1 antigen positive?", "Objective / Vitals / Labs"),
+            ("What fluids are being given and at what rate?", "Plan & Orders"),
+            ("Which warning signs of dengue are present?", "Assessment & Diagnosis"),
+            ("Why should NSAIDs be avoided for this patient?", "Plan & Orders"),
+        ],
+    ),
+    ConditionTemplate(
+        name="Pulmonary Tuberculosis",
+        diagnosis="Pulmonary Tuberculosis, sputum AFB {afb}, rifampicin {rif}",
+        ward="Pulmonology",
+        complaint="Cough for more than {weeks} weeks with evening fever, night sweats and weight loss.",
+        subjective="{age}yo {sex} reports productive cough for {weeks} weeks, evening rise of "
+                   "temperature, drenching night sweats and loss of {wt_loss}kg weight. "
+                   "{tb_contact}.",
+        objective="Temp {temp}°C, HR {hr} bpm, RR {rr}/min, SpO2 {spo2}% on {o2}. BMI {bmi} kg/m2. "
+                  "Coarse crepitations over the {tb_zone}. Chest X-ray: {cxr_tb}. "
+                  "Sputum AFB smear {afb}. CBNAAT: MTB detected, rifampicin {rif}. "
+                  "HIV non-reactive. ESR {esr} mm/hr.",
+        assessment="Microbiologically confirmed pulmonary tuberculosis, new case, rifampicin {rif}. "
+                   "Weight band {wband} kg for dosing. Notified under NTEP.",
+        plan="1. Start fixed-dose combination HRZE ({fdc} tablets daily) for the 2-month intensive phase.\n"
+             "2. Pyridoxine 10mg daily to prevent isoniazid neuropathy.\n"
+             "3. Baseline LFT and visual acuity; repeat LFT at 2 weeks.\n"
+             "4. Airborne isolation, cough hygiene counselling and household contact screening.",
+        medications=["Isoniazid", "Rifampicin", "Pyrazinamide", "Ethambutol"],
+        organism_or_marker="CBNAAT",
+        vitals_profile={"heart_rate": (84, 112), "bp_systolic": (98, 128), "bp_diastolic": (60, 82),
+                        "resp_rate": (18, 26), "temp_celsius": (37.2, 38.6),
+                        "o2_saturation": (90, 97), "blood_glucose": (80, 130)},
+        questions=[
+            ("What did the CBNAAT test show?", "Objective / Vitals / Labs"),
+            ("Which anti-tubercular drugs were started?", "Plan & Orders"),
+            ("What did the chest X-ray show?", "Objective / Vitals / Labs"),
+            ("How much weight has the patient lost?", "Subjective History"),
+            ("Is there rifampicin resistance?", "Assessment & Diagnosis"),
+        ],
+    ),
+    ConditionTemplate(
+        name="Acute STEMI",
+        diagnosis="Acute {stemi_wall} Wall ST-Elevation Myocardial Infarction",
+        ward="Cardiology",
+        complaint="Crushing central chest pain radiating to the left arm with sweating for {hrs_pain} hours.",
+        subjective="{age}yo {sex} with {risk} describes sudden retrosternal chest pain at rest, "
+                   "radiating to the left arm and jaw, with profuse sweating and nausea for {hrs_pain} hours.",
+        objective="BP {sbp}/{dbp} mmHg, HR {hr} bpm, SpO2 {spo2}%. ECG: ST elevation in {leads}. "
+                  "hs-Troponin I {trop} ng/L. Echo: regional wall motion abnormality, LVEF {lvef}%. "
+                  "Coronary angiography: {culprit}.",
+        assessment="Acute {stemi_wall} wall STEMI, Killip class {killip}. Culprit lesion {culprit}. "
+                   "Door-to-balloon time {dtb} minutes.",
+        plan="1. Primary PCI performed with drug-eluting stent to the culprit vessel.\n"
+             "2. Dual antiplatelet therapy: Aspirin 75mg daily plus Ticagrelor 90mg BID for 12 months.\n"
+             "3. Atorvastatin 80mg nightly, Metoprolol {metop}mg daily, Ramipril 2.5mg daily.\n"
+             "4. Continuous cardiac monitoring for 48 hours; cardiac rehabilitation referral.",
+        medications=["Aspirin", "Ticagrelor", "Atorvastatin", "Metoprolol", "Ramipril"],
+        organism_or_marker="Troponin",
+        vitals_profile={"heart_rate": (58, 104), "bp_systolic": (100, 158), "bp_diastolic": (60, 96),
+                        "resp_rate": (16, 24), "temp_celsius": (36.2, 37.3),
+                        "o2_saturation": (92, 99), "blood_glucose": (110, 220)},
+        questions=[
+            ("What did the ECG show?", "Objective / Vitals / Labs"),
+            ("What was the troponin level?", "Objective / Vitals / Labs"),
+            ("Which antiplatelet drugs were prescribed?", "Plan & Orders"),
+            ("What was the culprit vessel on angiography?", "Assessment & Diagnosis"),
+            ("Describe the chest pain the patient reported.", "Subjective History"),
+        ],
+    ),
+    ConditionTemplate(
+        name="Enteric Fever",
+        diagnosis="Enteric Fever (Typhoid), blood culture {typh_org}",
+        ward="General Medicine",
+        complaint="Step-ladder fever, abdominal discomfort and loss of appetite for {d} days.",
+        subjective="{age}yo {sex} reports {d} days of gradually rising fever, dull abdominal pain, "
+                   "{bowel} and generalised weakness. History of eating street food.",
+        objective="Temp {temp}°C, HR {hr} bpm (relative bradycardia), BP {sbp}/{dbp} mmHg. Coated tongue, "
+                  "tender hepatosplenomegaly. Blood culture: {typh_org}. Widal TO {widal}. "
+                  "WBC {wbc_t} x10^9/L, platelets {plt} x10^9/L, SGPT {sgpt} U/L.",
+        assessment="Culture-confirmed enteric fever caused by {typh_org}. No features of intestinal "
+                   "perforation or encephalopathy.",
+        plan="1. IV Ceftriaxone 2g once daily; switch to oral Azithromycin 500mg daily once afebrile for 48 hours.\n"
+             "2. Paracetamol 650mg SOS for fever above 38.5°C.\n"
+             "3. Soft, high-calorie diet and oral hydration; monitor for abdominal distension.\n"
+             "4. Repeat CBC and LFT after 72 hours; stool culture before discharge.",
+        medications=["Ceftriaxone", "Azithromycin", "Paracetamol"],
+        organism_or_marker="Salmonella Typhi",
+        vitals_profile={"heart_rate": (72, 100), "bp_systolic": (100, 130), "bp_diastolic": (60, 84),
+                        "resp_rate": (16, 22), "temp_celsius": (38.0, 39.8),
+                        "o2_saturation": (95, 99), "blood_glucose": (84, 130)},
+        questions=[
+            ("What organism grew in the blood culture?", "Objective / Vitals / Labs"),
+            ("Which antibiotic was started for typhoid?", "Plan & Orders"),
+            ("What was the Widal titre?", "Objective / Vitals / Labs"),
+            ("What symptoms did the patient report?", "Subjective History"),
+            ("When should the antibiotic be switched to oral?", "Plan & Orders"),
+        ],
+    ),
+    ConditionTemplate(
+        name="Falciparum Malaria",
+        diagnosis="Plasmodium falciparum Malaria, {mal_sev}",
+        ward="General Medicine",
+        complaint="Intermittent fever with chills and rigors, vomiting and headache for {d} days.",
+        subjective="{age}yo {sex} returned from {mal_place} two weeks ago and reports {d} days of "
+                   "fever with chills and rigors every alternate day, vomiting and severe headache.",
+        objective="Temp {temp}°C, HR {hr} bpm, BP {sbp}/{dbp} mmHg. Pallor and mild icterus, "
+                  "splenomegaly. Peripheral smear: P. falciparum ring forms, parasitaemia {para}%. "
+                  "RDT positive for Pf HRP-2. Hb {hb} g/dL, platelets {plt} x10^9/L, bilirubin {bili} mg/dL.",
+        assessment="Plasmodium falciparum malaria with {para}% parasitaemia, {mal_sev}. "
+                   "{mal_comp}.",
+        plan="1. IV Artesunate 2.4mg/kg at 0, 12 and 24 hours, then once daily until oral intake possible.\n"
+             "2. Complete course with oral Artemether-Lumefantrine for 3 days.\n"
+             "3. Single low dose Primaquine 0.25mg/kg as gametocytocide after G6PD screening.\n"
+             "4. Capillary glucose 4-hourly; repeat smear at 48 hours to confirm parasite clearance.",
+        medications=["Artesunate", "Artemether-Lumefantrine", "Primaquine", "Paracetamol"],
+        organism_or_marker="Plasmodium falciparum",
+        vitals_profile={"heart_rate": (90, 124), "bp_systolic": (94, 126), "bp_diastolic": (56, 80),
+                        "resp_rate": (18, 28), "temp_celsius": (37.8, 40.0),
+                        "o2_saturation": (93, 99), "blood_glucose": (68, 130)},
+        questions=[
+            ("What was the parasite count on the smear?", "Objective / Vitals / Labs"),
+            ("Which antimalarial was started?", "Plan & Orders"),
+            ("Is this severe malaria?", "Assessment & Diagnosis"),
+            ("Where did the patient travel recently?", "Subjective History"),
+            ("What was the haemoglobin and platelet count?", "Objective / Vitals / Labs"),
+        ],
+    ),
 ]
 
-FIRST_NAMES = ["Aaron", "Beatrice", "Caleb", "Delia", "Ezra", "Farah", "Gideon", "Hana", "Isaac",
-               "Juno", "Kwame", "Lucia", "Mateo", "Nadia", "Omar", "Priya", "Quentin", "Rosa",
-               "Samir", "Tessa", "Ulric", "Vera", "Wren", "Xiomara", "Yusuf", "Zara", "Alina",
-               "Bruno", "Cora", "Dmitri", "Elena", "Felix", "Greta", "Hugo", "Iris", "Jonas"]
-LAST_NAMES = ["Almeida", "Bergstrom", "Castellanos", "Dubois", "Eriksen", "Fontaine", "Gallagher",
-              "Haruki", "Ibarra", "Jansen", "Kowalski", "Lindqvist", "Moreau", "Nakamura",
-              "Okonkwo", "Petrov", "Quintero", "Rasmussen", "Silva", "Tanaka", "Ueda", "Volkov",
-              "Wexler", "Yamamoto", "Zielinski", "Achebe", "Bianchi", "Cardoso"]
+MALE_FIRST_NAMES = [
+    "Aarav", "Arjun", "Rohan", "Karthik", "Siddharth", "Rahul", "Vikram", "Aditya", "Pranav",
+    "Harish", "Suresh", "Ramesh", "Mahesh", "Ganesh", "Venkatesh", "Manoj", "Anil", "Sanjay",
+    "Rajiv", "Nikhil", "Varun", "Abhishek", "Deepak", "Prakash", "Srinivas", "Imran", "Farhan",
+    "Gurpreet", "Naveen", "Kiran", "Lokesh", "Tejas", "Yash", "Joseph", "Sameer", "Vinod",
+    "Ravi", "Ashok", "Gopal", "Mukesh",
+]
+FEMALE_FIRST_NAMES = [
+    "Ananya", "Priya", "Kavya", "Meera", "Lakshmi", "Sneha", "Pooja", "Divya", "Aishwarya",
+    "Nandini", "Shreya", "Radha", "Sunita", "Geeta", "Anjali", "Deepika", "Pallavi", "Revathi",
+    "Shalini", "Bhavana", "Sowmya", "Fatima", "Ayesha", "Simran", "Asha", "Vidya", "Rekha",
+    "Usha", "Kamala", "Harini", "Madhuri", "Swati", "Neha", "Parvathi", "Zoya", "Jyothi",
+]
+LAST_NAMES = [
+    "Sharma", "Verma", "Iyer", "Iyengar", "Reddy", "Rao", "Nair", "Menon", "Pillai", "Patel",
+    "Shah", "Desai", "Joshi", "Kulkarni", "Deshpande", "Gowda", "Hegde", "Shetty", "Kamath",
+    "Bhat", "Mukherjee", "Banerjee", "Chatterjee", "Das", "Ghosh", "Singh", "Gupta", "Agarwal",
+    "Mishra", "Pandey", "Tiwari", "Yadav", "Naidu", "Chowdhury", "Khan", "Siddiqui", "Qureshi",
+    "Fernandes", "Dsouza", "Krishnan", "Subramanian", "Venkataraman", "Sinha", "Saxena", "Bose",
+]
+# Kept for any external import that still expects a single list.
+FIRST_NAMES = MALE_FIRST_NAMES + FEMALE_FIRST_NAMES
+
+
+def indian_phone(rng) -> str:
+    return f"+91 {rng.choice([98, 99, 97, 94, 90, 88, 70])}{rng.randint(100, 999)} {rng.randint(10000, 99999)}"
+
+
+STABLE_CONTEXT_KEYS = {"age", "sex", "d", "ef", "stage", "gold", "py", "curb",
+                       "weeks", "wt_loss", "hrs_pain", "lvef", "dtb", "bmi"}
 
 
 def _pick(rng: random.Random, seq: Sequence):
@@ -316,6 +485,56 @@ def _build_context(cond: ConditionTemplate, rng: random.Random, age: int, sex: s
                                     "type 1 respiratory failure"]),
         "anth": _pick(rng, ["I", "II"]), "salb": _pick(rng, [2.5, 5.0]),
         "pred": _pick(rng, [30, 40]),
+        # dengue
+        "dengue_sx": _pick(rng, ["persistent vomiting", "abdominal pain", "gum bleeding",
+                                 "extreme lethargy", "decreased oral intake"]),
+        "plt_d": rng.randint(18, 92), "hct": rng.randint(41, 52),
+        "wbc_d": round(rng.uniform(2.1, 4.2), 1),
+        "ns1": _pick(rng, ["positive", "positive", "negative (day 6, IgM-driven diagnosis)"]),
+        "igm": _pick(rng, ["positive", "equivocal", "negative"]),
+        "sgot": rng.randint(68, 340), "fluid_d": _pick(rng, [3, 5, 7]),
+        "warning": _pick(rng, ["persistent vomiting and abdominal pain",
+                               "mucosal bleeding from gums",
+                               "rising haematocrit with falling platelets",
+                               "lethargy and restlessness"]),
+        # tuberculosis
+        "weeks": rng.randint(3, 10), "wt_loss": rng.randint(3, 11),
+        "tb_contact": _pick(rng, ["Father was treated for TB two years ago",
+                                  "No known TB contact", "Works in a crowded textile unit",
+                                  "Neighbour currently on anti-TB treatment"]),
+        "bmi": round(rng.uniform(15.2, 20.8), 1),
+        "tb_zone": _pick(rng, ["right upper zone", "left upper zone", "bilateral upper zones"]),
+        "cxr_tb": _pick(rng, ["right upper lobe cavitation with fibro-nodular infiltrates",
+                              "bilateral upper zone infiltrates with a 3cm cavity",
+                              "left upper lobe consolidation with hilar lymphadenopathy"]),
+        "afb": _pick(rng, ["positive (2+)", "positive (1+)", "positive (scanty)"]),
+        "rif": _pick(rng, ["sensitive", "sensitive", "sensitive", "resistance not detected"]),
+        "esr": rng.randint(42, 110), "wband": _pick(rng, ["30-39", "40-54", "55-69"]),
+        "fdc": _pick(rng, [2, 3, 4]),
+        # STEMI
+        "stemi_wall": _pick(rng, ["Anterior", "Inferior", "Lateral", "Anterolateral"]),
+        "hrs_pain": rng.randint(1, 8),
+        "risk": _pick(rng, ["type 2 diabetes and smoking", "hypertension and dyslipidaemia",
+                            "a strong family history of coronary disease", "no prior cardiac history"]),
+        "leads": _pick(rng, ["V1-V4", "II, III and aVF", "I, aVL, V5-V6", "V1-V6 and aVL"]),
+        "trop": rng.randint(1800, 48000), "lvef": rng.randint(30, 52),
+        "culprit": _pick(rng, ["99% proximal LAD occlusion", "total occlusion of the mid RCA",
+                               "90% stenosis of the proximal LCx", "thrombotic occlusion of the mid LAD"]),
+        "killip": _pick(rng, ["I", "I", "II", "III"]), "dtb": rng.randint(48, 110),
+        # typhoid
+        "bowel": _pick(rng, ["constipation", "loose stools", "alternating constipation and diarrhoea"]),
+        "typh_org": _pick(rng, ["Salmonella Typhi", "Salmonella Typhi", "Salmonella Paratyphi A"]),
+        "widal": _pick(rng, ["1:160", "1:320", "1:80"]), "wbc_t": round(rng.uniform(3.2, 6.0), 1),
+        "sgpt": rng.randint(54, 180),
+        # malaria
+        "mal_place": _pick(rng, ["Odisha", "Jharkhand", "Chhattisgarh", "north-east India",
+                                 "a construction site in Mangaluru"]),
+        "para": round(rng.uniform(0.8, 6.5), 1), "hb": round(rng.uniform(7.2, 11.8), 1),
+        "bili": round(rng.uniform(1.2, 4.6), 1),
+        "mal_sev": _pick(rng, ["uncomplicated", "severe", "severe"]),
+        "mal_comp": _pick(rng, ["No cerebral involvement or renal failure",
+                                "Jaundice and thrombocytopenia present",
+                                "Hypoglycaemia on admission, corrected with dextrose"]),
     }
 
 
@@ -348,7 +567,7 @@ def expert_task_score(severity: int, priority: str, acuity: str,
 
     This encodes how an experienced charge nurse actually triages: patient
     acuity and overdue status can promote a nominally lower-priority task above
-    a higher-priority one. The GA never sees this function — it only sees the
+    a higher-priority one. The GA never sees this function, it only sees the
     *orderings* it produces, exactly as it would only see a clinician's
     pairwise judgements. Recovering this policy from orderings alone is the
     learning problem.
@@ -403,7 +622,7 @@ def corrupt_vitals(clean: Dict[str, Optional[float]], rng: random.Random) -> Tup
         # a diastolic exceeding the systolic.
         v["bp_systolic"], v["bp_diastolic"] = 88.0, 96.0
         v["heart_rate"] = 44.0
-        desc = "Diastolic pressure exceeds systolic — physiologically impossible combination."
+        desc = "Diastolic pressure exceeds systolic, physiologically impossible combination."
 
     else:  # copy_forward, or a fallback when the chosen field was absent
         ctype = "copy_forward"

@@ -1,0 +1,11 @@
+**/node_modules
+**/venv
+**/venv_*
+**/.venv
+**/__pycache__
+**/*.pyc
+frontend/dist
+report
+.git
+.claude
+*.pdf

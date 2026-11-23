@@ -5,7 +5,7 @@ Training is offline and deterministic; serving is a cheap lookup. The registry
 loads whatever has been trained from disk at startup, and every consumer in the
 request path (retrieval, task board, vitals intake) asks the registry for the
 current policy. If nothing has been trained yet, each accessor degrades to the
-documented baseline rather than failing — the product still works, it just
+documented baseline rather than failing, the product still works, it just
 works the un-optimized way.
 """
 from __future__ import annotations
@@ -96,7 +96,7 @@ class BioRegistry:
             self._report = self._read("report") or {}
 
         logger.info(
-            "Bio registry loaded — ranking:%s tasks:%s immune:%s compression:%s routing:%s",
+            "Bio registry loaded, ranking:%s tasks:%s immune:%s compression:%s routing:%s",
             bool(self._ranking), bool(self._task_policy), bool(self._immune),
             bool(self._projector and self._projector.enabled),
             bool(self._router and self._router.trained),

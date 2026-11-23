@@ -34,62 +34,80 @@ def seed_database():
         admin_user = User(
             email="admin@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
-            full_name="Dr. Arthur Hastings (Admin)",
+            full_name="Dr. Kavitha Raghunathan (Admin)",
             role=UserRole.ADMIN,
             department="Hospital Administration",
             is_active=True
         )
-        doctor_chen = User(
-            email="dr.chen@neuroswarm.health",
+        doctor_sharma = User(
+            email="dr.sharma@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
-            full_name="Dr. Melinda Chen, MD",
+            full_name="Dr. Arvind Sharma, MD",
             role=UserRole.DOCTOR,
             department="Cardiology & Critical Care",
             is_active=True
         )
-        doctor_patel = User(
-            email="dr.patel@neuroswarm.health",
+        doctor_iyer = User(
+            email="dr.iyer@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
-            full_name="Dr. Rajesh Patel, MD",
+            full_name="Dr. Lakshmi Iyer, MD",
             role=UserRole.DOCTOR,
             department="Internal Medicine & Pulmonology",
             is_active=True
         )
-        nurse_sarah = User(
-            email="nurse.sarah@neuroswarm.health",
+        nurse_priya = User(
+            email="nurse.priya@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
-            full_name="Sarah Jenkins, RN",
+            full_name="Priya Nair, RN",
             role=UserRole.NURSE,
             department="Cardiology & Step-Down Unit",
             is_active=True
         )
-        nurse_james = User(
-            email="nurse.james@neuroswarm.health",
+        nurse_arjun = User(
+            email="nurse.arjun@neuroswarm.health",
             hashed_password=get_password_hash("password123"),
-            full_name="James Rodriguez, BSN",
+            full_name="Arjun Hegde, BSc Nursing",
             role=UserRole.NURSE,
             department="Pulmonology & General Medicine",
             is_active=True
         )
 
-        db.add_all([admin_user, doctor_chen, doctor_patel, nurse_sarah, nurse_james])
+        doctor_faizal = User(
+            email="dr.faizal@neuroswarm.health",
+            hashed_password=get_password_hash("password123"),
+            full_name="Dr. Mohammed Faizal, DM",
+            role=UserRole.DOCTOR,
+            department="Neurology & Internal Medicine",
+            is_active=True
+        )
+        nurse_deepa = User(
+            email="nurse.deepa@neuroswarm.health",
+            hashed_password=get_password_hash("password123"),
+            full_name="Deepa Kulkarni, RN",
+            role=UserRole.NURSE,
+            department="Neurology & Critical Care",
+            is_active=True
+        )
+
+        db.add_all([admin_user, doctor_sharma, doctor_iyer, doctor_faizal,
+                    nurse_priya, nurse_arjun, nurse_deepa])
         db.commit()
         db.refresh(admin_user)
-        db.refresh(doctor_chen)
-        db.refresh(doctor_patel)
-        db.refresh(nurse_sarah)
-        db.refresh(nurse_james)
+        db.refresh(doctor_sharma)
+        db.refresh(doctor_iyer)
+        db.refresh(nurse_priya)
+        db.refresh(nurse_arjun)
 
         print("Seeding patient records...")
         now = datetime.now(timezone.utc)
 
         # ----------------------------------------------------
-        # Patient 1: Eleanor Vance (Cardiology / Heart Failure)
+        # Patient 1: Kamala Sundaram (Cardiology / Heart Failure)
         # ----------------------------------------------------
         p1 = Patient(
             mrn="MRN-10492",
-            first_name="Eleanor",
-            last_name="Vance",
+            first_name="Kamala",
+            last_name="Sundaram",
             date_of_birth=date(1958, 3, 14),
             gender="Female",
             blood_group="A+",
@@ -99,7 +117,7 @@ def seed_database():
             primary_diagnosis="Acute Decompensated Heart Failure (HFrEF, EF 32%), Type 2 Diabetes, Stage 3 CKD",
             allergies="Sulfa drugs (erythematous rash), Lisinopril (severe refractory cough)",
             medical_history="Hypertension (15 yrs), Type 2 Diabetes Mellitus (12 yrs), HFrEF diagnosed 2024, Bilateral knee osteoarthritis.",
-            emergency_contact="Robert Vance (Husband) - (555) 234-5678",
+            emergency_contact="Raghavan Sundaram (Husband) - +91 98450 23456",
             admission_date=now - timedelta(days=3)
         )
         db.add(p1)
@@ -109,7 +127,7 @@ def seed_database():
         # Notes for Patient 1
         n1_1 = ClinicalNote(
             patient_id=p1.id,
-            author_id=doctor_chen.id,
+            author_id=doctor_sharma.id,
             note_type=NoteType.ADMISSION,
             title="Initial Admission History & Physical - Acute HF Exacerbation",
             chief_complaint="Severe orthopnea, paroxysmal nocturnal dyspnea, and 3+ bilateral lower extremity pitting edema.",
@@ -122,7 +140,7 @@ def seed_database():
         )
         n1_2 = ClinicalNote(
             patient_id=p1.id,
-            author_id=doctor_chen.id,
+            author_id=doctor_sharma.id,
             note_type=NoteType.CONSULT,
             title="Cardiology Consult & Transthoracic Echo Report",
             chief_complaint="Evaluation of left ventricular ejection fraction and regional wall motion abnormalities.",
@@ -137,25 +155,25 @@ def seed_database():
 
         # Vitals for Patient 1
         db.add_all([
-            VitalSign(patient_id=p1.id, recorded_by_id=nurse_sarah.id, heart_rate=98, bp_systolic=154, bp_diastolic=92, resp_rate=24, temp_celsius=37.1, o2_saturation=91.0, blood_glucose=168.0, notes="On room air. Labored breathing.", recorded_at=now - timedelta(days=3)),
-            VitalSign(patient_id=p1.id, recorded_by_id=nurse_sarah.id, heart_rate=88, bp_systolic=138, bp_diastolic=84, resp_rate=20, temp_celsius=36.8, o2_saturation=94.5, blood_glucose=142.0, notes="2L O2 via nasal cannula. Net diuresis -1200ml.", recorded_at=now - timedelta(days=2)),
-            VitalSign(patient_id=p1.id, recorded_by_id=nurse_sarah.id, heart_rate=76, bp_systolic=126, bp_diastolic=78, resp_rate=17, temp_celsius=36.7, o2_saturation=97.0, blood_glucose=124.0, notes="Room air tolerated well. Edema down to 1+.", recorded_at=now - timedelta(hours=3)),
+            VitalSign(patient_id=p1.id, recorded_by_id=nurse_priya.id, heart_rate=98, bp_systolic=154, bp_diastolic=92, resp_rate=24, temp_celsius=37.1, o2_saturation=91.0, blood_glucose=168.0, notes="On room air. Labored breathing.", recorded_at=now - timedelta(days=3)),
+            VitalSign(patient_id=p1.id, recorded_by_id=nurse_priya.id, heart_rate=88, bp_systolic=138, bp_diastolic=84, resp_rate=20, temp_celsius=36.8, o2_saturation=94.5, blood_glucose=142.0, notes="2L O2 via nasal cannula. Net diuresis -1200ml.", recorded_at=now - timedelta(days=2)),
+            VitalSign(patient_id=p1.id, recorded_by_id=nurse_priya.id, heart_rate=76, bp_systolic=126, bp_diastolic=78, resp_rate=17, temp_celsius=36.7, o2_saturation=97.0, blood_glucose=124.0, notes="Room air tolerated well. Edema down to 1+.", recorded_at=now - timedelta(hours=3)),
         ])
 
         # Tasks for Patient 1
         db.add_all([
-            CareTask(patient_id=p1.id, assigned_nurse_id=nurse_sarah.id, created_by_id=doctor_chen.id, title="Administer Morning Torsemide 20mg & Entresto", description="Check sitting BP prior to administration; hold if systolic < 100 mmHg.", priority=TaskPriority.HIGH, status=TaskStatus.COMPLETED, due_time=now - timedelta(hours=4), completed_at=now - timedelta(hours=4, minutes=10), completion_notes="BP was 126/78. Medications administered with morning meal."),
-            CareTask(patient_id=p1.id, assigned_nurse_id=nurse_sarah.id, created_by_id=doctor_chen.id, title="Daily Standing Weight & Electrolyte Panel", description="Log morning weight before breakfast. Draw serum K+ and Creatinine.", priority=TaskPriority.HIGH, status=TaskStatus.IN_PROGRESS, due_time=now + timedelta(hours=4)),
-            CareTask(patient_id=p1.id, assigned_nurse_id=nurse_sarah.id, created_by_id=doctor_chen.id, title="Cardiac Rehab Ambulation Assessment", description="Supervise 100m hallway ambulation with continuous pulse oximetry.", priority=TaskPriority.MEDIUM, status=TaskStatus.PENDING, due_time=now + timedelta(hours=8)),
+            CareTask(patient_id=p1.id, assigned_nurse_id=nurse_priya.id, created_by_id=doctor_sharma.id, title="Administer Morning Torsemide 20mg & Entresto", description="Check sitting BP prior to administration; hold if systolic < 100 mmHg.", priority=TaskPriority.HIGH, status=TaskStatus.COMPLETED, due_time=now - timedelta(hours=4), completed_at=now - timedelta(hours=4, minutes=10), completion_notes="BP was 126/78. Medications administered with morning meal."),
+            CareTask(patient_id=p1.id, assigned_nurse_id=nurse_priya.id, created_by_id=doctor_sharma.id, title="Daily Standing Weight & Electrolyte Panel", description="Log morning weight before breakfast. Draw serum K+ and Creatinine.", priority=TaskPriority.HIGH, status=TaskStatus.IN_PROGRESS, due_time=now + timedelta(hours=4)),
+            CareTask(patient_id=p1.id, assigned_nurse_id=nurse_priya.id, created_by_id=doctor_sharma.id, title="Cardiac Rehab Ambulation Assessment", description="Supervise 100m hallway ambulation with continuous pulse oximetry.", priority=TaskPriority.MEDIUM, status=TaskStatus.PENDING, due_time=now + timedelta(hours=8)),
         ])
 
         # ----------------------------------------------------
-        # Patient 2: Marcus Brody (Pulmonology / Pneumonia)
+        # Patient 2: Rajesh Yadav (Pulmonology / Pneumonia)
         # ----------------------------------------------------
         p2 = Patient(
             mrn="MRN-10821",
-            first_name="Marcus",
-            last_name="Brody",
+            first_name="Rajesh",
+            last_name="Yadav",
             date_of_birth=date(1981, 7, 22),
             gender="Male",
             blood_group="O+",
@@ -165,7 +183,7 @@ def seed_database():
             primary_diagnosis="Severe Community-Acquired Bacterial Pneumonia (Left Lower Lobe), Mild Intermittent Asthma",
             allergies="Penicillin / Amoxicillin (Anaphylaxis - facial edema & bronchospasm)",
             medical_history="Childhood asthma, smoking history (10 pack-years, quit 5 years ago), no prior hospitalizations.",
-            emergency_contact="Claire Brody (Wife) - (555) 789-0123",
+            emergency_contact="Sunita Yadav (Wife) - +91 99001 78901",
             admission_date=now - timedelta(days=2)
         )
         db.add(p2)
@@ -175,7 +193,7 @@ def seed_database():
         # Notes for Patient 2
         n2_1 = ClinicalNote(
             patient_id=p2.id,
-            author_id=doctor_patel.id,
+            author_id=doctor_iyer.id,
             note_type=NoteType.ADMISSION,
             title="Pulmonology Inpatient Admission Note - Left Lobe Pneumonia",
             chief_complaint="High fever (39.2°C), productive cough with rust-colored sputum, and left-sided pleuritic chest pain.",
@@ -188,7 +206,7 @@ def seed_database():
         )
         n2_2 = ClinicalNote(
             patient_id=p2.id,
-            author_id=doctor_patel.id,
+            author_id=doctor_iyer.id,
             note_type=NoteType.PROGRESS,
             title="Microbiology Culture Update & Clinical Progress Note",
             chief_complaint="Review of sputum & blood microbiology cultures.",
@@ -203,25 +221,25 @@ def seed_database():
 
         # Vitals for Patient 2
         db.add_all([
-            VitalSign(patient_id=p2.id, recorded_by_id=nurse_james.id, heart_rate=106, bp_systolic=118, bp_diastolic=74, resp_rate=26, temp_celsius=39.2, o2_saturation=88.0, blood_glucose=108.0, notes="Room air. Febrile and tachypneic.", recorded_at=now - timedelta(days=2)),
-            VitalSign(patient_id=p2.id, recorded_by_id=nurse_james.id, heart_rate=92, bp_systolic=122, bp_diastolic=76, resp_rate=21, temp_celsius=38.1, o2_saturation=93.5, blood_glucose=112.0, notes="On 3L nasal cannula. Post-DuoNeb treatment.", recorded_at=now - timedelta(days=1)),
-            VitalSign(patient_id=p2.id, recorded_by_id=nurse_james.id, heart_rate=80, bp_systolic=120, bp_diastolic=78, resp_rate=18, temp_celsius=37.1, o2_saturation=96.5, blood_glucose=99.0, notes="Weaning to 1L nasal cannula. Comfortable.", recorded_at=now - timedelta(hours=2)),
+            VitalSign(patient_id=p2.id, recorded_by_id=nurse_arjun.id, heart_rate=106, bp_systolic=118, bp_diastolic=74, resp_rate=26, temp_celsius=39.2, o2_saturation=88.0, blood_glucose=108.0, notes="Room air. Febrile and tachypneic.", recorded_at=now - timedelta(days=2)),
+            VitalSign(patient_id=p2.id, recorded_by_id=nurse_arjun.id, heart_rate=92, bp_systolic=122, bp_diastolic=76, resp_rate=21, temp_celsius=38.1, o2_saturation=93.5, blood_glucose=112.0, notes="On 3L nasal cannula. Post-DuoNeb treatment.", recorded_at=now - timedelta(days=1)),
+            VitalSign(patient_id=p2.id, recorded_by_id=nurse_arjun.id, heart_rate=80, bp_systolic=120, bp_diastolic=78, resp_rate=18, temp_celsius=37.1, o2_saturation=96.5, blood_glucose=99.0, notes="Weaning to 1L nasal cannula. Comfortable.", recorded_at=now - timedelta(hours=2)),
         ])
 
         # Tasks for Patient 2
         db.add_all([
-            CareTask(patient_id=p2.id, assigned_nurse_id=nurse_james.id, created_by_id=doctor_patel.id, title="Administer IV Ceftriaxone 1g & Azithromycin", description="Infuse over 30 mins; verify patient is free of rash/dyspnea.", priority=TaskPriority.HIGH, status=TaskStatus.COMPLETED, due_time=now - timedelta(hours=5), completed_at=now - timedelta(hours=4, minutes=45), completion_notes="Infusion complete, tolerated without adverse events."),
-            CareTask(patient_id=p2.id, assigned_nurse_id=nurse_james.id, created_by_id=doctor_patel.id, title="Albuterol-Ipratropium Nebulizer Treatment", description="Administer DuoNeb Q4H and assess breath sounds post-treatment.", priority=TaskPriority.MEDIUM, status=TaskStatus.IN_PROGRESS, due_time=now + timedelta(hours=1)),
-            CareTask(patient_id=p2.id, assigned_nurse_id=nurse_james.id, created_by_id=doctor_patel.id, title="Trial Room Air Oxygen Saturation", description="Discontinue nasal cannula for 30 minutes and record resting SpO2.", priority=TaskPriority.LOW, status=TaskStatus.PENDING, due_time=now + timedelta(hours=6)),
+            CareTask(patient_id=p2.id, assigned_nurse_id=nurse_arjun.id, created_by_id=doctor_iyer.id, title="Administer IV Ceftriaxone 1g & Azithromycin", description="Infuse over 30 mins; verify patient is free of rash/dyspnea.", priority=TaskPriority.HIGH, status=TaskStatus.COMPLETED, due_time=now - timedelta(hours=5), completed_at=now - timedelta(hours=4, minutes=45), completion_notes="Infusion complete, tolerated without adverse events."),
+            CareTask(patient_id=p2.id, assigned_nurse_id=nurse_arjun.id, created_by_id=doctor_iyer.id, title="Albuterol-Ipratropium Nebulizer Treatment", description="Administer DuoNeb Q4H and assess breath sounds post-treatment.", priority=TaskPriority.MEDIUM, status=TaskStatus.IN_PROGRESS, due_time=now + timedelta(hours=1)),
+            CareTask(patient_id=p2.id, assigned_nurse_id=nurse_arjun.id, created_by_id=doctor_iyer.id, title="Trial Room Air Oxygen Saturation", description="Discontinue nasal cannula for 30 minutes and record resting SpO2.", priority=TaskPriority.LOW, status=TaskStatus.PENDING, due_time=now + timedelta(hours=6)),
         ])
 
         # ----------------------------------------------------
-        # Patient 3: Sofia Alvarez (Surgical / Appendectomy)
+        # Patient 3: Sneha Kulkarni (Surgical / Appendectomy)
         # ----------------------------------------------------
         p3 = Patient(
             mrn="MRN-10955",
-            first_name="Sofia",
-            last_name="Alvarez",
+            first_name="Sneha",
+            last_name="Kulkarni",
             date_of_birth=date(1997, 11, 5),
             gender="Female",
             blood_group="B+",
@@ -231,7 +249,7 @@ def seed_database():
             primary_diagnosis="Post-Operative Laparoscopic Appendectomy (Day 2), Acute appendicitis resolved",
             allergies="Latex (contact urticaria), Codeine (severe nausea/vomiting)",
             medical_history="No prior surgical history. Regular menstrual cycles. Takes oral contraceptive pill.",
-            emergency_contact="Mateo Alvarez (Brother) - (555) 345-6789",
+            emergency_contact="Rohit Kulkarni (Brother) - +91 97400 34567",
             admission_date=now - timedelta(days=2)
         )
         db.add(p3)
@@ -240,7 +258,7 @@ def seed_database():
 
         n3_1 = ClinicalNote(
             patient_id=p3.id,
-            author_id=doctor_chen.id,
+            author_id=doctor_sharma.id,
             note_type=NoteType.PROCEDURE,
             title="Operative Summary - Laparoscopic Appendectomy",
             chief_complaint="Acute right lower quadrant abdominal pain with McBurney point tenderness.",
@@ -253,7 +271,7 @@ def seed_database():
         )
         n3_2 = ClinicalNote(
             patient_id=p3.id,
-            author_id=doctor_chen.id,
+            author_id=doctor_sharma.id,
             note_type=NoteType.SOAP,
             title="Post-Op Day 2 SOAP Progress Note",
             chief_complaint="Routine post-operative recovery check.",
@@ -267,22 +285,22 @@ def seed_database():
         db.add_all([n3_1, n3_2])
 
         db.add_all([
-            VitalSign(patient_id=p3.id, recorded_by_id=nurse_sarah.id, heart_rate=82, bp_systolic=120, bp_diastolic=78, resp_rate=16, temp_celsius=36.9, o2_saturation=98.0, blood_glucose=94.0, notes="Immediate post-op PACU vitals.", recorded_at=now - timedelta(days=1, hours=16)),
-            VitalSign(patient_id=p3.id, recorded_by_id=nurse_sarah.id, heart_rate=72, bp_systolic=116, bp_diastolic=72, resp_rate=15, temp_celsius=36.6, o2_saturation=99.0, blood_glucose=92.0, notes="Ambulating in room without dizziness.", recorded_at=now - timedelta(hours=4)),
+            VitalSign(patient_id=p3.id, recorded_by_id=nurse_priya.id, heart_rate=82, bp_systolic=120, bp_diastolic=78, resp_rate=16, temp_celsius=36.9, o2_saturation=98.0, blood_glucose=94.0, notes="Immediate post-op PACU vitals.", recorded_at=now - timedelta(days=1, hours=16)),
+            VitalSign(patient_id=p3.id, recorded_by_id=nurse_priya.id, heart_rate=72, bp_systolic=116, bp_diastolic=72, resp_rate=15, temp_celsius=36.6, o2_saturation=99.0, blood_glucose=92.0, notes="Ambulating in room without dizziness.", recorded_at=now - timedelta(hours=4)),
         ])
 
         db.add_all([
-            CareTask(patient_id=p3.id, assigned_nurse_id=nurse_sarah.id, created_by_id=doctor_chen.id, title="Incision Dressing Inspection & Cleaning", description="Inspect 3 laparoscopic trocar sites; verify no wound dehiscence or erythema.", priority=TaskPriority.MEDIUM, status=TaskStatus.COMPLETED, due_time=now - timedelta(hours=3), completed_at=now - timedelta(hours=3), completion_notes="Incisions clean, dry, intact. Steri-strips in place."),
-            CareTask(patient_id=p3.id, assigned_nurse_id=nurse_sarah.id, created_by_id=doctor_chen.id, title="Discharge Education & Oral Medication Review", description="Review wound care instructions, warning signs of infection, and oral analgesic schedule.", priority=TaskPriority.LOW, status=TaskStatus.PENDING, due_time=now + timedelta(hours=12)),
+            CareTask(patient_id=p3.id, assigned_nurse_id=nurse_priya.id, created_by_id=doctor_sharma.id, title="Incision Dressing Inspection & Cleaning", description="Inspect 3 laparoscopic trocar sites; verify no wound dehiscence or erythema.", priority=TaskPriority.MEDIUM, status=TaskStatus.COMPLETED, due_time=now - timedelta(hours=3), completed_at=now - timedelta(hours=3), completion_notes="Incisions clean, dry, intact. Steri-strips in place."),
+            CareTask(patient_id=p3.id, assigned_nurse_id=nurse_priya.id, created_by_id=doctor_sharma.id, title="Discharge Education & Oral Medication Review", description="Review wound care instructions, warning signs of infection, and oral analgesic schedule.", priority=TaskPriority.LOW, status=TaskStatus.PENDING, due_time=now + timedelta(hours=12)),
         ])
 
         # ----------------------------------------------------
-        # Patient 4: David Kim (Nephrology / Hypertensive Crisis)
+        # Patient 4: Mohammed Irfan Khan (Nephrology / Hypertensive Crisis)
         # ----------------------------------------------------
         p4 = Patient(
             mrn="MRN-11043",
-            first_name="David",
-            last_name="Kim",
+            first_name="Irfan",
+            last_name="Khan",
             date_of_birth=date(1972, 4, 19),
             gender="Male",
             blood_group="AB-",
@@ -292,7 +310,7 @@ def seed_database():
             primary_diagnosis="Hypertensive Urgency with Acute Kidney Injury (Stage 2 AKI, Cr 2.6 mg/dL)",
             allergies="Iodinated Radiographic Contrast Dye (Severe generalized urticaria)",
             medical_history="Poorly controlled essential hypertension, hyperlipidemia, gout.",
-            emergency_contact="Grace Kim (Wife) - (555) 456-7890",
+            emergency_contact="Ayesha Khan (Wife) - +91 98860 45678",
             admission_date=now - timedelta(days=1)
         )
         db.add(p4)
@@ -301,7 +319,7 @@ def seed_database():
 
         n4_1 = ClinicalNote(
             patient_id=p4.id,
-            author_id=doctor_patel.id,
+            author_id=doctor_iyer.id,
             note_type=NoteType.ADMISSION,
             title="Nephrology Consult & Admission Note - Hypertensive AKI",
             chief_complaint="Severe occipital headache, blurred vision, and elevated blood pressure of 210/118 mmHg.",
@@ -315,14 +333,14 @@ def seed_database():
         db.add(n4_1)
 
         db.add_all([
-            VitalSign(patient_id=p4.id, recorded_by_id=nurse_james.id, heart_rate=84, bp_systolic=210, bp_diastolic=118, resp_rate=18, temp_celsius=36.8, o2_saturation=97.0, blood_glucose=104.0, notes="On admission. Nicardipine infusion started at 5mg/hr.", recorded_at=now - timedelta(days=1, hours=8)),
-            VitalSign(patient_id=p4.id, recorded_by_id=nurse_james.id, heart_rate=74, bp_systolic=162, bp_diastolic=94, resp_rate=16, temp_celsius=36.7, o2_saturation=98.0, blood_glucose=101.0, notes="Nicardipine at 7.5mg/hr. Headache improving.", recorded_at=now - timedelta(hours=14)),
-            VitalSign(patient_id=p4.id, recorded_by_id=nurse_james.id, heart_rate=68, bp_systolic=138, bp_diastolic=84, resp_rate=15, temp_celsius=36.6, o2_saturation=99.0, blood_glucose=98.0, notes="Switched to oral Amlodipine & Carvedilol. Stable.", recorded_at=now - timedelta(hours=2)),
+            VitalSign(patient_id=p4.id, recorded_by_id=nurse_arjun.id, heart_rate=84, bp_systolic=210, bp_diastolic=118, resp_rate=18, temp_celsius=36.8, o2_saturation=97.0, blood_glucose=104.0, notes="On admission. Nicardipine infusion started at 5mg/hr.", recorded_at=now - timedelta(days=1, hours=8)),
+            VitalSign(patient_id=p4.id, recorded_by_id=nurse_arjun.id, heart_rate=74, bp_systolic=162, bp_diastolic=94, resp_rate=16, temp_celsius=36.7, o2_saturation=98.0, blood_glucose=101.0, notes="Nicardipine at 7.5mg/hr. Headache improving.", recorded_at=now - timedelta(hours=14)),
+            VitalSign(patient_id=p4.id, recorded_by_id=nurse_arjun.id, heart_rate=68, bp_systolic=138, bp_diastolic=84, resp_rate=15, temp_celsius=36.6, o2_saturation=99.0, blood_glucose=98.0, notes="Switched to oral Amlodipine & Carvedilol. Stable.", recorded_at=now - timedelta(hours=2)),
         ])
 
         db.add_all([
-            CareTask(patient_id=p4.id, assigned_nurse_id=nurse_james.id, created_by_id=doctor_patel.id, title="Hourly Automated Blood Pressure Monitoring", description="Log BP hourly while on oral antihypertensive transition; notify MD if systolic > 170 or < 110.", priority=TaskPriority.STAT, status=TaskStatus.IN_PROGRESS, due_time=now + timedelta(hours=1)),
-            CareTask(patient_id=p4.id, assigned_nurse_id=nurse_james.id, created_by_id=doctor_patel.id, title="Strict Intake/Output & Daily Weight Charting", description="Measure all urine output per shift. Draw morning renal panel (BUN/Cr/K+).", priority=TaskPriority.HIGH, status=TaskStatus.PENDING, due_time=now + timedelta(hours=4)),
+            CareTask(patient_id=p4.id, assigned_nurse_id=nurse_arjun.id, created_by_id=doctor_iyer.id, title="Hourly Automated Blood Pressure Monitoring", description="Log BP hourly while on oral antihypertensive transition; notify MD if systolic > 170 or < 110.", priority=TaskPriority.STAT, status=TaskStatus.IN_PROGRESS, due_time=now + timedelta(hours=1)),
+            CareTask(patient_id=p4.id, assigned_nurse_id=nurse_arjun.id, created_by_id=doctor_iyer.id, title="Strict Intake/Output & Daily Weight Charting", description="Measure all urine output per shift. Draw morning renal panel (BUN/Cr/K+).", priority=TaskPriority.HIGH, status=TaskStatus.PENDING, due_time=now + timedelta(hours=4)),
         ])
 
         db.commit()
@@ -332,8 +350,9 @@ def seed_database():
         # Extended cohort + labeled ground truth for the bio-inspired trainers
         # ------------------------------------------------------------------
         print("Generating extended clinical cohort...")
-        staff = {"doctors": [doctor_chen, doctor_patel], "nurses": [nurse_sarah, nurse_james]}
-        labels = generate_cohort(db, staff, n_patients=34, seed=2026, now=now)
+        staff = {"doctors": [doctor_sharma, doctor_iyer, doctor_faizal],
+                 "nurses": [nurse_priya, nurse_arjun, nurse_deepa]}
+        labels = generate_cohort(db, staff, n_patients=76, seed=2026, now=now)
 
         # Hand-authored benchmark queries for the four demo patients. These are
         # labeled by reading the notes above and recording which note actually
@@ -347,7 +366,7 @@ def seed_database():
             nurse_loads[row["nurse_id"]] = nurse_loads.get(row["nurse_id"], 0) + 1
 
         scenarios = build_task_scenarios(labels["task_rows"], nurse_loads,
-                                         scenario_size=6, n_scenarios=110, seed=5)
+                                         scenario_size=6, n_scenarios=180, seed=5)
 
         out = write_benchmarks({
             "retrieval": labels["retrieval"],
@@ -392,14 +411,14 @@ def build_core_benchmark(db):
     from app.models.patient import Patient
 
     specs = [
-        ("Eleanor", [
+        ("Kamala", [
             ("What diuretic and dose was prescribed?", "Plan & Orders"),
             ("What was the ejection fraction on echocardiography?", "Objective / Vitals / Labs"),
             ("Why was Lisinopril avoided for this patient?", "Plan & Orders"),
             ("What is the daily fluid restriction?", "Plan & Orders"),
             ("What symptoms did the patient describe on admission?", "Subjective History"),
         ]),
-        ("Marcus", [
+        ("Rajesh", [
             ("What bacteria was isolated in the sputum culture?", "Objective / Vitals / Labs"),
             ("Which antibiotics were started?", "Plan & Orders"),
             ("What did the chest imaging show?", "Objective / Vitals / Labs"),

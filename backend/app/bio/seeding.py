@@ -11,8 +11,9 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence
 
 from app.bio.corpus import (
-    CONDITIONS, FIRST_NAMES, LAST_NAMES, TASK_TEMPLATES, _build_context, _fill, _pick,
-    corrupt_vitals, expert_task_score,
+    CONDITIONS, FEMALE_FIRST_NAMES, LAST_NAMES, MALE_FIRST_NAMES, STABLE_CONTEXT_KEYS,
+    TASK_TEMPLATES, _build_context, _fill, _pick, corrupt_vitals, expert_task_score,
+    indian_phone,
 )
 from app.core.config import settings
 from app.models.note import ClinicalNote, NoteType
@@ -25,8 +26,8 @@ BENCH_DIR = settings.BIO_ARTIFACT_DIR.parent / "benchmarks"
 
 NOTE_SEQUENCE = [
     (NoteType.ADMISSION, "Admission History & Physical"),
-    (NoteType.PROGRESS, "Progress Note — Day {n}"),
-    (NoteType.SOAP, "SOAP Review — Day {n}"),
+    (NoteType.PROGRESS, "Progress Note: Day {n}"),
+    (NoteType.SOAP, "SOAP Review: Day {n}"),
     (NoteType.CONSULT, "Specialty Consultation"),
     (NoteType.PROCEDURE, "Procedure Record"),
     (NoteType.DISCHARGE, "Discharge Summary"),
@@ -65,7 +66,8 @@ def generate_cohort(
         cond = CONDITIONS[idx % len(CONDITIONS)]
         age = rng.randint(31, 88)
         sex = _pick(rng, ["male", "female"])
-        first, last = _pick(rng, FIRST_NAMES), _pick(rng, LAST_NAMES)
+        first = _pick(rng, MALE_FIRST_NAMES if sex == "male" else FEMALE_FIRST_NAMES)
+        last = _pick(rng, LAST_NAMES)
         admitted_days_ago = rng.randint(1, 21)
         ctx = _build_context(cond, rng, age, sex)
 
@@ -82,12 +84,14 @@ def generate_cohort(
             admission_date=now - timedelta(days=admitted_days_ago),
             status=status,
             primary_diagnosis=_fill(cond.diagnosis, rng, ctx),
-            allergies=_pick(rng, ["No known drug allergies", "Penicillin — rash",
-                                  "Sulfa drugs — anaphylaxis", "Iodinated contrast — urticaria",
-                                  "Codeine — nausea"]),
-            medical_history=f"Background of {_pick(rng, ['hypertension', 'type 2 diabetes', 'chronic kidney disease', 'atrial fibrillation', 'COPD', 'ischaemic heart disease'])}. "
+            allergies=_pick(rng, ["No known drug allergies", "No known drug allergies",
+                                  "Penicillin (rash)", "Sulfa drugs (anaphylaxis)",
+                                  "Iodinated contrast (urticaria)", "Codeine (nausea)",
+                                  "Diclofenac (angioedema)", "Cotrimoxazole (skin rash)"]),
+            medical_history=f"Background of {_pick(rng, ['hypertension', 'type 2 diabetes', 'chronic kidney disease', 'atrial fibrillation', 'COPD', 'ischaemic heart disease', 'hypothyroidism', 'treated pulmonary TB in childhood'])}. "
                             f"{_pick(rng, ['Ex-smoker.', 'Never smoked.', 'Current smoker.'])}",
-            emergency_contact=f"{_pick(rng, FIRST_NAMES)} {last} — {_pick(rng, ['spouse', 'son', 'daughter', 'sibling'])}",
+            emergency_contact=(f"{_pick(rng, FEMALE_FIRST_NAMES if sex == 'male' else MALE_FIRST_NAMES)} {last} "
+                               f"({_pick(rng, ['Spouse', 'Son', 'Daughter', 'Sibling'])}) - {indian_phone(rng)}"),
         )
         db.add(patient)
         db.flush()
@@ -100,6 +104,12 @@ def generate_cohort(
         answer_note_id: Optional[int] = None
         for j in range(n_notes):
             ntype, title_tpl = NOTE_SEQUENCE[j % len(NOTE_SEQUENCE)]
+            if j == 0:
+                nctx = ctx
+            else:
+                fresh = _build_context(cond, rng, age, sex)
+                nctx = {k: (ctx[k] if k in STABLE_CONTEXT_KEYS or not isinstance(v, (int, float))
+                            else v) for k, v in fresh.items()}
             created = now - timedelta(days=max(0, admitted_days_ago - j),
                                       hours=rng.randint(0, 20))
             note = ClinicalNote(
@@ -107,20 +117,21 @@ def generate_cohort(
                 author_id=author.id,
                 note_type=ntype,
                 title=title_tpl.format(n=j + 1),
-                chief_complaint=_fill(cond.complaint, rng, ctx),
-                subjective=_fill(cond.subjective, rng, ctx),
-                objective=_fill(cond.objective, rng, ctx),
-                assessment=_fill(cond.assessment, rng, ctx),
-                plan=_fill(cond.plan, rng, ctx),
+                chief_complaint=(_fill(cond.complaint, rng, nctx) if j == 0 else
+                                 f"Hospital day {j + 1} review. " + _fill(cond.complaint, rng, nctx)),
+                subjective=_fill(cond.subjective, rng, nctx),
+                objective=_fill(cond.objective, rng, nctx),
+                assessment=_fill(cond.assessment, rng, nctx),
+                plan=_fill(cond.plan, rng, nctx),
                 content=(f"{_fill(cond.diagnosis, rng, ctx)}. "
-                         f"{_fill(cond.assessment, rng, ctx)} "
-                         f"Management: {_fill(cond.plan, rng, ctx)}"),
+                         f"{_fill(cond.assessment, rng, nctx)} "
+                         f"Management: {_fill(cond.plan, rng, nctx)}"),
                 created_at=created,
             )
             db.add(note)
             db.flush()
             # The admission note is the canonical source for this patient's
-            # benchmark questions — it carries the full SOAP breakdown.
+            # benchmark questions, it carries the full SOAP breakdown.
             if j == 0:
                 answer_note_id = note.id
 

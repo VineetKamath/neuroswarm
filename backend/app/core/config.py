@@ -13,7 +13,7 @@ DEFAULT_DB_PATH = DATA_DIR / "neuroswarm.db"
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "NeuroSwarm — Bio-Inspired Clinical Intelligence"
+    PROJECT_NAME: str = "NeuroSwarm, Bio-Inspired Clinical Intelligence"
     PROJECT_SHORT_NAME: str = "NeuroSwarm"
     API_V1_STR: str = "/api"
     SECRET_KEY: str = os.getenv("SECRET_KEY", "neuroswarm-bio-inspired-jwt-signing-key-2026")

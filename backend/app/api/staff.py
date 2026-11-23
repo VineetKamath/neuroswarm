@@ -2,7 +2,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.rbac import require_admin
+from app.core.rbac import require_admin, require_doctor_or_admin
 from app.core.security import get_password_hash
 from app.db.session import get_db
 from app.models.user import User, UserRole
@@ -24,6 +24,20 @@ def list_staff(
     Available to: Admin only.
     """
     return db.query(User).order_by(User.role.asc(), User.full_name.asc()).all()
+
+@router.get("/nurses")
+def list_nurses(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_doctor_or_admin)
+):
+    """
+    Active nurses available for task assignment.
+    Available to: Doctor, Admin. Returns only what the assignment picker needs.
+    """
+    nurses = (db.query(User)
+                .filter(User.role == UserRole.NURSE, User.is_active == True)
+                .order_by(User.full_name.asc()).all())
+    return [{"id": n.id, "full_name": n.full_name, "department": n.department} for n in nurses]
 
 @router.post("", response_model=UserOut, status_code=status.HTTP_201_CREATED)
 def create_staff_member(

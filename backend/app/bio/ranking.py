@@ -114,7 +114,7 @@ class RankingWeights:
         question: str,
         reference_time: Optional[datetime] = None,
     ) -> List[float]:
-        """Blended scores aligned to the input order — the hot path used by the
+        """Blended scores aligned to the input order, the hot path used by the
         optimizers, which need scores but not the explanation payload."""
         if not candidates:
             return []

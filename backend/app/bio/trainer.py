@@ -38,7 +38,7 @@ def build_ranking_cases(db, labels: Sequence[Dict], pool_k: int = 20) -> List[Di
     An earlier version marked every chunk of the gold *note* as relevant. That
     leaked: because generated questions were always answered by the admission
     note, the GA could score a perfect nDCG by learning "rank ADMISSION first"
-    and driving the similarity weight to zero — gaming the benchmark instead of
+    and driving the similarity weight to zero, gaming the benchmark instead of
     learning retrieval. Grading by section removes the shortcut:
 
         1.0  correct section, in the most recent note that has it
@@ -186,7 +186,7 @@ def build_immune_datasets(db) -> Dict[str, List[Dict]]:
     clean = [l["values"] for l in labels if not l["is_error"]]
     errors = [l["values"] for l in labels if l["is_error"]]
 
-    # Train on 75% of normal data only — negative selection never sees an error.
+    # Train on 75% of normal data only, negative selection never sees an error.
     split = max(1, int(len(clean) * 0.75))
     return {
         "train_self": clean[:split],

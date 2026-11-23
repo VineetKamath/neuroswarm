@@ -65,7 +65,7 @@ def algorithm_catalog(current_user: User = Depends(require_any_authenticated)):
                 "plugs_into": "Between the FAISS candidate pool and the clinician's result list",
                 "problem": "Ranking on cosine similarity alone ignores recency, note type, "
                            "verbatim clinical terms and which SOAP section answers the question.",
-                "why_bio": "nDCG is a rank metric — flat almost everywhere, so it has no gradient "
+                "why_bio": "nDCG is a rank metric, flat almost everywhere, so it has no gradient "
                            "to descend. The search space is a 14-dimensional continuous box with "
                            "interacting parameters, where grid search is intractable. "
                            "Population-based metaheuristics are built for exactly this regime.",
@@ -92,14 +92,14 @@ def algorithm_catalog(current_user: User = Depends(require_any_authenticated)):
                 "key": "immune",
                 "index": 3,
                 "name": "Clinical Data Anomaly Detection",
-                "family": "Artificial Immune System — Negative Selection",
+                "family": "Artificial Immune System, Negative Selection",
                 "metaphor": "T-cell maturation in the thymus",
                 "plugs_into": "A checkpoint on vital signs before they are trusted for alerts",
                 "problem": "Transcription typos, decimal slips and unit confusion enter the "
                            "record silently and then drive clinical decisions.",
                 "why_bio": "A supervised classifier needs labeled examples of every error type, "
                            "which nobody has. Negative selection trains on NORMAL data only and "
-                           "flags whatever fails to match — so it catches error modes never "
+                           "flags whatever fails to match, so it catches error modes never "
                            "enumerated in advance. That is the defining strength of the metaphor.",
                 "fitness": "Detection rate against planted errors, penalized by false alarms",
                 "genome": "Variable-radius detectors censored against the learned self-region",
@@ -114,7 +114,7 @@ def algorithm_catalog(current_user: User = Depends(require_any_authenticated)):
                 "problem": "384 dimensions per chunk are stored and scanned for every query, "
                            "and retrieval is the entire response path since there is no LLM.",
                 "why_bio": "Choosing k of 384 dimensions is a 2^384 combinatorial search. "
-                           "Greedy selection gets trapped because dimensions interact — one "
+                           "Greedy selection gets trapped because dimensions interact, one "
                            "useless alone can be decisive alongside another. Uniform crossover "
                            "recombines useful dimension groups directly.",
                 "fitness": "Retrieval nDCG@5 in the reduced subspace minus a parsimony penalty",
@@ -137,7 +137,7 @@ def algorithm_catalog(current_user: User = Depends(require_any_authenticated)):
                 "scoping_note": "The original brief proposed routing across separate stores "
                                 "(encounters / prescriptions / reports). This system has one "
                                 "clinical-notes store, so that framing would be fiction. It does "
-                                "have a real partitioned space — note type x SOAP section — and "
+                                "have a real partitioned space, note type x SOAP section, and "
                                 "the colony optimizes routing across those instead.",
             },
         ],
@@ -286,7 +286,7 @@ def retrain(
     db: Session = Depends(get_db),
     current_user: User = Depends(require_admin),
 ):
-    """Re-run the full evolution. Admin only — it rebuilds every vector index."""
+    """Re-run the full evolution. Admin only, it rebuilds every vector index."""
     from app.bio.trainer import train_all
     return train_all(db, generations=generations, compare_optimizers=compare)
 

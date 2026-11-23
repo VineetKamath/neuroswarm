@@ -31,7 +31,7 @@ def record_vital_signs(
         )
 
     # Artificial Immune System checkpoint: screen the reading before it is
-    # trusted for alerts or trend display. The record is still saved — a
+    # trusted for alerts or trend display. The record is still saved, a
     # suspect value is flagged for verification, never silently discarded.
     values = {f: getattr(vital_in, f, None) for f in VITAL_FEATURES}
     model = bio_registry.immune

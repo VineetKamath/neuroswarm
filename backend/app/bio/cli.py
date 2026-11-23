@@ -28,7 +28,7 @@ def _bootstrap():
 
 def _fmt(title: str, block: dict) -> str:
     if "error" in block:
-        return f"  {title:<26} SKIPPED — {block['error']}"
+        return f"  {title:<26} SKIPPED, {block['error']}"
     base = block.get("baseline") or {}
     opt = block.get("optimized") or {}
     imp = block.get("improvement_pct") or block.get("improvement") or {}
@@ -91,7 +91,7 @@ def main(argv=None) -> int:
         db.close()
 
     print("\n" + "=" * 74)
-    print("  NeuroSwarm — bio-inspired training report")
+    print("  NeuroSwarm, bio-inspired training report")
     print("=" * 74)
     print(_fmt("1. Retrieval ranking", report.get("ranking", {})))
     if "selected" in report.get("ranking", {}):

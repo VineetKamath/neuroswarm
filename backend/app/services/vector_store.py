@@ -160,7 +160,7 @@ class PatientVectorStore:
         self.index_patient_notes(note.patient_id, db_patient_notes)
 
     def reindex_all(self, db) -> int:
-        """Rebuild every patient index — required after the dimension mask changes."""
+        """Rebuild every patient index, required after the dimension mask changes."""
         from app.models.note import ClinicalNote
         from app.models.patient import Patient
 
@@ -239,7 +239,7 @@ class PatientVectorStore:
         return store["metadata"] if store else []
 
     def partition_sizes(self) -> Dict[str, int]:
-        """Chunk count per (note_type :: section) partition — the ACO cost model."""
+        """Chunk count per (note_type :: section) partition, the ACO cost model."""
         sizes: Dict[str, int] = {}
         for store in self._patient_stores.values():
             for m in store["metadata"]:

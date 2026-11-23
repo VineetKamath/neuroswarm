@@ -1,341 +1,294 @@
-# NeuroSwarm — 4-Person Presentation Script
+# NeuroSwarm: Presentation Script (4 speakers)
 
-**Format:** ~20 minutes total, four speakers, ~4–5 minutes each, then joint Q&A.
-**Rule for everyone:** say the *number* and say *why a bio-inspired algorithm was
-necessary there*. Those are the two things an examiner actually grades.
+**Length:** about 20 minutes, 4 to 5 minutes each, then questions together.
 
-| Speaker | Owns | Slides / screen | Time |
+**One rule for everyone:** for each algorithm, say the number, and say why a bio-inspired
+algorithm was needed there. Those two things are what the examiners are looking for.
+
+| Speaker | Covers | On screen | Time |
 |---|---|---|---|
-| **Person 1 (you)** | Intro, the problem, why no LLM, live app demo | Login → Patient → Search | 4 min |
-| **Person 2** | GA/PSO foundations, Optimizer #1 (Ranking), Optimizer #2 (Tasks) | Bio-Lab: Ranking + Tasks tabs | 5 min |
-| **Person 3** | Optimizer #3 (Immune), Optimizer #4 (Compression) | Bio-Lab: Immune map + Dimension mask | 5 min |
-| **Person 4** | Optimizer #5 (ACO), architecture, safety, tests, conclusion | Bio-Lab: Pheromone grid + Architecture slide | 5 min |
+| **Person 1** | Intro, the problem, why there is no LLM, app demo | Login, patient chart, assistant | 4 min |
+| **Person 2** | GA and PSO: search ranking and task order | Bio-Lab: GA and PSO chapters | 5 min |
+| **Person 3** | AIS and Binary GA: typo checks and compression | Bio-Lab: AIS and Binary GA chapters | 5 min |
+| **Person 4** | ACO, how it fits together, safety, tests, closing | Bio-Lab: ACO chapter and Overview | 5 min |
 
 **Before you start:** backend running (`venv\Scripts\python.exe run.py`), frontend running
-(`npm run dev`), already logged in as Dr. Chen in a second browser tab so no one watches a
-login form load. Have the Bio-Lab page pre-opened on a third tab.
+(`npm run dev`). Log in as Dr. Arvind Sharma in one tab and open the Bio-Lab in another, so
+nobody has to watch a page load.
+
+**Bio-Lab tips:** each chapter has a guided story on the right. Click **Next** and the 3D
+scene moves to match. The caption at the bottom of the scene says what is happening at that
+moment. Press **F** for full screen and **Shift + arrow keys** to change chapter.
 
 ---
 
-## PERSON 1 — Introduction and the working product
-
-*Screen: title slide, then the running app.*
+## Person 1: Introduction and the app
 
 ### Opening (45 sec)
 
-> Good morning. Our project is **NeuroSwarm** — a hospital care-coordination and
-> electronic-health-record platform. But the EHR is not the contribution. The
-> contribution is this: **five decisions inside that hospital system are made by
-> bio-inspired optimization algorithms instead of by rules a programmer wrote.**
+> Good morning. Our project is NeuroSwarm, a hospital records and care system.
+> The records system itself is not the main point. The main point is that five everyday
+> decisions inside it are made by algorithms copied from nature, instead of by rules we
+> wrote by hand.
 >
-> A doctor searching a patient's notes, a nurse's task queue ordering itself, a
-> mistyped blood pressure being caught before it triggers an alert — each of those is
-> a decision, and each one is tuned by a different algorithm from nature.
+> Which note a doctor sees first. Which task a nurse does first. Whether a vital sign
+> was typed wrong. Each of these is a decision, and each one is tuned by a different
+> bio-inspired algorithm.
 
 ### The problem (1 min)
 
-> Here is the problem we started from. A clinician at a bedside has maybe thirty
-> seconds. The patient's history is dozens of unstructured notes. If they ask
-> *"what antibiotic is this patient on and why"*, the system has to find that
-> answer, not return twenty documents that mention antibiotics.
+> A doctor at the bedside has maybe thirty seconds. The patient's history is dozens of
+> notes. If they ask "what antibiotic is this patient on?", the system has to find that
+> answer, not twenty notes that mention antibiotics.
 >
-> The obvious approach is a set of hand-written rules — sort by date, sort by
-> priority, flag anything outside the normal range. We built exactly that first,
-> and it is our **baseline**. Every number you will hear today is measured against
-> it, so nobody has to take our word for the improvement.
+> The obvious fix is a set of simple rules: sort by date, sort by priority, flag anything
+> out of range. We built exactly that first. That is our baseline, and every number today
+> is compared with it.
 
-### The one decision that makes the project measurable (1 min)
+### Why there is no language model (1 min)
 
-*This is the point that separates the project from every other "medical AI" submission — deliver it slowly.*
-
-> One deliberate choice: **there is no large language model anywhere in this system.**
-> Our earlier version called a hosted 70-billion-parameter model to phrase its answers.
-> We removed it, for three reasons.
+> There is no large language model anywhere in this system. An earlier version used one to
+> write its answers. We took it out for three reasons.
 >
-> One — **zero hallucination becomes structural instead of aspirational.** Every
-> sentence the clinician sees is quoted verbatim from a real note. There is no
-> generation step that *could* invent a drug dose.
+> One: it cannot make things up. Every sentence the doctor sees is copied from a real note,
+> so there is no step that could invent a dose.
 >
-> Two — **retrieval quality becomes visible.** If a language model rewrites the
-> output, good ranking and bad ranking produce nearly identical prose, and the
-> improvement disappears. Without it, better ranking *is* the user-facing improvement.
+> Two: you can see the ranking work. If a language model rewrites the answer, good ranking
+> and bad ranking end up sounding the same. Without it, better ranking means a better answer.
 >
-> Three — **fitness becomes deterministic.** A genetic algorithm needs a stable,
-> repeatable objective function. A network call with variable latency and randomly
-> sampled output is a terrible thing to put inside an evolutionary loop.
+> Three: a genetic algorithm needs a score that gives the same result every time. A language
+> model gives a different answer each time and takes a second to respond, which is a bad
+> thing to put inside a loop that runs thousands of times.
 
-### Live demo (1 min 30)
+### Demo (1 min 30)
 
-*Do these in order. Narrate what you clicked, not what the code does.*
+*Say what you click, not what the code does.*
 
-1. **Login screen** — "Role-based: Admin, Doctor, Nurse. One click to switch roles."
-2. **Log in as Dr. Chen** → patient list. "38 patients, seeded with realistic SOAP-format
-   clinical notes."
-3. **Open a patient** → ask a real clinical question in the search box.
-   "The answer comes back **cited** — that highlighted text is the actual note it came from."
-4. **Ask something the notes do not contain.** — "And this is the refusal gate. Below a
-   similarity threshold it says *no relevant information found* rather than returning a
-   weak match. In a clinical tool, refusing is a feature."
-5. **Switch to a Nurse login** → task queue. "Same data, different role, different
-   permissions — and this queue's ordering is one of our five optimizers."
+1. **Login screen.** "Admin, doctor and nurse accounts. One click to switch."
+2. **Patients.** "80 patients with realistic notes: heart failure, pneumonia, dengue, TB,
+   heart attacks, typhoid, malaria and more."
+3. **Open Kamala Sundaram, click "Summarize this patient".** "Everything here is taken from
+   her record. You can open the cited sources."
+4. **Ask "What diuretic is the patient on?"** Point at the ACO and GA/PSO badges on the answer.
+5. **Ask something unrelated, like "what is the capital of France?".** "It refuses. If the
+   match is too weak it says nothing was found instead of guessing."
+6. **Switch to Nurse Priya, open Care Tasks.** "This queue is ordered by one of our algorithms."
 
 ### Hand-off (15 sec)
 
-> So that is the product. Everything you just saw is being ordered, filtered and
-> checked by evolved policies rather than by `ORDER BY`. **Person 2** will take the
-> first two of those five algorithms.
+> Everything you just saw is ordered, filtered or checked by an evolved policy, not a fixed
+> rule. Person 2 will explain the first two algorithms.
 
 ---
 
-## PERSON 2 — Foundations + Ranking (GA/PSO) + Task triage (GA)
+## Person 2: Genetic Algorithm and Particle Swarm
 
-*Screen: Bio-Lab → Ranking tab, then Tasks tab.*
+*Screen: Bio-Lab, GA chapter. Click Next through the story while you talk. Then the PSO chapter.*
 
-### The toolkit in 45 seconds
+### The tools (45 sec)
 
-> Before the applications — three algorithms do all the work, and all three are in
-> `app/bio/common.py`, written from scratch, not imported from a library.
+> Two of our algorithms do most of the work. We wrote them ourselves; they are in
+> `app/bio/common.py`.
 >
-> **Genetic Algorithm** — a population of candidate solutions; tournament selection
-> picks parents, crossover mixes them, mutation adds new variation, elitism carries
-> the best one forward untouched.
-> **Particle Swarm** — candidates fly through the search space, each pulled towards
-> its own best-ever position and towards the swarm's best.
-> **Binary GA** — the same, but each gene is one bit: on or off.
+> A genetic algorithm keeps a population of guesses. The better ones are picked as parents,
+> their genes are mixed, and a few genes are changed at random. The best ones are always
+> kept, so the best score never goes down.
+>
+> Particle swarm optimization sends a flock of guesses through the space. Each one is pulled
+> towards the best spot it has found and the best spot the whole flock has found.
 
-### Optimizer #1 — Search result ranking (2 min)
+### Search ranking (2 min)
 
-> **Where it sits:** between the vector search and the list the doctor reads.
+> When the doctor asks a question, several notes match. The old system ranked them on one
+> thing: how similar the words were. But a good result also depends on how recent the note
+> is, whether the exact drug name appears, and whether it is the right section. A question
+> about the plan should show the Plan section.
 >
-> **The baseline** ranked on one signal — embedding cosine similarity. But a
-> clinically good result also depends on how *recent* the note is, whether the exact
-> clinical term appears *verbatim*, and whether the SOAP section actually answers the
-> kind of question asked. A question about a plan should surface the Plan section.
+> So each guess is a set of 14 numbers: how much to trust each clue, plus a few settings.
+> Its score is how well it ranks questions where we already know the right note.
 >
-> So we evolve a **14-gene genome**: six signal weights, a recency half-life, a
-> length pivot, and six note-type priors.
+> Why a bio-inspired algorithm? The ranking score only changes when two results swap places.
+> Move a weight a little and nothing changes, so there is no slope to follow and normal
+> calculus-based methods do not work. And 14 settings is far too many to try every
+> combination. A GA only needs to compare two guesses.
 >
-> **Why bio-inspired — this is the important part.** The metric we care about is
-> nDCG, which is a *ranking* metric. It is flat almost everywhere — nudge a weight
-> slightly and the order does not change, so the score does not change. **There is no
-> gradient to descend.** And a 14-dimensional continuous space with interacting
-> parameters is far too large for grid search. A GA does not need a gradient; it only
-> needs to be able to *compare* two candidates.
+> We trained a GA and a PSO and raced them. The winner is used.
 >
-> We trained a GA and a PSO and **raced them against each other** — the winner is
-> deployed.
->
-> **Result, on a held-out test split the optimizer never saw: nDCG@5 goes from
-> 0.7635 to 0.9264 — a 21.3% improvement.**
+> **Result on 116 questions it never saw: ranking quality (nDCG@5) went from 0.69 to 0.92,
+> a 32.5% improvement.**
 
-*Show: the convergence chart — best/mean/worst fitness, GA and PSO overlaid, diversity collapsing.*
+*In the GA scene, point at Dr. Sharma's question on the right as the correct note moves to #1.*
 
-### Optimizer #2 — Care-task prioritization (2 min)
+### Nurse task order (1 min 30)
 
-> **Where it sits:** the nurse's task queue.
+> The old task list was one SQL sort: by due time, then priority. But a charge nurse knows
+> that an overdue medium task for a critical patient comes before a high-priority bath that
+> is not due yet. A fixed sort cannot do that.
 >
-> **The baseline** was a single SQL sort: `ORDER BY due_time ASC, priority DESC`.
-> That cannot express what a charge nurse does constantly — **an overdue MEDIUM
-> medication on a CRITICAL patient outranks a not-yet-due HIGH hygiene task.** No
-> fixed sort can represent that trade-off.
+> Nurses cannot write that down as a formula, but they can easily say which of two tasks
+> they would do first. So we trained on those pairs. Agreement with those choices jumps in
+> steps, so again there is no slope, and again a GA handles it.
 >
-> **Why bio-inspired:** we could not get clinicians to write down a scoring formula —
-> nobody thinks that way. But they will happily tell you, for any two tasks, **which
-> one they would do first.** So our training data is *pairwise preferences*, and our
-> objective is pairwise agreement — which is a **discontinuous step function** of the
-> weights. It jumps when a pair flips and is flat in between. Calculus cannot touch
-> that. A GA optimizes it directly.
+> **Result on unseen ward scenarios: agreement with the expert order went from 80.6% to
+> 94.3%, and the most urgent task is now first 91% of the time instead of 61%.**
+
+*Open "Try it on the real system" to show tonight's real queue, old order next to GA order.*
+
+### PSO (30 sec)
+
+*In the PSO chapter, click Next to the "Only follow the leader" step.*
+
+> Here the flock is on a landscape with a decoy hill and a real peak. If the birds only
+> follow the leader, they all crowd onto the decoy and get stuck. Balancing their own memory
+> with the flock's is what lets them find the real peak.
 >
-> **Result: expert agreement goes from 0.6808 to 0.9212 — a 35.3% improvement**, the
-> largest gain in the project.
-
-*Show: the live A/B panel — the real ward queue ordered by the baseline on one side, the evolved policy on the other.*
-
-> **Person 3** takes the next two.
+> Person 3 takes the next two.
 
 ---
 
-## PERSON 3 — Immune anomaly detection + Embedding compression
+## Person 3: Artificial Immune System and Binary GA
 
-*Screen: Bio-Lab → Immune detector map, then Dimension mask.*
+*Screen: Bio-Lab, AIS chapter. Then Binary GA.*
 
-### Optimizer #3 — Vitals anomaly detection, Artificial Immune System (2 min 30)
+### Catching typos in vital signs (2 min 30)
 
-> **Where it sits:** a checkpoint on every vital-sign reading before it is trusted
-> enough to raise an alert. A nurse types 180 instead of 108 — that typo should never
-> reach the alerting system.
+> Every vital sign a nurse enters is checked before it is trusted. If a nurse types a heart
+> rate of 180 instead of 81, that typo should not set off an alarm.
 >
-> **The biology, because the metaphor is doing real work here.** In the thymus,
-> immature T-cells are exposed to the body's own proteins. Any T-cell that binds to
-> "self" is destroyed. The ones that survive react only to things the body has
-> **never seen before**. That is called **negative selection**.
+> The idea comes from the thymus. The body makes T-cells at random, then destroys any that
+> attack the body's own cells. The ones left only react to things that are not part of the
+> body. This is called negative selection.
 >
-> In our system, "self" is the manifold of **normal** seven-dimensional vital-sign
-> vectors. We generate candidate detectors, censor away any that match normal
-> physiology, and keep the survivors — V-detector style, with variable radius.
->
-> **Why bio-inspired, and this is the strongest justification in the whole project:**
-> a supervised classifier needs labeled examples of **every error type you want to
-> catch**. Nobody has that — you cannot enumerate every way a human mistypes a number.
-> **Negative selection trains on normal data only**, so it flags error modes that were
-> never enumerated in advance. For safety work, that is exactly the property you want.
->
-> We tested it against **six planted corruption types** — digit transposition, decimal
-> shift, unit confusion, missing digit, impossible physiology, and copy-forward —
-> **none of which the model was ever shown.**
->
-> **Result: 89.3% detection at a 0% false-alarm rate. F1 of 0.9434.** The zero matters
-> more than the 89 — a vitals checker that cries wolf gets switched off in a week.
->
-> **One honest point about scope:** two error classes *are* enumerable — values
-> outside physiological range, and impossible relationships like diastolic pressure
-> above systolic. We handle those with deterministic rules, not the immune system,
-> because a rule is simpler and cannot miss. That is the honest division of labour.
+> In our system, "self" is the set of normal vital-sign readings. We create random
+> detectors, throw away any that touch normal readings, and keep the rest.
 
-*Show: the detector map — detectors ringing the normal cloud without overlapping it. Plant a typo live and watch it get bound.*
+*Click Next through "Destroy any cell that attacks self" and "The typo arrives".*
 
-### Optimizer #4 — Embedding compression, Binary GA (2 min)
+> Why this approach? A normal classifier needs examples of every kind of mistake, and nobody
+> has those. This only needs normal data, so it can catch mistakes nobody listed.
+>
+> We tested it on six kinds of planted typos it never saw.
+>
+> **Result: it caught 90.3% of the typos with a 0.9% false alarm rate, one false alarm in
+> 113 normal readings.** A low false alarm rate matters, because a checker that keeps
+> crying wolf gets ignored.
+>
+> Some mistakes are simple to write as rules, like a value that is physically impossible,
+> or diastolic higher than systolic. Those are handled by plain rules. The immune system
+> covers the rest.
 
-> **Where it sits:** between the sentence-transformer encoder and the FAISS index.
->
-> Every note chunk becomes a **384-dimensional** vector. Not all 384 dimensions earn
-> their storage for *clinical* text — that encoder was trained on the general web.
->
-> So: one bit per dimension, keep it or drop it. **Why bio-inspired — the search space
-> is 2³⁸⁴.** That is more combinations than atoms in the observable universe, so
-> exhaustive search is out. And greedy forward selection gets trapped, because
-> **dimensions interact**: a dimension that looks useless alone can be decisive
-> alongside another one. Uniform crossover is the right operator precisely because it
-> recombines *useful groups* of dimensions rather than evaluating them one at a time.
->
-> **Result: 384 dimensions down to 145 — 62.24% less memory, with accuracy preserved.**
->
-> **And we want to be honest about that word "preserved."** The compression benchmark
-> holds out only about 18 queries, so variance across random seeds is large — repeated
-> runs gave held-out changes of −1.5%, +0.5%, +1.1% and +13%. A split that small
-> **cannot separate a real accuracy gain from sampling noise**, so we claim accuracy is
-> *preserved*, not improved. The result that **is** stable across every seed is the
-> 62% memory reduction — that follows deterministically from keeping 145 of 384
-> dimensions.
+*Optional: in "Try it on the real system", show HR 180 (caught by the immune detector) and
+BP 212 (not caught, because 212 is still a realistic value on this ward). Say this limit
+out loud before anyone asks.*
 
-*Show: the dimension mask — all 384 dimensions, lit if they survived.*
+### Making the search index smaller (2 min)
 
-> **Person 4** has the last algorithm and the system as a whole.
+> To search by meaning, every piece of a note is stored as 384 numbers. Not all of them are
+> useful for medical text.
+>
+> So each gene is a switch: keep this number or drop it. There are 2 to the power 384
+> possible masks, far too many to try. Picking numbers one at a time also fails, because
+> some numbers are only useful together. Crossover can keep useful groups together.
+>
+> **Result: 384 numbers down to 142, about 63% less memory, with search quality about the
+> same.**
+>
+> To be clear about "about the same": this test set is only 18 questions, so results jump
+> around between runs, from minus 6% to plus 13%. We cannot honestly call that an
+> improvement. The memory saving is exact.
+
+> Person 4 has the last algorithm and the system as a whole.
 
 ---
 
-## PERSON 4 — ACO routing, architecture, safety, tests, conclusion
+## Person 4: Ant Colony Optimization, the full system, and closing
 
-*Screen: Bio-Lab → Pheromone grid, then the architecture slide.*
+*Screen: Bio-Lab, ACO chapter. Then the Overview.*
 
-### Optimizer #5 — Multi-source query routing, Ant Colony Optimization (2 min)
+### Where to search first (2 min)
 
-> **Where it sits:** ahead of the vector scan, deciding *which parts of the index to
-> even look at.*
+> Each patient's notes are split into 30 sections: note type times part of the note. A
+> question about medicine rarely needs the section about symptoms. Searching everything
+> every time is wasteful.
 >
-> Our search space is partitioned — **30 partitions**, note type crossed with SOAP
-> section. A question about medication rarely needs the partition holding nursing
-> hygiene observations. Ants lay pheromone on paths that lead to food; good routes get
-> reinforced, and unused pheromone **evaporates**.
+> Ants find food by leaving pheromone. Paths that work get more pheromone, and unused trails
+> fade. Our ants are practice questions, and the food is the section that holds the answer.
 >
-> **Why ACO instead of a simple lookup table mapping intent to partition?** One word:
-> **evaporation.** A static table goes stale as documentation habits shift — a ward
-> changes how it writes notes and your table silently starts routing to the wrong
-> place. Pheromone decay makes the policy **continuously forget outdated routes**,
-> while probabilistic exploration keeps testing alternatives. It is a routing policy
-> with a built-in mechanism for being wrong gracefully.
+> Why not just a fixed table? Because the fading matters. If a ward starts writing notes
+> differently, a fixed table quietly keeps sending searches to the wrong place. With
+> evaporation, old routes fade unless they keep working.
 >
-> **Result: 81.16% fewer chunks scanned, at a 0.8508 hit rate.**
->
-> **Two honest notes.** First: narrowing the search costs recall — that hit rate is
-> 0.85, not 1.0. In production NeuroSwarm detects a weak or thin routed result and
-> **falls back to a full patient scan**, so a miss costs one extra scan, never a wrong
-> answer. Second, on scope: the original brief proposed routing across separate data
-> stores — encounters, prescriptions, reports. This system has a single clinical-notes
-> store, so that framing would have been fiction. We applied ACO to the partitioned
-> search space we actually have.
+> **Result: 82% fewer chunks scanned, and the answer is in the searched sections 91% of the
+> time.** When the narrow search looks weak, NeuroSwarm scans everything, so a miss costs a
+> little time and never gives a wrong answer.
 
-*Show: the pheromone heatmap — query intent × partition, trail strength after training.*
+*In "Try it on the real system", ask a question and show which sections the ants chose.*
 
 ### How it fits together (1 min)
 
-*Show the architecture diagram.*
+*Show the Overview chapter.*
 
-> A single query goes through all of it: the **ACO router** chooses partitions → **FAISS**
-> searches a per-patient index → with the **evolved dimension mask** applied → the
-> **GA/PSO re-ranker** reorders on six evolved signals → the **similarity gate** refuses
-> rather than guesses → and the answer is assembled **verbatim and cited**. Vitals go
-> through the **immune checkpoint**; the task queue through the **GA triage policy**.
+> One question goes through everything: the ants choose sections, the search runs on the
+> smaller index, the evolved recipe ranks the results, a similarity check refuses weak
+> matches, and the answer is copied from the notes with citations. Vitals go through the
+> immune check. Tasks go through the GA policy.
 >
-> Each optimizer is trained **offline** and saved as a JSON artifact. Serving is a cheap
-> lookup. And if nothing has been trained, **every optimizer degrades to its documented
-> baseline rather than failing** — the product still works, it just works the
-> un-optimized way.
+> Each algorithm is trained offline and saved as a file. If nothing is trained, each part
+> falls back to the simple rule, so the app still works.
 
-### Clinical safety (45 sec)
+### Safety (45 sec)
 
-> Three properties we designed in rather than tested for:
-> **Patient isolation is structural** — FAISS indices are partitioned by patient ID, so
-> Patient A's index contains no vectors belonging to Patient B. Cross-patient leakage is
-> *impossible*, not *filtered*.
-> **The refusal gate** — below the similarity threshold it declines to answer.
-> **RBAC** is enforced centrally through FastAPI dependency injection, not sprinkled
-> through endpoints.
+> Each patient has their own search index, so one patient's notes cannot show up in another
+> patient's answer. The similarity check refuses rather than guesses. And role permissions
+> are checked in one central place on the server.
 
 ### Evidence (45 sec)
 
-> **41 tests** — authentication, RBAC returning 401 and 403 correctly, patient vector
-> isolation, the similarity threshold, and the bio-inspired subsystem itself: that each
-> optimizer converges on a known optimum, that immune detectors never overlap the
-> self-region, and that ACO concentrates pheromone on the rewarding partition.
+> There are 35 automated tests covering login, permissions, patient isolation, the refusal
+> check, and the algorithms themselves. For example, each optimizer must reach a known best
+> answer, and immune detectors must never cover a normal reading.
 >
-> The Bio-Lab page also ships a **live browser sandbox** for each algorithm — you can
-> drag the mutation rate and watch convergence change in real time — and every teaching
-> claim it makes is checked by an automated script. It asserts, for example, that *with
-> elitism the best genome never regresses*: zero regressions across twelve seeds and
-> fifty generations, versus forty without elitism. If a claim ever stops being true,
-> the build fails.
+> The browser versions of the algorithms in the Bio-Lab are checked by a script too. For
+> example, with elitism the best score never drops: zero drops across 12 runs, compared with
+> 40 drops without it.
 
 ### Closing (30 sec)
 
-> To close. Five decision points in a working hospital system, each one handed to the
-> algorithm whose structure actually matches the problem: **a gradient-free rank metric
-> to a GA and PSO, discontinuous human preferences to a GA, unknown error modes to
-> negative selection, a 2³⁸⁴ combinatorial search to a binary GA, and a routing policy
-> that must forget to an ant colony.**
+> Five decisions in a working hospital system, each given to the algorithm that fits it: a
+> score with no slope to a GA and PSO, human preferences to a GA, unknown typos to an immune
+> system, a huge on/off search to a binary GA, and a route that needs to forget to an ant
+> colony.
 >
-> Every number measured on a held-out split, against the baseline it replaced, with the
-> weak results reported as honestly as the strong ones. Thank you — we are happy to take
-> questions.
+> Every number is measured on data the algorithm never saw, against the rule it replaced,
+> and we have told you where the results are weak as well as where they are strong.
+> Thank you. We are happy to take questions.
 
 ---
 
-## Joint Q&A preparation
-
-Agree in advance **who answers what**, so nobody talks over anyone.
+## Questions: who answers what
 
 | Likely question | Who | Short answer |
 |---|---|---|
-| "Why not just use ChatGPT / an LLM?" | **P1** | The four reasons — structural zero-hallucination, retrieval quality stays visible, deterministic fitness for the GA, and retrieval is ~99% of response time so speed work is meaningful. |
-| "Isn't a GA overkill? Why not gradient descent?" | **P2** | nDCG is flat almost everywhere — no gradient exists. Pairwise agreement is a step function. Neither is differentiable. |
-| "How do you know it isn't overfitting?" | **P2** | Every figure is on a held-out test split the optimizer never trained on, against the exact baseline it replaced. Reproducible with `python -m app.bio.cli train`. |
-| "Where did the medical data come from?" | **P1** | Generated cohort — 38 patients, 822 indexed chunks, SOAP-format templates with labeled ground truth. No real patient data, so no privacy issue. |
-| "How is the anomaly detector validated if it never sees errors?" | **P3** | It trains on normal data only, then is evaluated against six planted corruption types it was never shown. That is the whole point of negative selection. |
-| "Is the compression gain real?" | **P3** | **Concede immediately** — the memory gain is deterministic and real; the accuracy claim is "preserved," not "improved," because an 18-query holdout cannot separate signal from noise. Say it before they say it. |
-| "What if ACO routes to the wrong partition?" | **P4** | Weak or thin routed result → automatic fallback to a full patient scan. A miss costs one extra scan, not a wrong answer. |
-| "What would you do next?" | **P4** | Hospital-scale index where the routing and compression speed-ups actually bite; larger benchmark so the compression accuracy question can be settled. |
+| "Why not use ChatGPT or another LLM?" | P1 | It can make things up, it hides whether ranking is good, it gives different answers each time, and it is slow. Our search is about 99% of response time, so speed work actually shows. |
+| "Why not gradient descent?" | P2 | Ranking quality and pairwise agreement only change in steps. There is no slope. |
+| "How do you know it isn't overfitting?" | P2 | Every number is on a test set the algorithm never trained on. Run `python -m app.bio.cli train` to reproduce it. |
+| "Where did the data come from?" | P1 | It is generated: 80 patients and 1,932 note chunks, with known answers built in. No real patient data. |
+| "How do you test the immune system if it never sees errors?" | P3 | We train on normal readings only, then test on six kinds of planted typos it never saw. |
+| "Does it catch every typo?" | P3 | No. A typo that lands on a realistic value, like BP 212 on this ward, can get through. That is why range rules run next to it. |
+| "Is the compression gain real?" | P3 | The memory saving is exact. Accuracy is "about the same", because 18 test questions is too few to say more. Say this before they ask. |
+| "What if the ants pick the wrong section?" | P4 | If the narrow search looks weak, it scans everything. A miss costs time, not a wrong answer. |
+| "What would you do next?" | P4 | Test on a much bigger index, where routing and compression save more, and build a bigger test set for compression. |
 
-**If you do not know an answer, say so and say what you would measure to find out.**
-That reads far better than guessing.
+**If you do not know an answer,** say so, and say what you would measure to find out.
 
 ---
 
 ## Rehearsal checklist
 
-- [ ] Everyone can pronounce and define: nDCG, Kendall τ, negative selection, pheromone
+- [ ] Everyone can explain in one sentence: nDCG, Kendall tau, negative selection,
       evaporation, elitism, tournament selection.
-- [ ] P1 has run the demo clicks at least twice — including the refusal query.
-- [ ] Bio-Lab is pre-loaded; nobody waits for a chart to render on stage.
-- [ ] Each hand-off line is said out loud so the transitions are not awkward.
-- [ ] Full run-through timed once. If you are over 20 minutes, cut from the
-      architecture section (P4), **never** from the "why bio-inspired" justifications.
+- [ ] Person 1 has done the demo clicks at least twice, including the refused question.
+- [ ] Everyone has clicked through their Bio-Lab story once.
+- [ ] Say each hand-off line out loud in practice.
+- [ ] Time one full run. If it is over 20 minutes, cut from "How it fits together", never
+      from the "why bio-inspired" parts.

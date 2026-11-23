@@ -30,7 +30,7 @@ def dcg(relevances: Sequence[float]) -> float:
 
 
 def ndcg_at_k(ranked_relevance: Sequence[float], k: int) -> float:
-    """Normalized Discounted Cumulative Gain — rewards putting the truly
+    """Normalized Discounted Cumulative Gain, rewards putting the truly
     relevant items *near the top*, not merely somewhere in the list."""
     top = list(ranked_relevance[:k])
     ideal = sorted(ranked_relevance, reverse=True)[:k]
@@ -98,7 +98,7 @@ class GenerationRecord:
 
 
 def population_diversity(population: Sequence[Sequence[float]]) -> float:
-    """Mean per-gene spread — collapses toward 0 as the run converges."""
+    """Mean per-gene spread, collapses toward 0 as the run converges."""
     arr = np.asarray(population, dtype=float)
     if arr.shape[0] < 2:
         return 0.0

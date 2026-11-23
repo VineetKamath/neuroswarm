@@ -10,7 +10,7 @@ WHERE IT PLUGS IN
 WHY BIO-INSPIRED
     Choosing k of 384 dimensions is a combinatorial subset-selection problem
     with 2^384 candidates. It is not convex, not differentiable, and greedy
-    forward selection gets trapped because dimensions interact — a dimension
+    forward selection gets trapped because dimensions interact, a dimension
     that is useless alone can be decisive alongside another. A binary GA with
     uniform crossover recombines useful dimension groups directly, which is
     precisely the building-block behaviour crossover is designed to exploit.

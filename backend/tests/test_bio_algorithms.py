@@ -74,7 +74,7 @@ def test_particle_swarm_converges_and_loses_diversity():
 
 
 def test_binary_ga_finds_optimal_subset():
-    """Reward the first 10 bits, penalize the rest — optimum is exactly known."""
+    """Reward the first 10 bits, penalize the rest, optimum is exactly known."""
     bga = BinaryGeneticAlgorithm(
         BinaryGAConfig(genome_length=24, population_size=40, generations=40,
                        mutation_rate=0.05, seed=2),
@@ -180,7 +180,7 @@ def test_task_categorization():
 
 def test_ga_policy_can_outrank_priority_only_sort():
     """An overdue MEDIUM task on a CRITICAL patient should beat a not-yet-due
-    HIGH task on a stable one — the exact case a fixed sort cannot express."""
+    HIGH task on a stable one, the exact case a fixed sort cannot express."""
     urgent = TaskFeatures(1, "MEDIUM", "CRITICAL", "medication", overdue_hours=9.0,
                           pending_hours=30.0, nurse_open_tasks=2)
     routine = TaskFeatures(2, "HIGH", "STABLE", "hygiene", overdue_hours=-8.0,
@@ -231,7 +231,7 @@ def test_negative_selection_trains_only_on_self_and_flags_nonself():
     model.fit(_normal_vitals())
     assert len(model.detectors) > 0
 
-    # Every detector must lie outside the self-region — that is the censoring
+    # Every detector must lie outside the self-region, that is the censoring
     # guarantee that makes false alarms structurally rare.
     for d in model.detectors:
         d_self = float(np.min(np.linalg.norm(model.self_set - d.center, axis=1)))

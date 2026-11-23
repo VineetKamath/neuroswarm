@@ -45,9 +45,11 @@ INTENT_SECTION_AFFINITY: Dict[str, Dict[str, float]] = {
 
 INTENT_KEYWORDS: Dict[str, Sequence[str]] = {
     "medication": ("medication", "med", "drug", "dose", "dosage", "mg", "prescri", "antibiotic",
-                   "administer", "infusion", "titrate", "started on", "taking"),
-    "lab":        ("lab", "culture", "wbc", "hemoglobin", "creatinine", "troponin", "bnp", "panel",
-                   "result", "sputum", "blood test", "abg", "electrolyte"),
+                   "administer", "infusion", "titrate", "started on", "taking", "diuretic", "insulin",
+                   "antiplatelet", "antimalarial", "anti-tubercular", "steroid", "analgesi", "fluids"),
+    "lab":        ("lab", "culture", "wbc", "hemoglobin", "haemoglobin", "creatinine", "troponin", "bnp",
+                   "panel", "result", "sputum", "blood test", "abg", "electrolyte", "platelet", "ns1",
+                   "cbnaat", "smear", "parasite", "widal", "ecg", "x-ray", "angiograph", "bicarbonate"),
     "vitals":     ("vital", "blood pressure", "bp", "heart rate", "pulse", "temperature", "fever",
                    "saturation", "spo2", "o2", "respiratory rate", "glucose", "weight"),
     "diagnosis":  ("diagnos", "assessment", "impression", "condition", "why", "cause", "etiolog"),

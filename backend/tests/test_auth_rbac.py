@@ -19,13 +19,13 @@ def test_login_and_roles():
         assert admin_data["user"]["role"] == "ADMIN"
 
         # Doctor login
-        res_doc = client.post("/api/auth/login", json={"email": "dr.chen@neuroswarm.health", "password": "password123"})
+        res_doc = client.post("/api/auth/login", json={"email": "dr.sharma@neuroswarm.health", "password": "password123"})
         assert res_doc.status_code == 200
         doc_data = res_doc.json()
         assert doc_data["user"]["role"] == "DOCTOR"
 
         # Nurse login
-        res_nurse = client.post("/api/auth/login", json={"email": "nurse.sarah@neuroswarm.health", "password": "password123"})
+        res_nurse = client.post("/api/auth/login", json={"email": "nurse.priya@neuroswarm.health", "password": "password123"})
         assert res_nurse.status_code == 200
         nurse_data = res_nurse.json()
         assert nurse_data["user"]["role"] == "NURSE"
@@ -37,7 +37,7 @@ def test_login_and_roles():
 def test_rbac_403_enforcement():
     with TestClient(app) as client:
         # Login as nurse
-        res_nurse = client.post("/api/auth/login", json={"email": "nurse.sarah@neuroswarm.health", "password": "password123"})
+        res_nurse = client.post("/api/auth/login", json={"email": "nurse.priya@neuroswarm.health", "password": "password123"})
         nurse_token = res_nurse.json()["access_token"]
         nurse_headers = {"Authorization": f"Bearer {nurse_token}"}
 

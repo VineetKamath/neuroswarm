@@ -3,7 +3,7 @@
  *
  * These are hand-built candidate pools for three clinical questions. Each
  * candidate carries the same five signals the production reranker uses, and a
- * graded relevance label. Fitness is nDCG@3 averaged over the three queries —
+ * graded relevance label. Fitness is nDCG@3 averaged over the three queries,
  * the same metric the Python GA optimizes, just at a scale where you can see
  * every row on screen.
  *
@@ -14,9 +14,9 @@
 import { ndcgAtK } from './engines.js';
 
 export const SIGNALS = [
-  { key: 'similarity', label: 'Embedding similarity', hint: 'Cosine from Sentence-BERT — the only signal the baseline had' },
+  { key: 'similarity', label: 'Embedding similarity', hint: 'Cosine from Sentence-BERT, the only signal the baseline had' },
   { key: 'recency', label: 'Recency', hint: 'How recent the note is' },
-  { key: 'lexical', label: 'Verbatim term overlap', hint: 'Exact drug names / organisms the embedding blurs' },
+  { key: 'lexical', label: 'Exact word match', hint: 'Exact drug names / organisms the embedding blurs' },
   { key: 'section', label: 'SOAP section match', hint: 'Does this section answer this kind of question?' },
   { key: 'length', label: 'Chunk length fit', hint: 'Informative length; penalises stubs and rambles' },
 ];
@@ -26,22 +26,22 @@ export const TOY_QUERIES = [
     question: 'What diuretic and dose was prescribed?',
     intent: 'medication',
     candidates: [
-      { id: 'a1', label: 'Narrative — admission summary', section: 'Narrative', note: 'Admission',
+      { id: 'a1', label: 'Narrative, admission summary', section: 'Narrative', note: 'Admission',
         similarity: 0.93, recency: 0.20, lexical: 0.25, section_: 0.15, length: 0.55, rel: 0.0,
         text: 'Patient admitted overnight with breathlessness and leg swelling.' },
-      { id: 'a2', label: 'Plan & Orders — today', section: 'Plan & Orders', note: 'Progress',
+      { id: 'a2', label: 'Plan & Orders, today', section: 'Plan & Orders', note: 'Progress',
         similarity: 0.74, recency: 0.95, lexical: 0.90, section_: 1.00, length: 0.80, rel: 1.0,
         text: 'IV Furosemide 80mg BID. Fluid restriction 1.5L/day.' },
-      { id: 'a3', label: 'Plan & Orders — 5 days ago', section: 'Plan & Orders', note: 'Admission',
+      { id: 'a3', label: 'Plan & Orders, 5 days ago', section: 'Plan & Orders', note: 'Admission',
         similarity: 0.71, recency: 0.30, lexical: 0.85, section_: 1.00, length: 0.78, rel: 0.6,
         text: 'Start Furosemide 40mg daily, review response in 48 hours.' },
-      { id: 'a4', label: 'Assessment — diagnosis', section: 'Assessment', note: 'Progress',
+      { id: 'a4', label: 'Assessment, diagnosis', section: 'Assessment', note: 'Progress',
         similarity: 0.80, recency: 0.90, lexical: 0.20, section_: 0.45, length: 0.62, rel: 0.0,
         text: 'Decompensated heart failure, volume overloaded.' },
-      { id: 'a5', label: 'Subjective — symptoms', section: 'Subjective', note: 'Progress',
+      { id: 'a5', label: 'Subjective, symptoms', section: 'Subjective', note: 'Progress',
         similarity: 0.66, recency: 0.88, lexical: 0.05, section_: 0.15, length: 0.40, rel: 0.0,
         text: 'Reports sleeping on three pillows, worse at night.' },
-      { id: 'a6', label: 'Objective — labs', section: 'Objective', note: 'Progress',
+      { id: 'a6', label: 'Objective, labs', section: 'Objective', note: 'Progress',
         similarity: 0.69, recency: 0.92, lexical: 0.15, section_: 0.30, length: 0.85, rel: 0.0,
         text: 'NT-proBNP 4200 pg/mL, creatinine 1.4 mg/dL.' },
     ],
@@ -50,19 +50,19 @@ export const TOY_QUERIES = [
     question: 'What organism grew in the sputum culture?',
     intent: 'lab',
     candidates: [
-      { id: 'b1', label: 'Assessment — pneumonia', section: 'Assessment', note: 'Progress',
+      { id: 'b1', label: 'Assessment, pneumonia', section: 'Assessment', note: 'Progress',
         similarity: 0.91, recency: 0.85, lexical: 0.30, section_: 0.50, length: 0.58, rel: 0.0,
         text: 'Community-acquired pneumonia, CURB-65 score 2.' },
-      { id: 'b2', label: 'Objective — microbiology', section: 'Objective', note: 'Progress',
+      { id: 'b2', label: 'Objective, microbiology', section: 'Objective', note: 'Progress',
         similarity: 0.78, recency: 0.94, lexical: 0.95, section_: 1.00, length: 0.82, rel: 1.0,
         text: 'Sputum culture: Streptococcus pneumoniae, pan-sensitive.' },
-      { id: 'b3', label: 'Objective — earlier labs', section: 'Objective', note: 'Admission',
+      { id: 'b3', label: 'Objective, earlier labs', section: 'Objective', note: 'Admission',
         similarity: 0.72, recency: 0.25, lexical: 0.60, section_: 1.00, length: 0.75, rel: 0.6,
         text: 'Sputum sent for culture. WBC 18.2, CRP 210.' },
-      { id: 'b4', label: 'Plan — antibiotics', section: 'Plan & Orders', note: 'Progress',
+      { id: 'b4', label: 'Plan, antibiotics', section: 'Plan & Orders', note: 'Progress',
         similarity: 0.83, recency: 0.90, lexical: 0.35, section_: 0.30, length: 0.70, rel: 0.0,
         text: 'IV Ceftriaxone 2g daily plus oral Azithromycin.' },
-      { id: 'b5', label: 'Narrative — handover', section: 'Narrative', note: 'Progress',
+      { id: 'b5', label: 'Narrative, handover', section: 'Narrative', note: 'Progress',
         similarity: 0.86, recency: 0.60, lexical: 0.20, section_: 0.15, length: 0.45, rel: 0.0,
         text: 'Improving on antibiotics, oxygen weaned overnight.' },
       { id: 'b6', label: 'Chief complaint', section: 'Chief Complaint', note: 'Admission',
@@ -74,22 +74,22 @@ export const TOY_QUERIES = [
     question: 'What symptoms did the patient describe on admission?',
     intent: 'symptom',
     candidates: [
-      { id: 'c1', label: 'Objective — vitals', section: 'Objective', note: 'Admission',
+      { id: 'c1', label: 'Objective, vitals', section: 'Objective', note: 'Admission',
         similarity: 0.88, recency: 0.28, lexical: 0.25, section_: 0.25, length: 0.80, rel: 0.0,
         text: 'BP 118/72, HR 96, SpO2 91% on room air.' },
-      { id: 'c2', label: 'Subjective — history', section: 'Subjective', note: 'Admission',
+      { id: 'c2', label: 'Subjective, history', section: 'Subjective', note: 'Admission',
         similarity: 0.76, recency: 0.26, lexical: 0.85, section_: 1.00, length: 0.76, rel: 1.0,
         text: 'Describes breathlessness on exertion, orthopnea and ankle swelling for five days.' },
       { id: 'c3', label: 'Chief complaint', section: 'Chief Complaint', note: 'Admission',
         similarity: 0.73, recency: 0.26, lexical: 0.70, section_: 0.90, length: 0.35, rel: 0.6,
         text: 'Progressive dyspnea and leg swelling.' },
-      { id: 'c4', label: 'Plan — orders', section: 'Plan & Orders', note: 'Progress',
+      { id: 'c4', label: 'Plan, orders', section: 'Plan & Orders', note: 'Progress',
         similarity: 0.79, recency: 0.93, lexical: 0.10, section_: 0.15, length: 0.72, rel: 0.0,
         text: 'Daily weights, strict intake/output charting.' },
       { id: 'c5', label: 'Assessment', section: 'Assessment', note: 'Progress',
         similarity: 0.81, recency: 0.90, lexical: 0.20, section_: 0.40, length: 0.60, rel: 0.0,
         text: 'Heart failure with reduced ejection fraction.' },
-      { id: 'c6', label: 'Narrative — social', section: 'Narrative', note: 'Admission',
+      { id: 'c6', label: 'Narrative, social', section: 'Narrative', note: 'Admission',
         similarity: 0.68, recency: 0.24, lexical: 0.15, section_: 0.15, length: 0.50, rel: 0.0,
         text: 'Lives alone, independent with activities of daily living.' },
     ],
@@ -188,7 +188,7 @@ export function rankQuery(genome, query) {
     .sort((a, b) => b.score - a.score);
 }
 
-/** Mean nDCG@3 across all six queries — the sandbox fitness function.
+/** Mean nDCG@3 across all six queries, the sandbox fitness function.
  *  The queries deliberately pull against each other: one rewards an old
  *  note, one rewards a very short chunk, one contains a lexical distractor.
  *  No single weight vector wins by luck, so the population has to search. */
@@ -259,7 +259,7 @@ export const AIS_PRESETS = [
   { name: 'Digit transposition (120→210)', hr: 78, sys: 210, note: 'Plausible number, wrong patient context.' },
   { name: 'Dropped digit (98→8)', hr: 8, sys: 118, note: 'Individually impossible heart rate.' },
   { name: 'Bradycardic + hypotensive', hr: 38, sys: 72, note: 'Far from anything the model saw as normal.' },
-  { name: 'Tachycardic + hypertensive', hr: 150, sys: 205, note: 'Real but rare — a genuine edge case.' },
+  { name: 'Tachycardic + hypertensive', hr: 150, sys: 205, note: 'Real but rare, a genuine edge case.' },
 ];
 
 /* ------------------------------------------------------- ACO toy topology --
@@ -299,7 +299,7 @@ export const BIN_DIMS = 64;
 
 /**
  * Each "dimension" has a hidden usefulness. Fitness rewards keeping useful
- * dimensions and applies a parsimony penalty for keeping too many — the same
+ * dimensions and applies a parsimony penalty for keeping too many, the same
  * two-term objective as the production compression GA.
  */
 export function makeDimensionValues(rand) {

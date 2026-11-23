@@ -1,7 +1,7 @@
 /**
  * Browser-side implementations of the five optimizers.
  *
- * These mirror the Python operators in `backend/app/bio/` exactly — same
+ * These mirror the Python operators in `backend/app/bio/` exactly, same
  * selection, same crossover, same mutation, same pheromone update. They exist
  * so the Bio-Lab can run an algorithm *live* while you drag a slider, and so
  * every intermediate step (which parents were picked, where crossover cut,
@@ -27,7 +27,7 @@ export function mulberry32(seed) {
 export const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
 
 function gauss(rand, sigma) {
-  // Box–Muller
+  // Box-Muller
   const u = Math.max(1e-9, rand());
   const v = rand();
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v) * sigma;
@@ -243,13 +243,15 @@ export class ParticleSwarm {
    3. ARTIFICIAL IMMUNE SYSTEM  (real-valued negative selection, V-detector)
    ========================================================================== */
 export class NegativeSelection {
-  constructor({ selfSamples = [], selfRadius = 0.09, seed = 13, dims = 2 }) {
+  constructor({ selfSamples = [], selfRadius = 0.09, seed = 13, dims = 2, maxRadius = Infinity }) {
+    // maxRadius caps detector size (a constrained V-detector); Infinity = classic V-detector.
+    this.maxRadius = maxRadius;
     this.selfSamples = selfSamples;
     this.selfRadius = selfRadius;
     this.dims = dims;
     this.rand = mulberry32(seed);
     this.detectors = [];
-    this.rejected = [];      // candidates killed during censoring — the teaching moment
+    this.rejected = [];      // candidates killed during censoring, the teaching moment
     this.attempts = 0;
   }
 
@@ -269,7 +271,7 @@ export class NegativeSelection {
 
   /**
    * One censoring round: propose a random candidate detector.
-   * If it binds "self" it is destroyed (apoptosis) — exactly what happens to
+   * If it binds "self" it is destroyed (apoptosis), exactly what happens to
    * self-reactive T-cells in the thymus. Survivors grow a radius that stops
    * just short of the self region.
    */
@@ -279,7 +281,7 @@ export class NegativeSelection {
     const dSelf = this.selfSamples.length ? this.nearestSelf(c) : 1;
 
     if (dSelf <= this.selfRadius) {
-      this.rejected.push({ center: c, reason: 'bound self — destroyed' });
+      this.rejected.push({ center: c, reason: 'bound self, destroyed' });
       if (this.rejected.length > 60) this.rejected.shift();
       return { accepted: false, center: c };
     }
@@ -295,7 +297,7 @@ export class NegativeSelection {
       return { accepted: false, center: c };
     }
 
-    const det = { center: c, radius: dSelf - this.selfRadius };
+    const det = { center: c, radius: Math.min(dSelf - this.selfRadius, this.maxRadius) };
     this.detectors.push(det);
     return { accepted: true, ...det };
   }
@@ -393,7 +395,7 @@ export class BinaryGeneticAlgorithm {
       const b = this.population[this.tournament()];
       let c1; let c2;
       if (this.rand() > this.crossoverRate) { c1 = [...a]; c2 = [...b]; } else {
-        // Uniform crossover mixes dimensions freely — this is what lets the GA
+        // Uniform crossover mixes dimensions freely, this is what lets the GA
         // recombine useful *groups* of dimensions rather than contiguous blocks.
         c1 = []; c2 = [];
         for (let i = 0; i < a.length; i += 1) {
@@ -431,7 +433,7 @@ export class AntColony {
     this.iteration = 0;
     this.history = [];
     this.tau = intents.map(() => partitions.map(() => initial));
-    // Heuristic prior η — a weak, uniform starting bias so ants are not blind.
+    // Heuristic prior η, a weak, uniform starting bias so ants are not blind.
     this.eta = intents.map(() => partitions.map(() => 1 / partitions.length));
     this.lastWalks = [];
   }
@@ -494,7 +496,7 @@ export class AntColony {
     }
 
     // Evaporate first, then deposit. Evaporation is what lets the colony
-    // FORGET a route that stopped paying off — the reason this beats a
+    // FORGET a route that stopped paying off, the reason this beats a
     // static lookup table as documentation habits drift.
     for (let i = 0; i < this.intents.length; i += 1) {
       for (let p = 0; p < this.partitions.length; p += 1) {

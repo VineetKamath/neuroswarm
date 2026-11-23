@@ -14,7 +14,7 @@ short_description: Hospital records app tuned by GA, PSO, AIS, Binary GA and ACO
 A hospital records and care app where five decisions are made by bio-inspired algorithms:
 Genetic Algorithm, Particle Swarm Optimization, Artificial Immune System, Binary Genetic
 Algorithm and Ant Colony Optimization. Open the **Bio-Lab** to see each one as a 3D simulation
-with a guided story.
+with a step-by-step demo.
 
 All patient data is synthetic. Demo logins (password `password123`):
 

@@ -245,7 +245,7 @@ Each algorithm chapter has:
    | Binary GA | One embedding as a board of tiles over glass "meaning" pillars, next to a stack of the 24 masks in the population. Green means kept and useful, amber means kept but wasted. |
    | ACO | Anthills (question types) and food piles (note sections). Pheromone trails glow and evaporate, and ants come home carrying gold when they find the answer. |
 
-3. **A guided story**: Next/Back steps in plain language. Each step drives the scene (camera
+3. **A step-by-step demo**: Next/Back steps in plain language. Each step drives the scene (camera
    moves, play, experiments) and ends with *In NeuroSwarm*, which says exactly where this
    runs.
 4. **Tabs** below the scene:

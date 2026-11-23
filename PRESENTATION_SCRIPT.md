@@ -16,7 +16,7 @@ algorithm was needed there. Those two things are what the examiners are looking 
 (`npm run dev`). Log in as Dr. Arvind Sharma in one tab and open the Bio-Lab in another, so
 nobody has to watch a page load.
 
-**Bio-Lab tips:** each chapter has a guided story on the right. Click **Next** and the 3D
+**Bio-Lab tips:** each chapter has a **Demo** panel on the right. Click **Next** and the 3D
 scene moves to match. The caption at the bottom of the scene says what is happening at that
 moment. Press **F** for full screen and **Shift + arrow keys** to change chapter.
 

@@ -102,7 +102,7 @@ export function Toast({ text, tone = 'info' }) {
   return <div className={cx('pointer-events-none absolute left-1/2 top-3 z-10 -translate-x-1/2 rounded-xl border px-3 py-1.5 text-xs font-semibold backdrop-blur anim-pop', c)}>{text}</div>;
 }
 
-/** Guided, plain-language walkthrough. Each step can drive the scene. */
+/** Step-by-step demo walkthrough. Each step can drive the scene. */
 export function StoryPanel({ steps, index, setIndex, color, onAction }) {
   const s = steps[index];
   const prevIndex = useRef(-1);
@@ -119,7 +119,7 @@ export function StoryPanel({ steps, index, setIndex, color, onAction }) {
   return (
     <div className="card flex h-full flex-col p-5">
       <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider" style={{ color }}><Sparkles className="h-3.5 w-3.5" />Guided story</div>
+        <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider" style={{ color }}><Sparkles className="h-3.5 w-3.5" />Demo</div>
         <div className="font-mono text-[11px] text-slate-400">{index + 1} / {steps.length}</div>
       </div>
       <div className="mb-4 flex gap-1">

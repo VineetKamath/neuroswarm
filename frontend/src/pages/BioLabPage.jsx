@@ -172,7 +172,7 @@ function Overview({ report }) {
           <div className="relative">
             <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-300">Bio-Inspired Algorithms · NeuroSwarm</div>
             <h2 className="mt-2 max-w-3xl text-2xl font-bold leading-snug">{c.tagline}</h2>
-            <p className="mt-2 max-w-2xl text-sm text-slate-400">Each chapter has a 3D simulation, a step-by-step story, and a live demo on the real system.</p>
+            <p className="mt-2 max-w-2xl text-sm text-slate-400">Each chapter has a 3D simulation with a step-by-step demo, plus a live test on the real system.</p>
           </div>
         </div>
         <div className="space-y-3 p-6">

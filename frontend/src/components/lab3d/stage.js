@@ -44,7 +44,7 @@ export function createStage(container, { camera: camPos = [0, 6, 12], target = [
   key.position.set(6, 12, 8);
   scene.add(key);
 
-  // Smooth camera fly-to used by the guided story.
+  // Smooth camera fly-to used by the step-by-step demo.
   let fly = null;
   const flyTo = (pos, tgt, ms = 1200) => {
     fly = { from: camera.position.clone(), to: new THREE.Vector3(...pos), tFrom: controls.target.clone(), tTo: new THREE.Vector3(...tgt), start: performance.now(), ms };
